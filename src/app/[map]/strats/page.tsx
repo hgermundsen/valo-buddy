@@ -1,3 +1,4 @@
+import Image from "next/image";
 const Firestore = require('@google-cloud/firestore');
 const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
 const key = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n');
@@ -8,21 +9,32 @@ const db = new Firestore({
 });
 
 const ReadData = async (map: string) => {
-    const vodsData = await db.collection('maps').doc(`${map}`).collection('vods').get();
+    const stratsData = await db.collection('maps').doc(`${map}`).collection('strats').get();
     
-    if (vodsData.empty) {
+    if (stratsData.empty) {
         console.log('Booooooo. This guy stinks!');
     }
-    return vodsData;
+    return stratsData;
 }
 
 export default async function Page({ params }: { params: { map: string } }) {
     
     const vodsData = await ReadData(params.map);
+    let image: string;
     vodsData.forEach((element: { id: any; data: () => any; }) => {
         console.log(element.data());
+        image = element.data().images[0];
     });
     return <div>
-        <h1>{params.map.charAt(0).toUpperCase() + params.map.slice(1)} VODs Page</h1>
+        <h1>{params.map.charAt(0).toUpperCase() + params.map.slice(1)} Strats Page</h1>
+        <Image
+            src={image}
+            alt='A thing'
+            width={370}
+            height={208}
+            quality={100}
+            placeholder='blur'
+            blurDataURL={image}
+        />
     </div>
 }
