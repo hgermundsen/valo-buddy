@@ -1,6 +1,4 @@
 const Firestore = require('@google-cloud/firestore');
-const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
-const key = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n');
 
 const db = new Firestore({
     projectID: 'hunter-personal-playground',
