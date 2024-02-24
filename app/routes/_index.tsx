@@ -25,11 +25,17 @@ export default function MapSelect() {
           <Link
             key={name}
             to={name.toLowerCase()}
-            className="opacity-0 animate-rise-and-fade-in"
+            className="group overflow-hidden opacity-0 animate-rise-and-fade-in ring-2 ring-white/40 hover:ring-4 hover:ring-green-200 transition"
             style={{ animationDelay: `${0.05 * i}s` }}
           >
-            <span className="absolute p-2 bg-white text-slate-900">{name}</span>
-            <img src={image} alt={name} />
+            <span className="z-10 absolute px-6 py-3 bg-white/40 text-xl font-medium">
+              {name}
+            </span>
+            <img
+              className="group-hover:scale-110 transition ease-out"
+              src={image}
+              alt={name}
+            />
           </Link>
         ))}
       </div>
