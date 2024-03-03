@@ -31,7 +31,7 @@ export default function AgentSelect() {
             to={name.toLowerCase()}
             className="p-1 ring-inset ring-2 ring-white/40 hover:ring-4 hover:ring-green-200 transition"
           >
-            <img src={image} alt={name} />
+            <img src={image} alt={name} className="agent-image" />
           </Link>
         ))}
       </div>
