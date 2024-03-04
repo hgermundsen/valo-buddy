@@ -1,5 +1,6 @@
 import type { MetaFunction } from "@remix-run/node";
 import { useParams } from "@remix-run/react";
+import Filters from "~/components/filters";
 
 import { capitalizeWord } from "~/utils";
 
@@ -17,12 +18,8 @@ export default function Vods() {
   const { mapName, agentName } = useParams();
 
   return (
-    <main>
-      <main className="p-24">
-        <p>
-          Vods for {agentName!} on {mapName!}
-        </p>
-      </main>
+    <main className="p-24">
+      <Filters filterNames={["Foo", "Bar"]} />
     </main>
   );
 }

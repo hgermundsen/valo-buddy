@@ -17,12 +17,10 @@ export default function Strats() {
   const { mapName, agentName } = useParams();
 
   return (
-    <main>
-      <main className="p-24">
-        <p>
-          Strats for {agentName!} on {mapName!}
-        </p>
-      </main>
+    <main className="p-24">
+      <p>
+        Strats for {agentName!} on {mapName!}
+      </p>
     </main>
   );
 }
