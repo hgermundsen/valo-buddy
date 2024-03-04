@@ -18,6 +18,9 @@ export default {
             transform: "translateY(0)",
           },
         },
+        shimmer: {
+          "100%": { maskPosition: "left" },
+        },
       },
     },
   },

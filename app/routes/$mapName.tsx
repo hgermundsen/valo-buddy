@@ -31,7 +31,17 @@ export default function AgentSelect() {
             to={name.toLowerCase()}
             className="p-1 ring-inset ring-2 ring-white/40 hover:ring-4 hover:ring-green-200 transition"
           >
-            <img src={image} alt={name} className="agent-image" />
+            <img
+              src={image}
+              alt={name}
+              // Have to do this part with raw CSS, Tailwind doesn't have
+              // classes for "mask".
+              style={{
+                // https: //stackoverflow.com/a/68217932
+                mask: "linear-gradient(-60deg, black 30%, #0008, black 70%) right/350% 100%",
+              }}
+              className="hover:animate-[shimmer_0.5s]"
+            />
           </Link>
         ))}
       </div>
