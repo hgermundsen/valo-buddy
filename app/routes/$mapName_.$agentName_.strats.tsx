@@ -17,9 +17,9 @@ export default function Strats() {
   const { mapName, agentName } = useParams();
 
   return (
-    <main className="p-24">
+    <main className="h-full flex justify-center items-center">
       <p>
-        Strats for {agentName!} on {mapName!}
+        Strats for {capitalizeWord(agentName!)} on {capitalizeWord(mapName!)}
       </p>
     </main>
   );
