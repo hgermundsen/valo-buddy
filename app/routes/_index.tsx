@@ -1,9 +1,16 @@
 import type { MetaFunction } from "@remix-run/node";
 import { Link } from "@remix-run/react";
 
-import ascent from "../images/ascent.webp";
-import icebox from "../images/icebox.webp";
-import lotus from "../images/lotus.webp";
+import ascent from "../images/maps/ascent.webp";
+import bind from "../images/maps/bind.webp";
+import breeze from "../images/maps/breeze.webp";
+import fracture from "../images/maps/fracture.webp";
+import haven from "../images/maps/haven.webp";
+import icebox from "../images/maps/icebox.webp";
+import lotus from "../images/maps/lotus.webp";
+import pearl from "../images/maps/pearl.webp";
+import split from "../images/maps/split.webp";
+import sunset from "../images/maps/sunset.webp";
 
 export const meta: MetaFunction = () => [{ title: "Valo Buddy" }];
 
@@ -15,8 +22,15 @@ interface Map {
 export default function MapSelect() {
   const maps: Map[] = [
     { name: "Ascent", image: ascent },
+    { name: "Bind", image: bind },
+    { name: "Breeze", image: breeze },
+    { name: "Fracture", image: fracture },
+    { name: "Haven", image: haven },
     { name: "Icebox", image: icebox },
     { name: "Lotus", image: lotus },
+    { name: "Pearl", image: pearl },
+    { name: "Split", image: split },
+    { name: "Sunset", image: sunset },
   ];
   return (
     <main className="p-24">
