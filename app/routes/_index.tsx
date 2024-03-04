@@ -28,7 +28,7 @@ export default function MapSelect() {
             className="group overflow-hidden opacity-0 animate-rise-and-fade-in ring-2 ring-white/40 hover:ring-4 hover:ring-green-200 transition"
             style={{ animationDelay: `${0.05 * i}s` }}
           >
-            <span className="z-10 absolute px-6 py-3 bg-white/40 text-xl font-medium">
+            <span className="z-10 absolute bottom-4 left-4 text-4xl font-medium font-['Impact'] uppercase">
               {name}
             </span>
             <img
