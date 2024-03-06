@@ -80,7 +80,7 @@ export default function AgentSelect() {
               // Have to do this part with raw CSS, Tailwind doesn't have
               // classes for "mask".
               style={{
-                // https: //stackoverflow.com/a/68217932
+                // https://stackoverflow.com/a/68217932
                 mask: "linear-gradient(-60deg, black 30%, #0008, black 70%) right/350% 100%",
               }}
               className="hover:animate-[shimmer_0.5s]"
