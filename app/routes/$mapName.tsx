@@ -52,7 +52,7 @@ export default function AgentSelect() {
     { name: "Harbor", image: harbor },
     { name: "Iso", image: iso },
     { name: "Jett", image: jett },
-    { name: "KAY/O", image: kayo },
+    { name: "KAYO", image: kayo },
     { name: "Killjoy", image: killjoy },
     { name: "Neon", image: neon },
     { name: "Omen", image: omen },
