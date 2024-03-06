@@ -41,29 +41,29 @@ interface Agent {
 
 export default function AgentSelect() {
   const agents: Agent[] = [
-    { name: "Astra", image: astra },
-    { name: "Breach", image: breach },
-    { name: "Brimstone", image: brimstone },
-    { name: "Chamber", image: chamber },
-    { name: "Cypher", image: cypher },
-    { name: "Deadlock", image: deadlock },
-    { name: "Fade", image: fade },
-    { name: "Gekko", image: gekko },
-    { name: "Harbor", image: harbor },
-    { name: "Iso", image: iso },
-    { name: "Jett", image: jett },
-    { name: "KAYO", image: kayo },
-    { name: "Killjoy", image: killjoy },
-    { name: "Neon", image: neon },
-    { name: "Omen", image: omen },
-    { name: "Phoenix", image: phoenix },
-    { name: "Raze", image: raze },
-    { name: "Reyna", image: reyna },
-    { name: "Sage", image: sage },
-    { name: "Skye", image: skye },
-    { name: "Sova", image: sova },
-    { name: "Viper", image: viper },
-    { name: "Yoru", image: yoru },
+    { name: "astra", image: astra },
+    { name: "breach", image: breach },
+    { name: "brimstone", image: brimstone },
+    { name: "chamber", image: chamber },
+    { name: "cypher", image: cypher },
+    { name: "deadlock", image: deadlock },
+    { name: "fade", image: fade },
+    { name: "gekko", image: gekko },
+    { name: "harbor", image: harbor },
+    { name: "iso", image: iso },
+    { name: "jett", image: jett },
+    { name: "kayo", image: kayo },
+    { name: "killjoy", image: killjoy },
+    { name: "neon", image: neon },
+    { name: "omen", image: omen },
+    { name: "phoenix", image: phoenix },
+    { name: "raze", image: raze },
+    { name: "reyna", image: reyna },
+    { name: "sage", image: sage },
+    { name: "skye", image: skye },
+    { name: "sova", image: sova },
+    { name: "viper", image: viper },
+    { name: "yoru", image: yoru },
   ];
   return (
     <main className="h-full flex justify-center items-center">
@@ -71,7 +71,7 @@ export default function AgentSelect() {
         {agents.map(({ name, image }) => (
           <Link
             key={name}
-            to={name.toLowerCase()}
+            to={name}
             className="p-1 ring-inset ring-2 ring-white/40 hover:ring-4 hover:ring-green-200 transition"
           >
             <img
