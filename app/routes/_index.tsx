@@ -34,7 +34,7 @@ export default function MapSelect() {
   ];
   return (
     <main className="p-24">
-      <div className="grid gap-6 grid-cols-3 grid-rows-3">
+      <div className="grid gap-6 grid-cols-4">
         {maps.map(({ name, image }, i) => (
           <Link
             key={name}
