@@ -21,16 +21,16 @@ interface Map {
 
 export default function MapSelect() {
   const maps: Map[] = [
-    { name: "Ascent", image: ascent },
-    { name: "Bind", image: bind },
-    { name: "Breeze", image: breeze },
-    { name: "Fracture", image: fracture },
-    { name: "Haven", image: haven },
-    { name: "Icebox", image: icebox },
-    { name: "Lotus", image: lotus },
-    { name: "Pearl", image: pearl },
-    { name: "Split", image: split },
-    { name: "Sunset", image: sunset },
+    { name: "ascent", image: ascent },
+    { name: "bind", image: bind },
+    { name: "breeze", image: breeze },
+    { name: "fracture", image: fracture },
+    { name: "haven", image: haven },
+    { name: "icebox", image: icebox },
+    { name: "lotus", image: lotus },
+    { name: "pearl", image: pearl },
+    { name: "split", image: split },
+    { name: "sunset", image: sunset },
   ];
   return (
     <main className="p-24">
@@ -38,7 +38,7 @@ export default function MapSelect() {
         {maps.map(({ name, image }, i) => (
           <Link
             key={name}
-            to={name.toLowerCase()}
+            to={name}
             className="group overflow-hidden opacity-0 animate-rise-and-fade-in ring-2 ring-white/40 hover:ring-4 hover:ring-green-200 transition"
             style={{ animationDelay: `${0.05 * i}s` }}
           >
