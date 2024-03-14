@@ -115,8 +115,13 @@ export default function Vods() {
           rank="Diamond 3"
           roundsWon={13}
           roundsLost={15}
+          kills={18}
+          deaths={21}
+          assists={6}
+          valoplantLink="https://valoplant.gg/strategy-id"
+          trackerLink="https://tracker.gg/valorant/match/aff15759-5c28-4ade-8f7b-93ec72d4b066"
           tags={["Tag Four"]}
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum elit nunc, rutrum non enim sed, tristique feugiat ipsum. Integer accumsan tellus enim, nec lobortis lorem accumsan non. Phasellus a elementum felis. Duis fermentum risus ipsum, quis commodo erat sodales nec. Nulla ullamcorper eleifend nunc, eu vulputate orci ultricies ut. Mauris porta felis tincidunt, venenatis sem quis, suscipit leo. Nulla lacinia purus ac lorem pellentesque, sed commodo sapien aliquam."
+          description="Good 1v1s, but overheated too often. Textbook examples of playing off contact. Map awareness sucked in the second half. Pay attention to the enemy's util usage, and reposition depending on who's where."
         />
         <Vod
           title="VOD Title 2"
@@ -124,8 +129,13 @@ export default function Vods() {
           rank="Diamond 2"
           roundsWon={13}
           roundsLost={6}
+          kills={12}
+          deaths={14}
+          assists={11}
+          valoplantLink="https://valoplant.gg/strategy-id"
+          trackerLink="https://tracker.gg/valorant/match/09131180-fdc6-4254-9b37-9d00bfd25e7e"
           tags={["Tag One", "Tag Five"]}
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum elit nunc, rutrum non enim sed, tristique feugiat ipsum."
+          description="Got carried ngl but got mine most of the time. Quickly recognized what my job and my place were on our team, and didn't overstep."
         />
         <Vod
           title="VOD Title 3"
@@ -133,8 +143,13 @@ export default function Vods() {
           rank="Diamond 3"
           roundsWon={13}
           roundsLost={4}
+          kills={21}
+          deaths={9}
+          assists={4}
+          valoplantLink="https://valoplant.gg/strategy-id"
+          trackerLink="https://tracker.gg/valorant/match/aff15759-5c28-4ade-8f7b-93ec72d4b066"
           tags={["Tag Two"]}
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum elit nunc, rutrum non enim sed, tristique feugiat ipsum. Integer accumsan tellus enim, nec lobortis lorem accumsan non. Phasellus a elementum felis. Duis fermentum risus ipsum, quis commodo erat sodales nec. Nulla ullamcorper eleifend nunc, eu vulputate orci ultricies ut."
+          description="Textbook examples of playing an entry fragger, really demonstrated the fundamentals well. Had good comms re. shot calling and early-round IGLing. We played numbers advantage well."
         />
       </section>
     </main>
@@ -147,6 +162,11 @@ interface VodProps {
   rank: string;
   roundsWon: number;
   roundsLost: number;
+  kills: number;
+  deaths: number;
+  assists: number;
+  valoplantLink: string;
+  trackerLink: string;
   tags: string[];
   description: string;
 }
@@ -156,6 +176,11 @@ function Vod({
   rank,
   roundsWon,
   roundsLost,
+  kills,
+  deaths,
+  assists,
+  valoplantLink,
+  trackerLink,
   tags,
   description,
 }: VodProps) {
@@ -166,11 +191,34 @@ function Vod({
       </div>
       <div className="w-full flex flex-col space-y-2">
         <div className="flex justify-between">
-          <div className="flex grow flex-col">
+          <div className="flex flex-col">
             <h1 className="text-2xl font-bold">{title}</h1>
-            <span className="text-white/40 italic">
-              {date.toDateString()} - {rank} - {roundsWon}/{roundsLost}
-            </span>
+            <div className="flex space-x-4">
+              <span className="text-white/40">{date.toDateString()}</span>
+              <span className="text-white/40">{rank}</span>
+              <span className="text-white/40">
+                {roundsWon}/{roundsLost}
+              </span>
+              <span className="text-white/40">
+                {kills}/{deaths}/{assists}
+              </span>
+            </div>
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href={valoplantLink}
+              className="w-max text-blue-500 hover:underline visited:text-purple-500"
+            >
+              {valoplantLink}
+            </a>
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href={trackerLink}
+              className="w-max text-blue-500 hover:underline visited:text-purple-500"
+            >
+              {trackerLink}
+            </a>
           </div>
           <div className="flex-none space-x-2">
             {tags.map((tag) => (
