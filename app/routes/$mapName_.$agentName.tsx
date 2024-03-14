@@ -15,18 +15,22 @@ export const meta: MetaFunction = ({ params }) => {
 
 export default function VodsOrStratsSelect() {
   return (
-    <main className="h-full flex justify-center items-center space-x-8 text-4xl font-medium font-['Impact'] uppercase tracking-wide">
+    <main className="h-full flex grow text-8xl font-medium font-['Impact'] uppercase">
       <Link
         to="vods"
-        className="px-8 py-6 ring-2 ring-white/40 hover:ring-4 hover:ring-green-200 hover:bg-white/10 transition"
+        className="group flex grow justify-center items-center hover:bg-green-400 transition"
       >
-        Vods
+        <span className="bg-gradient-to-b from-neutral-300 to-white text-transparent bg-clip-text group-hover:text-white transition">
+          Vods
+        </span>
       </Link>
       <Link
         to="strats"
-        className="px-8 py-6 ring-2 ring-white/40 hover:ring-4 hover:ring-green-200 hover:bg-white/10 transition"
+        className="group flex grow justify-center items-center hover:bg-red-400 transition"
       >
-        Strats
+        <span className="bg-gradient-to-b from-neutral-300 to-white text-transparent bg-clip-text group-hover:text-white transition">
+          Strats
+        </span>
       </Link>
     </main>
   );
