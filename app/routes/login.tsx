@@ -80,13 +80,13 @@ export default function LoginPage() {
   }, [actionData]);
 
   return (
-    <div className="flex min-h-full flex-col justify-center">
+    <div className="flex min-h-full flex-col justify-center text-gray-900">
       <div className="mx-auto w-full max-w-md px-8">
         <Form method="post" className="space-y-6">
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-300"
             >
               Email address
             </label>
@@ -115,7 +115,7 @@ export default function LoginPage() {
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-300"
             >
               Password
             </label>
@@ -155,7 +155,7 @@ export default function LoginPage() {
               />
               <label
                 htmlFor="remember"
-                className="ml-2 block text-sm text-gray-900"
+                className="ml-2 block text-sm text-white"
               >
                 Remember me
               </label>
