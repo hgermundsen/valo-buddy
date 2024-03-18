@@ -40,6 +40,36 @@ async function seed() {
     },
   });
 
+  await prisma.vod.create({
+    data: {
+      map: "ascent",
+      agent: "killjoy",
+      title: "Never Gonna Give You Up",
+      date: new Date(),
+      rank: "Diamond 3",
+      roundsWon: 13,
+      roundsLost: 15,
+      kills: 18,
+      deaths: 21,
+      assists: 6,
+      valoplantLink: "https://valoplant.gg/strategy-id",
+      trackerLink:
+        "https://tracker.gg/valorant/match/aff15759-5c28-4ade-8f7b-93ec72d4b066",
+      tags: {
+        create: [
+          { name: "Overheat" },
+          { name: "1v1s" },
+          { name: "Map awareness" },
+          { name: "Game sense" },
+        ],
+      },
+      description:
+        "Good 1v1s, but overheated too often. Textbook examples of playing off contact. Map awareness sucked in the second half. Pay attention to the enemy's util usage, and reposition depending on who's where.",
+      unlistedYoutubeVideoURL:
+        "https://www.youtube.com/embed/dQw4w9WgXcQ?si=lQBlzJaRwljhksGZ",
+    },
+  });
+
   console.log(`Database has been seeded. 🌱`);
 }
 
