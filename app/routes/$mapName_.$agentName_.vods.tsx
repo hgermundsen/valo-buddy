@@ -1,10 +1,11 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Form } from "@remix-run/react";
+import { Form, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import validator from "validator";
 
 import Filters from "~/components/filters";
+import { getVods } from "~/models/vod.server";
 import { capitalizeWord } from "~/utils";
 
 export const meta: MetaFunction = ({ params }) => {
@@ -76,11 +77,13 @@ export async function loader({ params }: LoaderFunctionArgs) {
     throw new Response("Not Found", { status: 404 });
   }
 
-  // TODO: Replace with actual vod data.
-  return json({ mapName: params.mapName, agentName: params.agentName });
+  const vods = await getVods({ map: params.mapName, agent: params.agentName });
+  return json({ vods });
 }
 
 export default function Vods() {
+  const data = useLoaderData<typeof loader>();
+
   return (
     <main className="flex flex-col space-y-16 p-16">
       <section>
@@ -109,53 +112,82 @@ export default function Vods() {
         </Form>
       </section>
       <section className="flex flex-col space-y-4">
-        <Vod
-          title="VOD Title"
-          date={new Date()}
-          rank="Diamond 3"
-          roundsWon={13}
-          roundsLost={15}
-          kills={18}
-          deaths={21}
-          assists={6}
-          valoplantLink="https://valoplant.gg/strategy-id"
-          trackerLink="https://tracker.gg/valorant/match/aff15759-5c28-4ade-8f7b-93ec72d4b066"
-          tags={["Tag Four"]}
-          description="Good 1v1s, but overheated too often. Textbook examples of playing off contact. Map awareness sucked in the second half. Pay attention to the enemy's util usage, and reposition depending on who's where."
-          unlistedYoutubeVideoURL="https://www.youtube.com/embed/dQw4w9WgXcQ?si=lQBlzJaRwljhksGZ"
-        />
-        <Vod
-          title="VOD Title 2"
-          date={new Date()}
-          rank="Diamond 2"
-          roundsWon={13}
-          roundsLost={6}
-          kills={12}
-          deaths={14}
-          assists={11}
-          valoplantLink="https://valoplant.gg/strategy-id"
-          trackerLink="https://tracker.gg/valorant/match/09131180-fdc6-4254-9b37-9d00bfd25e7e"
-          tags={["Tag One", "Tag Five"]}
-          description="Got carried ngl but got mine most of the time. Quickly recognized what my job and my place were on our team, and didn't overstep."
-          unlistedYoutubeVideoURL="https://www.youtube.com/embed/zf3ETYZl6So?si=u-5MXQPs_wpobi3a"
-        />
-        <Vod
-          title="VOD Title 3"
-          date={new Date()}
-          rank="Diamond 3"
-          roundsWon={13}
-          roundsLost={4}
-          kills={21}
-          deaths={9}
-          assists={4}
-          valoplantLink="https://valoplant.gg/strategy-id"
-          trackerLink="https://tracker.gg/valorant/match/aff15759-5c28-4ade-8f7b-93ec72d4b066"
-          tags={["Tag Two"]}
-          description="Textbook examples of playing an entry fragger, really demonstrated the fundamentals well. Had good comms re. shot calling and early-round IGLing. We played numbers advantage well."
-          unlistedYoutubeVideoURL="https://www.youtube.com/embed/Yg1cviz76dk?si=13sm8KN6udCUsy-9"
-        />
+        {data.vods.length === 0 ? (
+          <PlaceholderVods />
+        ) : (
+          data.vods.map((vod) => (
+            <Vod
+              key={vod.title}
+              title={vod.title}
+              date={new Date(vod.date)}
+              rank={vod.rank}
+              roundsWon={vod.roundsWon}
+              roundsLost={vod.roundsLost}
+              kills={vod.kills}
+              deaths={vod.deaths}
+              assists={vod.assists}
+              valoplantLink={vod.valoplantLink}
+              trackerLink={vod.trackerLink}
+              tags={vod.tags.map((tag) => tag.name)}
+              description={vod.description}
+              unlistedYoutubeVideoURL={vod.unlistedYoutubeVideoURL}
+            />
+          ))
+        )}
       </section>
     </main>
+  );
+}
+
+function PlaceholderVods() {
+  return (
+    <>
+      <Vod
+        title="VOD Title"
+        date={new Date()}
+        rank="Diamond 3"
+        roundsWon={13}
+        roundsLost={15}
+        kills={18}
+        deaths={21}
+        assists={6}
+        valoplantLink="https://valoplant.gg/strategy-id"
+        trackerLink="https://tracker.gg/valorant/match/aff15759-5c28-4ade-8f7b-93ec72d4b066"
+        tags={["Tag Four"]}
+        description="Good 1v1s, but overheated too often. Textbook examples of playing off contact. Map awareness sucked in the second half. Pay attention to the enemy's util usage, and reposition depending on who's where."
+        unlistedYoutubeVideoURL="https://www.youtube.com/embed/dQw4w9WgXcQ?si=lQBlzJaRwljhksGZ"
+      />
+      <Vod
+        title="VOD Title 2"
+        date={new Date()}
+        rank="Diamond 2"
+        roundsWon={13}
+        roundsLost={6}
+        kills={12}
+        deaths={14}
+        assists={11}
+        valoplantLink="https://valoplant.gg/strategy-id"
+        trackerLink="https://tracker.gg/valorant/match/09131180-fdc6-4254-9b37-9d00bfd25e7e"
+        tags={["Tag One", "Tag Five"]}
+        description="Got carried ngl but got mine most of the time. Quickly recognized what my job and my place were on our team, and didn't overstep."
+        unlistedYoutubeVideoURL="https://www.youtube.com/embed/zf3ETYZl6So?si=u-5MXQPs_wpobi3a"
+      />
+      <Vod
+        title="VOD Title 3"
+        date={new Date()}
+        rank="Diamond 3"
+        roundsWon={13}
+        roundsLost={4}
+        kills={21}
+        deaths={9}
+        assists={4}
+        valoplantLink="https://valoplant.gg/strategy-id"
+        trackerLink="https://tracker.gg/valorant/match/aff15759-5c28-4ade-8f7b-93ec72d4b066"
+        tags={["Tag Two"]}
+        description="Textbook examples of playing an entry fragger, really demonstrated the fundamentals well. Had good comms re. shot calling and early-round IGLing. We played numbers advantage well."
+        unlistedYoutubeVideoURL="https://www.youtube.com/embed/Yg1cviz76dk?si=13sm8KN6udCUsy-9"
+      />
+    </>
   );
 }
 
