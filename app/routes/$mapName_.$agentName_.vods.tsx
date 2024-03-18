@@ -122,6 +122,7 @@ export default function Vods() {
           trackerLink="https://tracker.gg/valorant/match/aff15759-5c28-4ade-8f7b-93ec72d4b066"
           tags={["Tag Four"]}
           description="Good 1v1s, but overheated too often. Textbook examples of playing off contact. Map awareness sucked in the second half. Pay attention to the enemy's util usage, and reposition depending on who's where."
+          unlistedYoutubeVideoURL="https://www.youtube.com/embed/dQw4w9WgXcQ?si=lQBlzJaRwljhksGZ"
         />
         <Vod
           title="VOD Title 2"
@@ -136,6 +137,7 @@ export default function Vods() {
           trackerLink="https://tracker.gg/valorant/match/09131180-fdc6-4254-9b37-9d00bfd25e7e"
           tags={["Tag One", "Tag Five"]}
           description="Got carried ngl but got mine most of the time. Quickly recognized what my job and my place were on our team, and didn't overstep."
+          unlistedYoutubeVideoURL="https://www.youtube.com/embed/zf3ETYZl6So?si=u-5MXQPs_wpobi3a"
         />
         <Vod
           title="VOD Title 3"
@@ -150,6 +152,7 @@ export default function Vods() {
           trackerLink="https://tracker.gg/valorant/match/aff15759-5c28-4ade-8f7b-93ec72d4b066"
           tags={["Tag Two"]}
           description="Textbook examples of playing an entry fragger, really demonstrated the fundamentals well. Had good comms re. shot calling and early-round IGLing. We played numbers advantage well."
+          unlistedYoutubeVideoURL="https://www.youtube.com/embed/Yg1cviz76dk?si=13sm8KN6udCUsy-9"
         />
       </section>
     </main>
@@ -169,6 +172,7 @@ interface VodProps {
   trackerLink: string;
   tags: string[];
   description: string;
+  unlistedYoutubeVideoURL?: string;
 }
 function Vod({
   title,
@@ -183,12 +187,24 @@ function Vod({
   trackerLink,
   tags,
   description,
+  unlistedYoutubeVideoURL,
 }: VodProps) {
   return (
     <div className="flex space-x-4">
-      <div className="flex justify-center items-center bg-white/10 w-[427px] h-[240px] text-white/40 italic">
-        VOD Thumbnail
-      </div>
+      {unlistedYoutubeVideoURL ? (
+        <iframe
+          width="640"
+          height="270"
+          src={unlistedYoutubeVideoURL}
+          title={title}
+          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        ></iframe>
+      ) : (
+        <div className="flex justify-center items-center bg-white/10 w-[560px] h-[315px] text-white/40 italic">
+          VOD Thumbnail
+        </div>
+      )}
       <div className="w-full flex flex-col space-y-2">
         <div className="flex justify-between">
           <div className="flex flex-col">
