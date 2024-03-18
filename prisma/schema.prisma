@@ -36,3 +36,39 @@ model Note {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId String
 }
+
+model Vod {
+  id String @id @default(cuid())
+
+  map String
+  agent String
+
+  title String
+  date DateTime
+  rank String
+  roundsWon Int @db.SmallInt
+  roundsLost Int @db.SmallInt
+  kills Int @db.SmallInt
+  deaths Int @db.SmallInt
+  assists Int @db.SmallInt
+  valoplantLink String
+  trackerLink String
+  tags Tag[]
+  description String
+  unlistedYoutubeVideoURL String
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model Tag {
+  id String @id @default(cuid())
+
+  name String
+  vods Vod[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
