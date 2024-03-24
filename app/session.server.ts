@@ -8,7 +8,7 @@ invariant(process.env.SESSION_SECRET, "SESSION_SECRET must be set");
 
 export const sessionStorage = createCookieSessionStorage({
   cookie: {
-    name: "__session",
+    name: "valobuddy_session",
     httpOnly: true,
     path: "/",
     sameSite: "lax",
