@@ -24,20 +24,20 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const redirectTo = safeRedirect(formData.get("redirectTo"), "/");
   const remember = formData.get("remember");
 
+  // TODO: Harden input validation. (Laravel will take care of most of
+  // this for you, but still...)
   if (!validateEmail(email)) {
     return json(
       { errors: { email: "Email is invalid", password: null } },
       { status: 400 },
     );
   }
-
   if (typeof password !== "string" || password.length === 0) {
     return json(
       { errors: { email: null, password: "Password is required" } },
       { status: 400 },
     );
   }
-
   if (password.length < 8) {
     return json(
       { errors: { email: null, password: "Password is too short" } },
