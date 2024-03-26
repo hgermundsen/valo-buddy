@@ -46,6 +46,7 @@ model Vod {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId String
+  isPublic Boolean @default(false)
 
   map String
   agent String
