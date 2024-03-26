@@ -3,15 +3,15 @@ import type { Vod } from "@prisma/client";
 import { prisma } from "~/db.server";
 
 export function getVods({
+  userId,
   map,
   agent,
 }: {
+  userId: Vod["userId"];
   map: Vod["map"];
   agent: Vod["agent"];
 }) {
   return prisma.vod.findMany({
-    where: { deletedAt: null, map, agent },
-    orderBy: { createdAt: "desc" },
     select: {
       title: true,
       date: true,
@@ -27,5 +27,7 @@ export function getVods({
       description: true,
       unlistedYoutubeVideoURL: true,
     },
+    where: { userId, deletedAt: null, map, agent },
+    orderBy: { createdAt: "desc" },
   });
 }

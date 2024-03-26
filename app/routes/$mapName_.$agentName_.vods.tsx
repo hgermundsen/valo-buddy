@@ -6,6 +6,7 @@ import validator from "validator";
 
 import Filters from "~/components/filters";
 import { getVods } from "~/models/vod.server";
+import { requireUserId } from "~/session.server";
 import { capitalizeWord } from "~/utils";
 
 export const meta: MetaFunction = ({ params }) => {
@@ -57,7 +58,7 @@ const agentNames = [
   "yoru",
 ];
 
-export async function loader({ params }: LoaderFunctionArgs) {
+export async function loader({ request, params }: LoaderFunctionArgs) {
   // TODO: From a security perspective, is this enough?
   //
   // Should we also be sanitizing the input by removing or escaping dangerous
@@ -77,7 +78,12 @@ export async function loader({ params }: LoaderFunctionArgs) {
     throw new Response("Not Found", { status: 404 });
   }
 
-  const vods = await getVods({ map: params.mapName, agent: params.agentName });
+  const userId = await requireUserId(request);
+  const vods = await getVods({
+    userId,
+    map: params.mapName,
+    agent: params.agentName,
+  });
   return json({ vods });
 }
 
