@@ -24,8 +24,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const redirectTo = safeRedirect(formData.get("redirectTo"), "/");
   const remember = formData.get("remember");
 
-  // TODO: Harden input validation. (Laravel will take care of most of
-  // this for you, but still...)
+  // TODO: Harden input validation.
   if (!validateEmail(email)) {
     return json(
       { errors: { email: "Email is invalid", password: null } },
