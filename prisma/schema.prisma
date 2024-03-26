@@ -10,12 +10,13 @@ generator client {
 model User {
   id    String @id @default(cuid())
   email String @unique
+  password Password?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  password Password?
   notes    Note[]
+  vods Vod[]
 }
 
 model Password {
@@ -39,10 +40,15 @@ model Note {
 
 model Vod {
   id String @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String
 
   map String
   agent String
-
   title String
   date DateTime
   rank String
@@ -56,10 +62,6 @@ model Vod {
   tags Tag[]
   description String
   unlistedYoutubeVideoURL String
-  
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  deletedAt DateTime?
 }
 
 model Tag {

@@ -4,14 +4,14 @@ import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
 async function seed() {
-  const email = "rachel@remix.run";
+  const email = "todd@bethesda.net";
 
   // cleanup the existing database
   await prisma.user.delete({ where: { email } }).catch(() => {
     // no worries if it doesn't exist yet
   });
 
-  const hashedPassword = await bcrypt.hash("racheliscool", 10);
+  const hashedPassword = await bcrypt.hash("skyrimcashcow", 10);
 
   const user = await prisma.user.create({
     data: {
@@ -42,6 +42,7 @@ async function seed() {
 
   await prisma.vod.create({
     data: {
+      userId: user.id,
       map: "ascent",
       agent: "killjoy",
       title: "Never Gonna Give You Up",
