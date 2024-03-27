@@ -1,8 +1,6 @@
-import type {
-  ActionFunctionArgs,
-  LoaderFunctionArgs,
-  MetaFunction,
-} from "@remix-run/node";
+// TODO: Improve search UX: https://remix.run/docs/en/main/start/tutorial#submitting-forms-onchange
+
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
@@ -71,10 +69,12 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   //
   // Consider passing the entire request URL through something like
   // https://github.com/braintree/sanitize-url
-  invariant(params.mapName, "Map name not found");
-  invariant(params.agentName, "Agent name not found");
-  const isMapNameValid = validator.isIn(params.mapName, mapNames);
-  const isAgentNameValid = validator.isIn(params.agentName, agentNames);
+  const mapName = params.mapName;
+  const agentName = params.agentName;
+  invariant(mapName, "Map name not found");
+  invariant(agentName, "Agent name not found");
+  const isMapNameValid = validator.isIn(mapName, mapNames);
+  const isAgentNameValid = validator.isIn(agentName, agentNames);
   if (!isMapNameValid || !isAgentNameValid) {
     // Intentionally being vague with this error message. Something like
     // "Invalid map name" or "Invalid agent name" would indicate to attackers
@@ -93,11 +93,11 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   const userId = await requireUserId(request);
   const vods = await getVods({
     userId,
-    map: params.mapName,
-    agent: params.agentName,
+    map: mapName,
+    agent: agentName,
     titleQuery: q,
   });
-  return json({ vods, q });
+  return json({ mapName, agentName, vods, q });
 }
 
 export default function Vods() {
@@ -124,7 +124,7 @@ export default function Vods() {
               name="q"
               placeholder="Search for anything... (Just by title for now. Hopefully you'll be able to fuzzy search across all attributes soon)"
               aria-label="Search VODs"
-              defaultValue={data.q as string}
+              defaultValue={data.q as string} // TODO: Address this type casting.
               // eslint-disable-next-line jsx-a11y/no-autofocus
               autoFocus
               className="w-full bg-white/10 p-4"
@@ -140,7 +140,17 @@ export default function Vods() {
       </section>
       <section className="flex flex-col space-y-4">
         {data.vods.length === 0 ? (
-          <PlaceholderVods />
+          data.q === null ? (
+            <p className="text-neutral-400 italic">
+              No VODs for {capitalizeWord(data.agentName)} on{" "}
+              {capitalizeWord(data.mapName)}
+            </p>
+          ) : (
+            <p className="text-neutral-400 italic">
+              No VODs for {capitalizeWord(data.agentName)} on{" "}
+              {capitalizeWord(data.mapName)} which match that search query.
+            </p>
+          )
         ) : (
           data.vods.map((vod) => (
             <Vod
@@ -163,58 +173,6 @@ export default function Vods() {
         )}
       </section>
     </main>
-  );
-}
-
-function PlaceholderVods() {
-  return (
-    <>
-      <Vod
-        title="VOD Title"
-        date={new Date()}
-        rank="Diamond 3"
-        roundsWon={13}
-        roundsLost={15}
-        kills={18}
-        deaths={21}
-        assists={6}
-        valoplantLink="https://valoplant.gg/strategy-id"
-        trackerLink="https://tracker.gg/valorant/match/aff15759-5c28-4ade-8f7b-93ec72d4b066"
-        tags={["Tag Four"]}
-        description="Good 1v1s, but overheated too often. Textbook examples of playing off contact. Map awareness sucked in the second half. Pay attention to the enemy's util usage, and reposition depending on who's where."
-        unlistedYoutubeVideoURL="https://www.youtube.com/embed/dQw4w9WgXcQ?si=lQBlzJaRwljhksGZ"
-      />
-      <Vod
-        title="VOD Title 2"
-        date={new Date()}
-        rank="Diamond 2"
-        roundsWon={13}
-        roundsLost={6}
-        kills={12}
-        deaths={14}
-        assists={11}
-        valoplantLink="https://valoplant.gg/strategy-id"
-        trackerLink="https://tracker.gg/valorant/match/09131180-fdc6-4254-9b37-9d00bfd25e7e"
-        tags={["Tag One", "Tag Five"]}
-        description="Got carried ngl but got mine most of the time. Quickly recognized what my job and my place were on our team, and didn't overstep."
-        unlistedYoutubeVideoURL="https://www.youtube.com/embed/zf3ETYZl6So?si=u-5MXQPs_wpobi3a"
-      />
-      <Vod
-        title="VOD Title 3"
-        date={new Date()}
-        rank="Diamond 3"
-        roundsWon={13}
-        roundsLost={4}
-        kills={21}
-        deaths={9}
-        assists={4}
-        valoplantLink="https://valoplant.gg/strategy-id"
-        trackerLink="https://tracker.gg/valorant/match/aff15759-5c28-4ade-8f7b-93ec72d4b066"
-        tags={["Tag Two"]}
-        description="Textbook examples of playing an entry fragger, really demonstrated the fundamentals well. Had good comms re. shot calling and early-round IGLing. We played numbers advantage well."
-        unlistedYoutubeVideoURL="https://www.youtube.com/embed/Yg1cviz76dk?si=13sm8KN6udCUsy-9"
-      />
-    </>
   );
 }
 

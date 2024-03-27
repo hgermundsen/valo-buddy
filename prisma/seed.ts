@@ -71,6 +71,58 @@ async function seed() {
     },
   });
 
+  await prisma.vod.create({
+    data: {
+      userId: user.id,
+      map: "ascent",
+      agent: "killjoy",
+      title: "VOD Title 2",
+      date: new Date(),
+      rank: "Diamond 2",
+      roundsWon: 13,
+      roundsLost: 6,
+      kills: 12,
+      deaths: 14,
+      assists: 11,
+      valoplantLink: "https://valoplant.gg/strategy-id",
+      trackerLink:
+        "https://tracker.gg/valorant/match/09131180-fdc6-4254-9b37-9d00bfd25e7e",
+      tags: {
+        create: [{ name: "Tag One" }, { name: "Tag Five" }],
+      },
+      description:
+        "Got carried ngl but got mine most of the time. Quickly recognized what my job and my place were on our team, and didn't overstep.",
+      unlistedYoutubeVideoURL:
+        "https://www.youtube.com/embed/zf3ETYZl6So?si=u-5MXQPs_wpobi3a",
+    },
+  });
+
+  await prisma.vod.create({
+    data: {
+      userId: user.id,
+      map: "ascent",
+      agent: "killjoy",
+      title: "VOD Title 3",
+      date: new Date(),
+      rank: "Diamond 3",
+      roundsWon: 13,
+      roundsLost: 4,
+      kills: 21,
+      deaths: 9,
+      assists: 4,
+      valoplantLink: "https://valoplant.gg/strategy-id",
+      trackerLink:
+        "https://tracker.gg/valorant/match/aff15759-5c28-4ade-8f7b-93ec72d4b066",
+      tags: {
+        create: [{ name: "Tag Two" }],
+      },
+      description:
+        "Textbook examples of playing an entry fragger, really demonstrated the fundamentals well. Had good comms re. shot calling and early-round IGLing. We played numbers advantage well.",
+      unlistedYoutubeVideoURL:
+        "https://www.youtube.com/embed/Yg1cviz76dk?si=13sm8KN6udCUsy-9",
+    },
+  });
+
   console.log(`Database has been seeded. 🌱`);
 }
 
