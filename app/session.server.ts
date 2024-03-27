@@ -1,3 +1,9 @@
+// TODO: Consider storing session IDs in cookies instead of user IDs. If someone
+// knows another user's ID (if they get access to the database, they'd know
+// everyones' since their IDs and email addresses are stored in plaintext),
+// then they can just edit the cookie stored on their browser, and see someone
+// else's content.
+
 import { createCookieSessionStorage, redirect } from "@remix-run/node";
 import invariant from "tiny-invariant";
 
