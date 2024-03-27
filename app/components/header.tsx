@@ -7,7 +7,13 @@ export default function Header() {
 
   return (
     <header className="flex justify-between p-4">
-      <h1 className="font-bold">ValoBuddy</h1>
+      {/* Redirect to /login since if the user is logged in, the login page will
+          redirect them to /collection */}
+      <Link to="/login">
+        <h1 className="font-bold hover:text-valored-500 transition">
+          ValoBuddy
+        </h1>
+      </Link>
       <nav className="flex space-x-4 text-sm">
         {user ? (
           <>
