@@ -4,6 +4,11 @@ export default {
   content: ["./app/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      colors: {
+        valored: {
+          500: "#eb565a",
+        },
+      },
       animation: {
         "rise-and-fade-in": "riseAndFadeIn 0.5s ease forwards",
       },
