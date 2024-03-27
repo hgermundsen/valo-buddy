@@ -95,7 +95,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     userId,
     map: mapName,
     agent: agentName,
-    titleQuery: q,
+    query: q,
   });
   return json({ mapName, agentName, vods, q });
 }
@@ -122,7 +122,7 @@ export default function Vods() {
             <input
               type="search"
               name="q"
-              placeholder="Search for anything... (Just by title for now. Hopefully you'll be able to fuzzy search across all attributes soon)"
+              placeholder="Search for anything... (Just by title and description for now. Hopefully you'll be able to fuzzy search across all attributes soon)"
               aria-label="Search VODs"
               defaultValue={data.q as string} // TODO: Address this type casting.
               // eslint-disable-next-line jsx-a11y/no-autofocus

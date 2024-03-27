@@ -6,7 +6,7 @@ export function getVods({
   userId,
   map,
   agent,
-  titleQuery,
+  query,
 }: {
   userId: Vod["userId"];
   map: Vod["map"];
@@ -14,12 +14,20 @@ export function getVods({
   // Can't use ? optional syntax here since this function is designed to accept
   // a query param string straight from URL.searchParams(), which returns null
   // if the param doesn't exist.
-  titleQuery: string | null;
+  query: string | null;
 }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const where: any = { userId, deletedAt: null, map, agent };
-  if (titleQuery) {
-    where.title = { contains: titleQuery, mode: "insensitive" };
+  const where: any = {
+    userId,
+    deletedAt: null,
+    map,
+    agent,
+  };
+  if (query) {
+    where.OR = [
+      { title: { contains: query, mode: "insensitive" } },
+      { description: { contains: query, mode: "insensitive" } },
+    ];
   }
 
   return prisma.vod.findMany({
