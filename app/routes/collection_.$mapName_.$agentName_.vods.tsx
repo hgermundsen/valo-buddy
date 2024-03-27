@@ -2,7 +2,7 @@
 
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { Form, useLoaderData } from "@remix-run/react";
+import { Form, useLoaderData, useSubmit } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import validator from "validator";
 
@@ -102,11 +102,19 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 
 export default function Vods() {
   const data = useLoaderData<typeof loader>();
+  const submit = useSubmit();
 
   return (
     <main className="flex flex-col space-y-16 p-16">
       <section>
-        <Form role="search" className="flex flex-col space-y-4">
+        <Form
+          role="search"
+          onChange={(event) => {
+            const isFirstSearch = data.q === null;
+            submit(event.currentTarget, { replace: !isFirstSearch });
+          }}
+          className="flex flex-col space-y-4"
+        >
           <Filters
             filterNames={[
               "Tag One",
@@ -129,12 +137,6 @@ export default function Vods() {
               autoFocus
               className="w-full bg-white/10 p-4"
             />
-            <button
-              type="submit"
-              className="relative px-6 bg-red-400 font-medium font-['Impact'] uppercase tracking-wider bottom-0 left-0 hover:bottom-1 hover:left-1 hover:shadow-[-4px_4px_0_white] transition-all duration-500ms"
-            >
-              Search
-            </button>
           </div>
         </Form>
       </section>
