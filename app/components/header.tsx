@@ -7,8 +7,8 @@ export default function Header() {
 
   return (
     <header className="flex justify-between p-4">
-      <h1>ValoBuddy</h1>
-      <nav className="flex space-x-4">
+      <h1 className="font-bold">ValoBuddy</h1>
+      <nav className="flex space-x-4 text-sm">
         {user ? (
           <>
             <span>Signed in as {user.email}</span>
