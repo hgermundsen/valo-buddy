@@ -1,5 +1,9 @@
-import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import type {
+  ActionFunctionArgs,
+  LoaderFunctionArgs,
+  MetaFunction,
+} from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import validator from "validator";
@@ -78,13 +82,22 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     throw new Response("Not Found", { status: 404 });
   }
 
+  const url = new URL(request.url);
+  const q = url.searchParams.get("q");
+  // If the user searches for something, then deletes their search, redirect to
+  // a URL without the "q" query param.
+  if (q !== null && q === "") {
+    return redirect("");
+  }
+
   const userId = await requireUserId(request);
   const vods = await getVods({
     userId,
     map: params.mapName,
     agent: params.agentName,
+    titleQuery: q,
   });
-  return json({ vods });
+  return json({ vods, q });
 }
 
 export default function Vods() {
@@ -93,7 +106,7 @@ export default function Vods() {
   return (
     <main className="flex flex-col space-y-16 p-16">
       <section>
-        <Form className="flex flex-col space-y-4">
+        <Form role="search" className="flex flex-col space-y-4">
           <Filters
             filterNames={[
               "Tag One",
@@ -107,11 +120,19 @@ export default function Vods() {
 
           <div className="flex space-x-4">
             <input
-              type="text"
-              placeholder="Search for anything..."
+              type="search"
+              name="q"
+              placeholder="Search for anything... (Just by title for now. Hopefully you'll be able to fuzzy search across all attributes soon)"
+              aria-label="Search VODs"
+              defaultValue={data.q as string}
+              // eslint-disable-next-line jsx-a11y/no-autofocus
+              autoFocus
               className="w-full bg-white/10 p-4"
             />
-            <button className="relative px-6 bg-red-400 font-medium font-['Impact'] uppercase tracking-wider bottom-0 left-0 hover:bottom-1 hover:left-1 hover:shadow-[-4px_4px_0_white] transition-all duration-500ms">
+            <button
+              type="submit"
+              className="relative px-6 bg-red-400 font-medium font-['Impact'] uppercase tracking-wider bottom-0 left-0 hover:bottom-1 hover:left-1 hover:shadow-[-4px_4px_0_white] transition-all duration-500ms"
+            >
               Search
             </button>
           </div>
