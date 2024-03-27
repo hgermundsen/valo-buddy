@@ -19,7 +19,9 @@ export default function Header() {
           <>
             <span>Signed in as {user.email}</span>
             <Form action="logout" method="post">
-              <button type="submit">Log out</button>
+              <button type="submit" className="hover:underline">
+                Log out
+              </button>
             </Form>
           </>
         ) : (
