@@ -105,7 +105,7 @@ export default function Vods() {
   const submit = useSubmit();
 
   return (
-    <main className="flex flex-col space-y-16 p-16">
+    <main className="flex flex-col grow space-y-16 p-16">
       <section>
         <Form
           role="search"
