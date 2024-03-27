@@ -3,7 +3,7 @@ interface Props {
 }
 export default function Filters({ filterNames }: Props) {
   return (
-    <div className="h-full flex justify-between">
+    <div className="flex justify-between">
       <div className="flex space-x-4">
         {filterNames.map((filterName) => (
           <input

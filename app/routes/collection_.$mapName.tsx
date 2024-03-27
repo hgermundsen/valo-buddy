@@ -66,7 +66,7 @@ export default function AgentSelect() {
     { name: "yoru", image: yoru },
   ];
   return (
-    <main className="h-full flex justify-center items-center">
+    <main className="flex grow justify-center items-center">
       <div className="grid grid-cols-9">
         {agents.map(({ name, image }) => (
           <Link

@@ -32,7 +32,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="h-full bg-neutral-800 text-white">
+      <body className="flex flex-col h-full bg-neutral-800 text-white">
         <Header />
         <Outlet />
         <ScrollRestoration />
