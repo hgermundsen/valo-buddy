@@ -208,6 +208,8 @@ function Vod({
   description,
   unlistedYoutubeVideoURL,
 }: VodProps) {
+  const sortedTags = tags.sort();
+
   return (
     <div className="flex space-x-4">
       {unlistedYoutubeVideoURL ? (
@@ -256,7 +258,7 @@ function Vod({
             </a>
           </div>
           <div className="flex-none space-x-2">
-            {tags.map((tag) => (
+            {sortedTags.map((tag) => (
               <span key={tag} className="px-4 py-2 rounded-full bg-white/10">
                 {tag}
               </span>
