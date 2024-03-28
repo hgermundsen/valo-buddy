@@ -85,14 +85,11 @@ export default function Register() {
   }, [actionData]);
 
   return (
-    <div className="flex flex-col grow justify-center text-gray-900">
-      <div className="mx-auto w-full max-w-md px-8">
+    <div className="flex flex-col grow justify-center items-center text-neutral-400">
+      <div className="w-full max-w-md p-8 rounded-xl shadow-xl border-solid border-t border-neutral-700 bg-neutral-800">
         <Form method="post" className="space-y-6">
           <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="email" className="block text-sm font-medium">
               Email address
             </label>
             <div className="mt-1">
@@ -107,7 +104,7 @@ export default function Register() {
                 autoComplete="email"
                 aria-invalid={actionData?.errors?.email ? true : undefined}
                 aria-describedby="email-error"
-                className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
+                className="w-full px-2 py-1 rounded text-neutral-200 bg-neutral-700 border-t border-neutral-600 outline-none hover:bg-neutral-600 focus:bg-neutral-600 transition"
               />
               {actionData?.errors?.email ? (
                 <div className="pt-1 text-red-700" id="email-error">
@@ -118,10 +115,7 @@ export default function Register() {
           </div>
 
           <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="password" className="block text-sm font-medium">
               Password
             </label>
             <div className="mt-1">
@@ -133,7 +127,7 @@ export default function Register() {
                 autoComplete="new-password"
                 aria-invalid={actionData?.errors?.password ? true : undefined}
                 aria-describedby="password-error"
-                className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
+                className="w-full px-2 py-1 rounded text-neutral-200 bg-neutral-700 border-t border-neutral-600 outline-none hover:bg-neutral-600 focus:bg-neutral-600 transition"
               />
               {actionData?.errors?.password ? (
                 <div className="pt-1 text-red-700" id="password-error">
@@ -146,15 +140,15 @@ export default function Register() {
           <input type="hidden" name="redirectTo" value={redirectTo} />
           <button
             type="submit"
-            className="w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400"
+            className="w-full py-2 rounded font-medium text-white bg-valored-500 border-t border-valored-400 outline-none hover:bg-valored-400 focus:bg-valored-400 transition"
           >
-            Create Account
+            Create account
           </button>
           <div className="flex items-center justify-center">
-            <div className="text-center text-sm text-gray-500">
+            <div className="text-center text-sm">
               Already have an account?{" "}
               <Link
-                className="text-blue-500 underline"
+                className="text-blue-500 hover:underline"
                 to={{
                   pathname: "/login",
                   search: searchParams.toString(),
