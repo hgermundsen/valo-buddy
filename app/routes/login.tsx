@@ -79,8 +79,8 @@ export default function LoginPage() {
   }, [actionData]);
 
   return (
-    <div className="flex flex-col grow justify-center text-gray-900">
-      <div className="mx-auto w-full max-w-md px-8">
+    <div className="flex flex-col grow justify-center items-center text-gray-900">
+      <div className="w-full max-w-md p-8 rounded-xl shadow-xl border-solid border-t border-neutral-700 bg-neutral-800">
         <Form method="post" className="space-y-6">
           <div>
             <label

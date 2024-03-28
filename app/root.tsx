@@ -33,7 +33,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="flex flex-col h-full bg-neutral-800 text-white">
+      <body className="flex flex-col h-full bg-neutral-900 text-white">
         <Header />
         <Outlet />
         <Footer />
