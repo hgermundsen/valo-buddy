@@ -6,7 +6,8 @@ export default {
     extend: {
       colors: {
         valored: {
-          500: "#eb565a",
+          500: "#eb565a", // True Valorant red color.
+          400: "#f57679", // My custom, lightened version (probably needs tweaking).
         },
       },
       animation: {
