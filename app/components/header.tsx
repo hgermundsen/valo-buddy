@@ -26,8 +26,12 @@ export default function Header() {
           </>
         ) : (
           <>
-            <Link to="register">Sign Up</Link>
-            <Link to="login">Log In</Link>
+            <Link to="register" className="hover:underline">
+              Sign Up
+            </Link>
+            <Link to="login" className="hover:underline">
+              Log In
+            </Link>
           </>
         )}
       </nav>
