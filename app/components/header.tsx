@@ -19,17 +19,17 @@ export default function Header() {
           <>
             <span>Signed in as {user.email}</span>
             <Form action="logout" method="post">
-              <button type="submit" className="hover:underline">
+              <button type="submit" className="font-medium hover:underline">
                 Log out
               </button>
             </Form>
           </>
         ) : (
           <>
-            <Link to="register" className="hover:underline">
+            <Link to="register" className="font-medium hover:underline">
               Sign Up
             </Link>
-            <Link to="login" className="hover:underline">
+            <Link to="login" className="font-medium hover:underline">
               Log In
             </Link>
           </>
