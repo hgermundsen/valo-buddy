@@ -3,10 +3,10 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, useLoaderData, useSubmit } from "@remix-run/react";
+import { Fragment } from "react";
 import invariant from "tiny-invariant";
 import validator from "validator";
 
-import Filters from "~/components/filters";
 import { getVods } from "~/models/vod.server";
 import { requireUserId } from "~/session.server";
 import { capitalizeWord } from "~/utils";
@@ -83,26 +83,40 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   }
 
   const url = new URL(request.url);
-  const q = url.searchParams.get("q");
-  // If the user searches for something, then deletes their search, redirect to
-  // a URL without the "q" query param.
-  if (q !== null && q === "") {
-    return redirect("");
+  const q = url.searchParams.get("q") || undefined;
+  const selectedTagIds = [];
+  // url.searchParams.entries() looks like
+  // { ['clu99tnrt0007wu3ohc59as1a', 'on'], ['q', '<search-box-content>'], etc. }
+  for (const searchParamEntry of url.searchParams.entries()) {
+    const [key, value] = searchParamEntry;
+    if (key === "q") {
+      continue;
+    }
+    if (value === "on") {
+      selectedTagIds.push(key);
+    }
   }
-
   const userId = await requireUserId(request);
   const vods = await getVods({
     userId,
     map: mapName,
     agent: agentName,
     query: q,
+    tagIds: selectedTagIds,
   });
+
   return json({ mapName, agentName, vods, q });
 }
 
 export default function Vods() {
   const data = useLoaderData<typeof loader>();
   const submit = useSubmit();
+
+  const tags = data.vods.flatMap((vod) => vod.tags);
+  const uniqueTags = new Set(tags);
+  const sortedAndUniqueTags = Array.from(uniqueTags).sort((a, b) =>
+    a.name.localeCompare(b.name),
+  );
 
   return (
     <main className="flex flex-col grow space-y-16 p-16">
@@ -115,16 +129,30 @@ export default function Vods() {
           }}
           className="flex flex-col space-y-4"
         >
-          <Filters
-            filterNames={[
-              "Tag One",
-              "Tag Two",
-              "Tag Three",
-              "Tag Four",
-              "Tag Five",
-              "Tag Six",
-            ]}
-          />
+          <div className="flex justify-between">
+            <div className="flex space-x-4">
+              {sortedAndUniqueTags.map((tag) => (
+                // TODO: Fix the margin-left issue that seems to be happening
+                // cause of the hidden checkbox, but visible label... possibly?
+                <Fragment key={tag.id}>
+                  <input
+                    type="checkbox"
+                    id={tag.id}
+                    name={tag.id}
+                    style={{ "--peer-name": tag.id }}
+                    className="peer/--peer-name"
+                  />
+                  <label
+                    htmlFor={tag.id}
+                    style={{ "--peer-name": tag.id }}
+                    className={`select-none cursor-pointer px-4 py-2 bg-white/10 rounded-full ring-2 ring-white/40 hover:ring-4 hover:ring-green-200 peer-checked/--peer-name:text-orange-500 transition`}
+                  >
+                    {tag.name}
+                  </label>
+                </Fragment>
+              ))}
+            </div>
+          </div>
 
           <div className="flex space-x-4">
             <input

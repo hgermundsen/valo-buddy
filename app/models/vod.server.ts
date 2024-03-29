@@ -7,14 +7,13 @@ export function getVods({
   map,
   agent,
   query,
+  tagIds,
 }: {
   userId: Vod["userId"];
   map: Vod["map"];
   agent: Vod["agent"];
-  // Can't use ? optional syntax here since this function is designed to accept
-  // a query param string straight from URL.searchParams(), which returns null
-  // if the param doesn't exist.
-  query: string | null;
+  query?: string;
+  tagIds: string[];
 }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const where: any = {
@@ -23,11 +22,21 @@ export function getVods({
     map,
     agent,
   };
+
   if (query) {
     where.OR = [
       { title: { contains: query, mode: "insensitive" } },
       { description: { contains: query, mode: "insensitive" } },
     ];
+  }
+  if (tagIds.length !== 0) {
+    where.tags = {
+      some: {
+        id: {
+          in: tagIds,
+        },
+      },
+    };
   }
 
   return prisma.vod.findMany({
@@ -42,7 +51,7 @@ export function getVods({
       assists: true,
       valoplantLink: true,
       trackerLink: true,
-      tags: true,
+      tags: { select: { id: true, name: true } },
       description: true,
       unlistedYoutubeVideoURL: true,
     },
