@@ -2,6 +2,7 @@ import type { Vod } from "@prisma/client";
 
 import { prisma } from "~/db.server";
 
+// TODO: Modify params to look more like strat.server.ts's getStrats().
 export function getVods({
   userId,
   map,
@@ -29,7 +30,7 @@ export function getVods({
       { description: { contains: query, mode: "insensitive" } },
     ];
   }
-  if (tagIds.length !== 0) {
+  if (tagIds.length > 0) {
     where.tags = {
       some: {
         id: {
