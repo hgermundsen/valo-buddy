@@ -107,7 +107,7 @@ export default function Register() {
                 className="w-full px-2 py-1 rounded text-neutral-200 bg-neutral-700 border-t border-neutral-600 outline-none hover:bg-neutral-600 focus:bg-neutral-600 transition"
               />
               {actionData?.errors?.email ? (
-                <div className="pt-1 text-red-700" id="email-error">
+                <div className="pt-1 text-red-600" id="email-error">
                   {actionData.errors.email}
                 </div>
               ) : null}
@@ -130,7 +130,7 @@ export default function Register() {
                 className="w-full px-2 py-1 rounded text-neutral-200 bg-neutral-700 border-t border-neutral-600 outline-none hover:bg-neutral-600 focus:bg-neutral-600 transition"
               />
               {actionData?.errors?.password ? (
-                <div className="pt-1 text-red-700" id="password-error">
+                <div className="pt-1 text-red-600" id="password-error">
                   {actionData.errors.password}
                 </div>
               ) : null}
