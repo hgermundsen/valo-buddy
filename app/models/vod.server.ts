@@ -42,6 +42,7 @@ export function getVods({
 
   return prisma.vod.findMany({
     select: {
+      id: true,
       title: true,
       date: true,
       rank: true,

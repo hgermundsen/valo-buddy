@@ -32,6 +32,7 @@ export function getStrats(
 
   return prisma.strat.findMany({
     select: {
+      id: true,
       createdAt: true,
       updatedAt: true,
       title: true,

@@ -148,7 +148,7 @@ export default function Vods() {
                     htmlFor={tag.id}
                     className={
                       data.selectedTagIds.includes(tag.id)
-                        ? ""
+                        ? "select-none cursor-pointer px-4 py-2 bg-white/40 rounded-full ring-2 ring-white/40 hover:ring-4 hover:ring-green-200 transition"
                         : "select-none cursor-pointer px-4 py-2 bg-white/10 rounded-full ring-2 ring-white/40 hover:ring-4 hover:ring-green-200 transition"
                     }
                   >
@@ -173,6 +173,7 @@ export default function Vods() {
           </div>
         </Form>
       </section>
+
       <section className="flex flex-col space-y-4 px-16">
         {data.vods.length === 0 ? (
           data.q === null ? (
@@ -189,7 +190,7 @@ export default function Vods() {
         ) : (
           data.vods.map((vod) => (
             <Vod
-              key={vod.title}
+              key={vod.id}
               title={vod.title}
               date={new Date(vod.date)}
               rank={vod.rank}
