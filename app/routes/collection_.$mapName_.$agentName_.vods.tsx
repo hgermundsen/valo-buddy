@@ -119,7 +119,7 @@ export default function Vods() {
   const submit = useSubmit();
 
   return (
-    <main className="flex flex-col grow space-y-16 p-16">
+    <main className="flex flex-col grow space-y-16 px-16 py-8">
       <section className="sticky top-8 w-full p-8 rounded-xl shadow-xl border-solid border-t border-neutral-700 bg-neutral-800">
         <Form
           role="search"
@@ -148,7 +148,7 @@ export default function Vods() {
                     htmlFor={tag.id}
                     className={
                       data.selectedTagIds.includes(tag.id)
-                        ? "select-none cursor-pointer px-4 py-2 bg-white/40 rounded-full ring-2 ring-white/40 hover:ring-4 hover:ring-green-200 transition"
+                        ? ""
                         : "select-none cursor-pointer px-4 py-2 bg-white/10 rounded-full ring-2 ring-white/40 hover:ring-4 hover:ring-green-200 transition"
                     }
                   >
@@ -168,7 +168,7 @@ export default function Vods() {
               defaultValue={data.q as string} // TODO: Address this type casting.
               // eslint-disable-next-line jsx-a11y/no-autofocus
               autoFocus
-              className="w-full bg-white/10 p-4"
+              className="w-full px-4 py-3 rounded-lg placeholder:italic text-neutral-200 bg-neutral-700 border-t border-neutral-600 outline-none hover:bg-neutral-600 focus:bg-neutral-600 focus:shadow-lg transition"
             />
           </div>
         </Form>

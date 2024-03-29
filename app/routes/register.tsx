@@ -104,7 +104,7 @@ export default function Register() {
                 autoComplete="email"
                 aria-invalid={actionData?.errors?.email ? true : undefined}
                 aria-describedby="email-error"
-                className="w-full px-2 py-1 rounded text-neutral-200 bg-neutral-700 border-t border-neutral-600 outline-none hover:bg-neutral-600 focus:bg-neutral-600 transition"
+                className="w-full px-3 py-2 rounded-lg text-neutral-200 bg-neutral-700 border-t border-neutral-600 outline-none hover:bg-neutral-600 focus:bg-neutral-600 focus:shadow-lg transition"
               />
               {actionData?.errors?.email ? (
                 <div className="pt-1 text-red-600" id="email-error">
@@ -127,7 +127,7 @@ export default function Register() {
                 autoComplete="new-password"
                 aria-invalid={actionData?.errors?.password ? true : undefined}
                 aria-describedby="password-error"
-                className="w-full px-2 py-1 rounded text-neutral-200 bg-neutral-700 border-t border-neutral-600 outline-none hover:bg-neutral-600 focus:bg-neutral-600 transition"
+                className="w-full px-3 py-2 rounded-lg text-neutral-200 bg-neutral-700 border-t border-neutral-600 outline-none hover:bg-neutral-600 focus:bg-neutral-600 focus:shadow-lg transition"
               />
               {actionData?.errors?.password ? (
                 <div className="pt-1 text-red-600" id="password-error">
@@ -140,7 +140,7 @@ export default function Register() {
           <input type="hidden" name="redirectTo" value={redirectTo} />
           <button
             type="submit"
-            className="w-full py-2 rounded font-medium text-white bg-valored-500 border-t border-valored-400 outline-none hover:bg-valored-400 focus:bg-valored-400 transition"
+            className="w-full py-2 rounded-lg font-medium text-white bg-valored-500 border-t border-valored-400 outline-none hover:bg-valored-400 focus:bg-valored-400 focus:shadow-lg transition"
           >
             Create account
           </button>
