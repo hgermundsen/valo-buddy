@@ -60,12 +60,12 @@ model Vod {
   assists Int @db.SmallInt
   valoplantLink String
   trackerLink String
-  tags Tag[]
+  tags VodTag[]
   description String
   unlistedYoutubeVideoURL String
 }
 
-model Tag {
+model VodTag {
   id String @id @default(cuid())
 
   name String
