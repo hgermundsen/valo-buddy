@@ -102,7 +102,7 @@ async function seed() {
     },
   });
 
-  await prisma.vod.create({
+  const vod3 = await prisma.vod.create({
     data: {
       userId: user.id,
       map: "ascent",
@@ -125,6 +125,38 @@ async function seed() {
         "Textbook examples of playing an entry fragger, really demonstrated the fundamentals well. Had good comms re. shot calling and early-round IGLing. We played numbers advantage well.",
       unlistedYoutubeVideoURL:
         "https://www.youtube.com/embed/Yg1cviz76dk?si=13sm8KN6udCUsy-9",
+    },
+  });
+
+  await prisma.strat.create({
+    data: {
+      userId: user.id,
+      map: "ascent",
+      agent: "killjoy",
+      title: "Strat 1",
+      tags: {
+        create: [
+          {
+            name: "Passive",
+          },
+          {
+            name: "Woohoojin",
+          },
+        ],
+      },
+      lineupsAndAbilityTricksDefenderSideNotes:
+        "This section doesn't just have to be for lineups. There are some neat places you can throw Reyna's eye, or ways you can toss Phoenix's flash, for instance. Those aren't lineups, but users will want a place to document stuff like that.",
+      earlyRoundAttackerSideNotes:
+        "- Where do high-rank/pro players start when the barriers drop?\n- What do high-rank/pro players do in the first 5-10 seconds of the round?",
+      earlyRoundDefenderSideNotes:
+        "- Where do high-rank/pro players start when the barriers drop?\n- What do high-rank/pro players do in the first 5-10 seconds of the round?",
+      midRoundDefenderSideNotes:
+        "You can add whatever you want here. TODO: Would like to see Markdown support.",
+      lateRoundDefenderSideNotes:
+        "TODO: Would also like to see image/screenshot upload support (potentially a security vulnerability? potentially a legal liability, since now we host content like a social network?).",
+      relatedVods: {
+        connect: { id: vod3.id },
+      },
     },
   });
 

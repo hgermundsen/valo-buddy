@@ -17,6 +17,7 @@ model User {
 
   notes    Note[]
   vods Vod[]
+  strats Strat[]
 }
 
 model Password {
@@ -63,6 +64,7 @@ model Vod {
   tags VodTag[]
   description String
   unlistedYoutubeVideoURL String
+  relatedStrats Strat[]
 }
 
 model VodTag {
@@ -70,6 +72,43 @@ model VodTag {
 
   name String
   vods Vod[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model Strat {
+  id String @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String
+  isPublic Boolean @default(false)
+
+  map String
+  agent String
+  title String
+  tags StratTag[]
+  miscLinks String[]
+  lineupsAndAbilityTricksAttackerSideNotes String?
+  lineupsAndAbilityTricksDefenderSideNotes String?
+  earlyRoundAttackerSideNotes String?
+  earlyRoundDefenderSideNotes String?
+  midRoundAttackerSideNotes String?
+  midRoundDefenderSideNotes String?
+  lateRoundAttackerSideNotes String?
+  lateRoundDefenderSideNotes String?
+  relatedVods Vod[]
+}
+
+model StratTag {
+  id String @id @default(cuid())
+
+  name String
+  strats Strat[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
