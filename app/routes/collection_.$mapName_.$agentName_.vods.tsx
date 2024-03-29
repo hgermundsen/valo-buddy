@@ -120,7 +120,7 @@ export default function Vods() {
 
   return (
     <main className="flex flex-col grow space-y-16 p-16">
-      <section>
+      <section className="sticky top-8 w-full p-8 rounded-xl shadow-xl border-solid border-t border-neutral-700 bg-neutral-800">
         <Form
           role="search"
           onChange={(event) => {
@@ -173,7 +173,7 @@ export default function Vods() {
           </div>
         </Form>
       </section>
-      <section className="flex flex-col space-y-4">
+      <section className="flex flex-col space-y-4 px-16">
         {data.vods.length === 0 ? (
           data.q === null ? (
             <p className="text-neutral-400 italic">
