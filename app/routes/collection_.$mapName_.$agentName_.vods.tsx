@@ -1,7 +1,7 @@
 // TODO: Improve search UX: https://remix.run/docs/en/main/start/tutorial#submitting-forms-onchange
 
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
-import { json, redirect } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import { Form, useLoaderData, useSubmit } from "@remix-run/react";
 import { Fragment } from "react";
 import invariant from "tiny-invariant";
@@ -105,18 +105,18 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     tagIds: selectedTagIds,
   });
 
-  return json({ mapName, agentName, vods, q });
+  return json({ mapName, agentName, vods, q, selectedTagIds });
 }
 
 export default function Vods() {
   const data = useLoaderData<typeof loader>();
-  const submit = useSubmit();
-
   const tags = data.vods.flatMap((vod) => vod.tags);
   const uniqueTags = new Set(tags);
   const sortedAndUniqueTags = Array.from(uniqueTags).sort((a, b) =>
     a.name.localeCompare(b.name),
   );
+
+  const submit = useSubmit();
 
   return (
     <main className="flex flex-col grow space-y-16 p-16">
@@ -130,22 +130,27 @@ export default function Vods() {
           className="flex flex-col space-y-4"
         >
           <div className="flex justify-between">
-            <div className="flex space-x-4">
+            {/* The "relative -left-4" styles are necessary because "space-x-4"
+                gives every child element margin-left: 1rem, except for the
+                first one. In our case, the first element is a hidden checkbox.
+                The first _visible_ element is the label, and it has left margin
+                on it, which we don't want. These two styles offset that. */}
+            <div className="flex space-x-4 relative -left-4">
               {sortedAndUniqueTags.map((tag) => (
-                // TODO: Fix the margin-left issue that seems to be happening
-                // cause of the hidden checkbox, but visible label... possibly?
                 <Fragment key={tag.id}>
                   <input
                     type="checkbox"
                     id={tag.id}
                     name={tag.id}
-                    style={{ "--peer-name": tag.id }}
-                    className="peer/--peer-name"
+                    className="hidden"
                   />
                   <label
                     htmlFor={tag.id}
-                    style={{ "--peer-name": tag.id }}
-                    className={`select-none cursor-pointer px-4 py-2 bg-white/10 rounded-full ring-2 ring-white/40 hover:ring-4 hover:ring-green-200 peer-checked/--peer-name:text-orange-500 transition`}
+                    className={
+                      data.selectedTagIds.includes(tag.id)
+                        ? "select-none cursor-pointer px-4 py-2 bg-white/40 rounded-full ring-2 ring-white/40 hover:ring-4 hover:ring-green-200 transition"
+                        : "select-none cursor-pointer px-4 py-2 bg-white/10 rounded-full ring-2 ring-white/40 hover:ring-4 hover:ring-green-200 transition"
+                    }
                   >
                     {tag.name}
                   </label>
