@@ -11,7 +11,12 @@ async function seed() {
     // no worries if it doesn't exist yet
   });
 
-  const hashedPassword = await bcrypt.hash("skyrimcashcow", 10);
+  const bcryptRoundsEnvVar = parseInt(process.env.BCRYPT_ROUNDS || "");
+  const bcryptRounds = Number.isInteger(bcryptRoundsEnvVar)
+    ? bcryptRoundsEnvVar
+    : 12;
+
+  const hashedPassword = await bcrypt.hash("skyrimcashcow", bcryptRounds);
 
   const user = await prisma.user.create({
     data: {

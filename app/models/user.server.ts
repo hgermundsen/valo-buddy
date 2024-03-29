@@ -14,7 +14,12 @@ export async function getUserByEmail(email: User["email"]) {
 }
 
 export async function createUser(email: User["email"], password: string) {
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const bcryptRoundsEnvVar = parseInt(process.env.BCRYPT_ROUNDS || "");
+  const bcryptRounds = Number.isInteger(bcryptRoundsEnvVar)
+    ? bcryptRoundsEnvVar
+    : 12;
+
+  const hashedPassword = await bcrypt.hash(password, bcryptRounds);
 
   return prisma.user.create({
     data: {
