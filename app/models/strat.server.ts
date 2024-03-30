@@ -1,4 +1,4 @@
-import { Strat } from "@prisma/client";
+import { Strat, User } from "@prisma/client";
 
 import { prisma } from "~/db.server";
 
@@ -48,8 +48,10 @@ export function getStrats(
   });
 }
 
-// Fetches lots of information about a particular strat.
-export function getStratById(id: Strat["id"], userId: Strat["userId"]) {
+export function getStrat({
+  id,
+  userId,
+}: Pick<Strat, "id"> & { userId: User["id"] }) {
   return prisma.strat.findFirst({
     select: {
       id: true,
