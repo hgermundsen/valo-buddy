@@ -1,4 +1,4 @@
-import { Strat, User } from "@prisma/client";
+import { Strat, StratTag, User } from "@prisma/client";
 
 import { prisma } from "~/db.server";
 
@@ -6,13 +6,19 @@ import { prisma } from "~/db.server";
 //
 // Only fetches information about each strat necessary for displaying in a list
 // of them.
-export function getStrats(
-  userId: Strat["userId"],
-  map: Strat["map"],
-  agent: Strat["agent"],
-  tagIds: string[],
-  query?: string,
-) {
+export function getStratListItems({
+  userId,
+  map,
+  agent,
+  query,
+  tagIds,
+}: {
+  userId: User["id"];
+  map: Strat["map"];
+  agent: Strat["agent"];
+  query?: string;
+  tagIds: StratTag["id"][];
+}) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const where: any = {
     userId,

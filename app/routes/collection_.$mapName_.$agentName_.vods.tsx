@@ -7,7 +7,7 @@ import { Fragment } from "react";
 import invariant from "tiny-invariant";
 import validator from "validator";
 
-import { getVods } from "~/models/vod.server";
+import { getVodListItems } from "~/models/vod.server";
 import { requireUserId } from "~/session.server";
 import { capitalizeWord } from "~/utils";
 
@@ -97,7 +97,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     }
   }
   const userId = await requireUserId(request);
-  const vods = await getVods({
+  const vods = await getVodListItems({
     userId,
     map: mapName,
     agent: agentName,

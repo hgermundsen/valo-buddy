@@ -4,7 +4,7 @@ import { Fragment } from "react";
 import invariant from "tiny-invariant";
 import validator from "validator";
 
-import { getStrats } from "~/models/strat.server";
+import { getStratListItems } from "~/models/strat.server";
 import { requireUserId } from "~/session.server";
 import { capitalizeWord } from "~/utils";
 
@@ -96,7 +96,13 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   const userId = await requireUserId(request);
   // TODO: Call a more lightweight function that only returns info about strats
   // that we display on this page.
-  const strats = await getStrats(userId, mapName, agentName, selectedTagIds, q);
+  const strats = await getStratListItems({
+    userId,
+    map: mapName,
+    agent: agentName,
+    query: q,
+    tagIds: selectedTagIds,
+  });
 
   return json({ mapName, agentName, strats, q, selectedTagIds });
 }

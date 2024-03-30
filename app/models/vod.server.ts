@@ -1,19 +1,19 @@
-import type { Vod } from "@prisma/client";
+import type { User, Vod, VodTag } from "@prisma/client";
 
 import { prisma } from "~/db.server";
 
-export function getVods({
+export function getVodListItems({
   userId,
   map,
   agent,
   query,
   tagIds,
 }: {
-  userId: Vod["userId"];
+  userId: User["id"];
   map: Vod["map"];
   agent: Vod["agent"];
   query?: string;
-  tagIds: string[];
+  tagIds: VodTag["id"][];
 }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const where: any = {
