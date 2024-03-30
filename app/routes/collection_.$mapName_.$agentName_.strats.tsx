@@ -94,8 +94,6 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     }
   }
   const userId = await requireUserId(request);
-  // TODO: Call a more lightweight function that only returns info about strats
-  // that we display on this page.
   const strats = await getStratListItems({
     userId,
     map: mapName,
