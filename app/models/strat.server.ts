@@ -44,7 +44,7 @@ export function getStrats(
       images: true,
     },
     where,
-    orderBy: { createdAt: "desc" },
+    orderBy: { updatedAt: "desc" },
   });
 }
 

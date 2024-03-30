@@ -2,7 +2,6 @@ import type { Vod } from "@prisma/client";
 
 import { prisma } from "~/db.server";
 
-// TODO: Modify params to look more like strat.server.ts's getStrats().
 export function getVods({
   userId,
   map,
@@ -58,6 +57,6 @@ export function getVods({
       unlistedYoutubeVideoURL: true,
     },
     where,
-    orderBy: { createdAt: "desc" },
+    orderBy: { updatedAt: "desc" },
   });
 }
