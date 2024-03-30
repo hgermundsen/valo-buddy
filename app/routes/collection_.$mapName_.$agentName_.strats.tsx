@@ -178,7 +178,7 @@ export default function Strats() {
           data.q === null ? (
             <p className="text-neutral-400 italic">
               No strats for {capitalizeWord(data.agentName)} on{" "}
-              {capitalizeWord(data.mapName)}
+              {capitalizeWord(data.mapName)}.
             </p>
           ) : (
             <p className="text-neutral-400 italic">

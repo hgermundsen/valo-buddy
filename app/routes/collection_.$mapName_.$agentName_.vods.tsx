@@ -179,7 +179,7 @@ export default function Vods() {
           data.q === null ? (
             <p className="text-neutral-400 italic">
               No VODs for {capitalizeWord(data.agentName)} on{" "}
-              {capitalizeWord(data.mapName)}
+              {capitalizeWord(data.mapName)}.
             </p>
           ) : (
             <p className="text-neutral-400 italic">
