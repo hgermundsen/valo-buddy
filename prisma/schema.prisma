@@ -9,11 +9,11 @@ generator client {
 
 model User {
   id    String @id @default(cuid())
-  email String @unique
-  password Password?
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  email String @unique
+  password Password?
 
   notes    Note[]
   vods Vod[]
@@ -69,13 +69,12 @@ model Vod {
 
 model VodTag {
   id String @id @default(cuid())
-
-  name String
-  vods Vod[]
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
+
+  name String
+  vods Vod[]
 }
 
 model Strat {
@@ -106,11 +105,10 @@ model Strat {
 
 model StratTag {
   id String @id @default(cuid())
-
-  name String
-  strats Strat[]
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
+
+  name String
+  strats Strat[]
 }
