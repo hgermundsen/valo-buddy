@@ -1,5 +1,5 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
-import { Form, json, useLoaderData, useSubmit } from "@remix-run/react";
+import { Form, Link, json, useLoaderData, useSubmit } from "@remix-run/react";
 import { Fragment } from "react";
 import invariant from "tiny-invariant";
 import validator from "validator";
@@ -184,6 +184,7 @@ export default function Strats() {
           data.strats.map((strat) => (
             <Strat
               key={strat.id}
+              id={strat.id}
               title={strat.title}
               createdAt={new Date(strat.createdAt)}
               updatedAt={new Date(strat.updatedAt)}
@@ -197,19 +198,22 @@ export default function Strats() {
 }
 
 interface StratProps {
+  id: string;
   title: string;
   createdAt: Date;
   updatedAt: Date;
   tags: string[];
 }
-function Strat({ title, createdAt, updatedAt, tags }: StratProps) {
+function Strat({ id, title, createdAt, updatedAt, tags }: StratProps) {
   const sortedTags = tags.sort();
 
   return (
     <div className="flex flex-col space-y-2">
       <div className="flex justify-between">
         <div className="flex flex-col">
-          <h1 className="text-2xl font-bold">{title}</h1>
+          <Link to={id} className="hover:underline">
+            <h1 className="text-2xl font-bold">{title}</h1>
+          </Link>
           <div className="flex space-x-4">
             <span className="text-neutral-400">
               Created on {createdAt.toDateString()}, last updated on{" "}
