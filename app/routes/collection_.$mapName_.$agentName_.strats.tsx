@@ -195,6 +195,7 @@ export default function Strats() {
               createdAt={new Date(strat.createdAt)}
               updatedAt={new Date(strat.updatedAt)}
               tags={strat.tags.map((tag) => tag.name)}
+              imageURLs={strat.images.map((image) => image.imageURL)}
             />
           ))
         )}
@@ -209,30 +210,45 @@ interface StratProps {
   createdAt: Date;
   updatedAt: Date;
   tags: string[];
+  imageURLs: string[];
 }
-function Strat({ id, title, createdAt, updatedAt, tags }: StratProps) {
+function Strat({
+  id,
+  title,
+  createdAt,
+  updatedAt,
+  tags,
+  imageURLs,
+}: StratProps) {
   const sortedTags = tags.sort();
 
   return (
-    <div className="flex flex-col space-y-2">
-      <div className="flex justify-between">
-        <div className="flex flex-col">
-          <Link to={id} className="hover:underline">
-            <h1 className="text-2xl font-bold">{title}</h1>
-          </Link>
-          <div className="flex space-x-4">
-            <span className="text-neutral-400">
-              Created on {createdAt.toDateString()}, last updated on{" "}
-              {updatedAt.toDateString()}
-            </span>
+    <div className="flex space-x-4">
+      <div className="flex justify-center items-center bg-white/10 w-48 h-48 text-white/40 italic">
+        {/* TODO: Display all of them in some kind of grid. Will have to figure out
+        how to dynamically style this depending on the length of the list. */}
+        <img src={imageURLs[0]} alt="TODO: Make better" />
+      </div>
+      <div className="w-full flex flex-col space-y-2">
+        <div className="flex justify-between">
+          <div className="flex flex-col">
+            <Link to={id} className="hover:underline">
+              <h1 className="text-2xl font-bold">{title}</h1>
+            </Link>
+            <div className="flex space-x-4">
+              <span className="text-neutral-400">
+                Created on {createdAt.toDateString()}, last updated on{" "}
+                {updatedAt.toDateString()}
+              </span>
+            </div>
           </div>
-        </div>
-        <div className="flex-none space-x-2">
-          {sortedTags.map((tag) => (
-            <span key={tag} className="px-4 py-2 rounded-full bg-white/10">
-              {tag}
-            </span>
-          ))}
+          <div className="flex-none space-x-2">
+            {sortedTags.map((tag) => (
+              <span key={tag} className="px-4 py-2 rounded-full bg-white/10">
+                {tag}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </div>
