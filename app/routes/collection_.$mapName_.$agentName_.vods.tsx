@@ -264,8 +264,8 @@ function Vod({
       <div className="w-full flex flex-col space-y-2">
         <div className="flex justify-between">
           <div className="flex flex-col">
-            <h1 className="text-2xl font-bold">{title}</h1>
-            <div className="flex space-x-4">
+            <h1 className="font-['Space_Mono'] text-2xl">{title}</h1>
+            <div className="flex space-x-4 font-['Space_Mono']">
               <span className="text-white/40">{date.toDateString()}</span>
               <span className="text-white/40">{rank}</span>
               <span className="text-white/40">
@@ -279,7 +279,7 @@ function Vod({
               target="_blank"
               rel="noreferrer"
               href={valoplantLink}
-              className="w-max text-blue-500 hover:underline visited:text-purple-500"
+              className="w-max font-['Space_Mono'] text-blue-500 hover:underline visited:text-purple-500"
             >
               {valoplantLink}
             </a>
@@ -287,7 +287,7 @@ function Vod({
               target="_blank"
               rel="noreferrer"
               href={trackerLink}
-              className="w-max text-blue-500 hover:underline visited:text-purple-500"
+              className="w-max font-['Space_Mono'] text-blue-500 hover:underline visited:text-purple-500"
             >
               {trackerLink}
             </a>

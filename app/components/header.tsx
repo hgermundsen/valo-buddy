@@ -10,7 +10,7 @@ export default function Header() {
       {/* Redirect to /login since if the user is logged in, the login page will
           redirect them to /collection */}
       <Link to="/login">
-        <h1 className="font-bold hover:text-valored-500 transition">
+        <h1 className="font-['Space_Mono'] scale-y-110 hover:text-valored-500 transition">
           ValoBuddy
         </h1>
       </Link>

@@ -230,9 +230,9 @@ function Strat({
       </div>
       <div className="w-full flex flex-col space-y-2">
         <div className="flex justify-between">
-          <div className="flex flex-col">
+          <div className="flex flex-col font-['Space_Mono']">
             <Link to={id} className="hover:underline">
-              <h1 className="text-2xl font-bold">{title}</h1>
+              <h1 className="text-2xl">{title}</h1>
             </Link>
             <div className="flex space-x-4">
               <span className="text-neutral-400">

@@ -100,7 +100,7 @@ export default function StratDetailsPage() {
 
   return (
     <main className="flex flex-col grow px-16 py-8 space-y-8">
-      <nav className="flex space-x-2 text-neutral-400">
+      <nav className="flex space-x-2 text-neutral-400 text-sm font-['Space_Mono'] scale-y-110 uppercase">
         <Link
           to="/collection"
           className="text-blue-500 hover:underline visited:text-purple-500"
@@ -112,14 +112,14 @@ export default function StratDetailsPage() {
           to={`/collection/${data.mapName}`}
           className="text-blue-500 hover:underline visited:text-purple-500"
         >
-          {capitalizeWord(data.mapName)}
+          {data.mapName}
         </Link>
         <span>&gt;</span>
         <Link
           to={`/collection/${data.mapName}/${data.agentName}`}
           className="text-blue-500 hover:underline visited:text-purple-500"
         >
-          {capitalizeWord(data.agentName)}
+          {data.agentName}
         </Link>
         <span>&gt;</span>
         <Link
@@ -149,7 +149,7 @@ export default function StratDetailsPage() {
       </header>
 
       <section>
-        <h2 className="text-4xl font-medium font-['Impact'] uppercase">
+        <h2 className="text-3xl font-['Space_Mono'] scale-y-125 uppercase">
           Links
         </h2>
         {data.strat.miscLinks.length === 0 ? (
@@ -165,19 +165,19 @@ export default function StratDetailsPage() {
         )}
       </section>
 
-      <section>
-        <h2 className="text-4xl font-medium font-['Impact'] uppercase">
+      <section className="flex flex-col space-y-2">
+        <h2 className="text-3xl font-['Space_Mono'] scale-y-125 uppercase">
           Lineups and Agent Tricks
         </h2>
         <div className="grid grid-cols-2 gap-6">
-          <div>
-            <h3 className="text-2xl font-medium font-['Impact'] uppercase">
+          <div className="flex flex-col space-y-2">
+            <h3 className="text-xl text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
               Attacker Side
             </h3>
             <p>{data.strat.lineupsAndAbilityTricksAttackerSideNotes}</p>
           </div>
-          <div>
-            <h3 className="text-2xl font-medium font-['Impact'] uppercase">
+          <div className="flex flex-col space-y-2">
+            <h3 className="text-xl text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
               Defender Side
             </h3>
             <p>{data.strat.lineupsAndAbilityTricksDefenderSideNotes}</p>
@@ -185,19 +185,19 @@ export default function StratDetailsPage() {
         </div>
       </section>
 
-      <section>
-        <h2 className="text-4xl font-medium font-['Impact'] uppercase">
+      <section className="flex flex-col space-y-2">
+        <h2 className="text-3xl font-['Space_Mono'] scale-y-125 uppercase">
           Early Round
         </h2>
         <div className="grid grid-cols-2 gap-6">
-          <div>
-            <h3 className="text-2xl font-medium font-['Impact'] uppercase">
+          <div className="flex flex-col space-y-2">
+            <h3 className="text-xl text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
               Attacker Side
             </h3>
             <p>{data.strat.earlyRoundAttackerSideNotes}</p>
           </div>
-          <div>
-            <h3 className="text-2xl font-medium font-['Impact'] uppercase">
+          <div className="flex flex-col space-y-2">
+            <h3 className="text-xl text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
               Defender Side
             </h3>
             <p>{data.strat.earlyRoundDefenderSideNotes}</p>
@@ -205,19 +205,19 @@ export default function StratDetailsPage() {
         </div>
       </section>
 
-      <section>
-        <h2 className="text-4xl font-medium font-['Impact'] uppercase">
+      <section className="flex flex-col space-y-2">
+        <h2 className="text-3xl font-['Space_Mono'] scale-y-125 uppercase">
           Mid Round
         </h2>
         <div className="grid grid-cols-2 gap-6">
-          <div>
-            <h3 className="text-2xl font-medium font-['Impact'] uppercase">
+          <div className="flex flex-col space-y-2">
+            <h3 className="text-xl text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
               Attacker Side
             </h3>
             <p>{data.strat.midRoundAttackerSideNotes}</p>
           </div>
-          <div>
-            <h3 className="text-2xl font-medium font-['Impact'] uppercase">
+          <div className="flex flex-col space-y-2">
+            <h3 className="text-xl text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
               Defender Side
             </h3>
             <p>{data.strat.midRoundDefenderSideNotes}</p>
@@ -225,19 +225,19 @@ export default function StratDetailsPage() {
         </div>
       </section>
 
-      <section>
-        <h2 className="text-4xl font-medium font-['Impact'] uppercase">
+      <section className="flex flex-col space-y-2">
+        <h2 className="text-3xl font-['Space_Mono'] scale-y-125 uppercase">
           Late Round
         </h2>
         <div className="grid grid-cols-2 gap-6">
-          <div>
-            <h3 className="text-2xl font-medium font-['Impact'] uppercase">
+          <div className="flex flex-col space-y-2">
+            <h3 className="text-xl text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
               Attacker Side
             </h3>
             <p>{data.strat.lateRoundAttackerSideNotes}</p>
           </div>
-          <div>
-            <h3 className="text-2xl font-medium font-['Impact'] uppercase">
+          <div className="flex flex-col space-y-2">
+            <h3 className="text-xl text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
               Defender Side
             </h3>
             <p>{data.strat.lateRoundDefenderSideNotes}</p>
@@ -245,8 +245,8 @@ export default function StratDetailsPage() {
         </div>
       </section>
 
-      <section>
-        <h2 className="text-4xl font-medium font-['Impact'] uppercase">
+      <section className="flex flex-col space-y-2">
+        <h2 className="text-3xl font-['Space_Mono'] scale-y-125 uppercase">
           Miscellaneous
         </h2>
         <p>{data.strat.miscNotes}</p>
