@@ -2,6 +2,10 @@ import { Strat } from "@prisma/client";
 
 import { prisma } from "~/db.server";
 
+// Only supports querying by title.
+//
+// Only fetches information about each strat necessary for displaying in a list
+// of them.
 export function getStrats(
   userId: Strat["userId"],
   map: Strat["map"],
@@ -37,6 +41,22 @@ export function getStrats(
       updatedAt: true,
       title: true,
       tags: { select: { id: true, name: true } },
+      images: true,
+    },
+    where,
+    orderBy: { createdAt: "desc" },
+  });
+}
+
+// Fetches lots of information about a particular strat.
+export function getStratById(id: Strat["id"], userId: Strat["userId"]) {
+  return prisma.strat.findFirst({
+    select: {
+      id: true,
+      createdAt: true,
+      updatedAt: true,
+      title: true,
+      tags: { select: { id: true, name: true } },
       miscLinks: true,
       lineupsAndAbilityTricksAttackerSideNotes: true,
       lineupsAndAbilityTricksDefenderSideNotes: true,
@@ -48,8 +68,14 @@ export function getStrats(
       lateRoundDefenderSideNotes: true,
       miscNotes: true,
       relatedVods: { select: { id: true, title: true } },
+      images: true,
     },
-    where,
-    orderBy: { createdAt: "desc" },
+    where: {
+      id,
+      // Without this check, we have an IDOR. With this check, if a match
+      // doesn't exist, then we return "no results", which is exactly the type
+      // of obscure response we want to send back to the client.
+      userId,
+    },
   });
 }
