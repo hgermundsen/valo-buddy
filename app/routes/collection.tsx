@@ -12,7 +12,7 @@ import pearl from "../images/maps/pearl.webp";
 import split from "../images/maps/split.webp";
 import sunset from "../images/maps/sunset.webp";
 
-export const meta: MetaFunction = () => [{ title: "Valo Buddy - Collection" }];
+export const meta: MetaFunction = () => [{ title: "ValoBuddy - Collection" }];
 
 interface Map {
   name: string;

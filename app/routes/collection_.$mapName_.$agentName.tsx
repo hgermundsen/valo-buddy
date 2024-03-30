@@ -8,7 +8,7 @@ export const meta: MetaFunction = ({ params }) => {
   const agentName = capitalizeWord(params.agentName!);
   return [
     {
-      title: `Valo Buddy - ${mapName}/${agentName}`,
+      title: `ValoBuddy - ${mapName}/${agentName}`,
     },
   ];
 };

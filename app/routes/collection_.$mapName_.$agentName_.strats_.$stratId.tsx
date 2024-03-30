@@ -14,7 +14,7 @@ export const meta: MetaFunction = ({ params }) => {
     {
       // TODO: Is this a helpful title? You're showing IDs, that's not very
       // human-readable...
-      title: `Valo Buddy - ${mapName}/${agentName}/strats/${params.stratId!}`,
+      title: `ValoBuddy - ${mapName}/${agentName}/strats/${params.stratId!}`,
     },
   ];
 };

@@ -31,7 +31,7 @@ import yoru from "../images/agents/yoru.webp";
 
 export const meta: MetaFunction = ({ params }) => {
   const mapName = capitalizeWord(params.mapName!);
-  return [{ title: `Valo Buddy - ${mapName}` }];
+  return [{ title: `ValoBuddy - ${mapName}` }];
 };
 
 interface Agent {
