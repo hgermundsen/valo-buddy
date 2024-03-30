@@ -135,8 +135,27 @@ export default function StratDetailsPage() {
           <h1 className="text-6xl font-medium font-['Impact'] uppercase">
             {data.strat.title}
           </h1>
-          <button className="h-min px-4 py-2 rounded-lg font-medium text-white bg-valored-500 border-t border-valored-400 outline-none hover:bg-valored-400 focus:bg-valored-400 focus:shadow-lg transition">
-            Edit
+          <button className="h-min flex space-x-2 px-5 py-3 font-['Space_Mono'] text-white bg-gradient-to-r from-valored-500 to-red-600 from-50% to-50% bg-left-bottom bg-[length:200%_100%] outline-none hover:bg-right-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out">
+            {/* btw this came from https://flowbite.com/icons/ */}
+            {/* TODO: Consider moving this into some kind of shared component.
+            /components/icons folder, maybe? */}
+            <svg
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="butt"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
+              />
+            </svg>
+            <span>Edit</span>
           </button>
         </div>
         <div className="space-x-2">
