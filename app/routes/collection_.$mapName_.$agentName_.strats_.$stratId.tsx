@@ -150,6 +150,23 @@ export default function StratDetailsPage() {
 
       <section>
         <h2 className="text-4xl font-medium font-['Impact'] uppercase">
+          Links
+        </h2>
+        {data.strat.miscLinks.length === 0 ? (
+          <p className="text-neutral-400 italic">No content.</p>
+        ) : (
+          <ul>
+            <div className="grid gap-6 grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+              {data.strat.miscLinks.map((link) => (
+                <li key={link}>{link}</li>
+              ))}
+            </div>
+          </ul>
+        )}
+      </section>
+
+      <section>
+        <h2 className="text-4xl font-medium font-['Impact'] uppercase">
           Lineups and Agent Tricks
         </h2>
         <div className="grid grid-cols-2 gap-6">
