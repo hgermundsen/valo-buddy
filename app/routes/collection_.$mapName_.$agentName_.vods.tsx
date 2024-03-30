@@ -61,6 +61,8 @@ const agentNames = [
 ];
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
+  const userId = await requireUserId(request);
+
   // TODO: From a security perspective, is this enough?
   //
   // Should we also be sanitizing the input by removing or escaping dangerous
@@ -96,7 +98,6 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
       selectedTagIds.push(key);
     }
   }
-  const userId = await requireUserId(request);
   const vods = await getVodListItems({
     userId,
     map: mapName,
