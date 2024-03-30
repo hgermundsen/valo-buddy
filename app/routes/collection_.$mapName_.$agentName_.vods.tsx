@@ -124,7 +124,7 @@ export default function Vods() {
         <Form
           role="search"
           onChange={(event) => {
-            const isFirstSearch = data.q === null;
+            const isFirstSearch = data.q === undefined;
             submit(event.currentTarget, { replace: !isFirstSearch });
           }}
           className="flex flex-col space-y-4"
@@ -176,7 +176,7 @@ export default function Vods() {
 
       <section className="flex flex-col space-y-4 px-16">
         {data.vods.length === 0 ? (
-          data.q === null ? (
+          data.q === undefined ? (
             <p className="text-neutral-400 italic">
               No VODs for {capitalizeWord(data.agentName)} on{" "}
               {capitalizeWord(data.mapName)}.
