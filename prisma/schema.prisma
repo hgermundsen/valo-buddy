@@ -8,15 +8,15 @@ generator client {
 }
 
 model User {
-  id    String @id @default(cuid())
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  email String @unique
+  email    String    @unique
   password Password?
 
-  notes    Note[]
-  vods Vod[]
+  notes  Note[]
+  vods   Vod[]
   strats Strat[]
 }
 
@@ -40,37 +40,37 @@ model Note {
 }
 
 model Vod {
-  id String @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String    @id @default(cuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId String
+  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId   String
   isPublic Boolean @default(false)
 
-  map String
-  agent String
-  title String
-  date DateTime
-  rank String
-  roundsWon Int @db.SmallInt
-  roundsLost Int @db.SmallInt
-  kills Int @db.SmallInt
-  deaths Int @db.SmallInt
-  assists Int @db.SmallInt
-  valoplantLink String
-  trackerLink String
-  tags VodTag[]
-  description String
+  map                     String
+  agent                   String
+  title                   String
+  date                    DateTime
+  rank                    String
+  roundsWon               Int      @db.SmallInt
+  roundsLost              Int      @db.SmallInt
+  kills                   Int      @db.SmallInt
+  deaths                  Int      @db.SmallInt
+  assists                 Int      @db.SmallInt
+  valoplantLink           String
+  trackerLink             String
+  tags                    VodTag[]
+  description             String
   unlistedYoutubeVideoURL String
-  relatedStrats Strat[]
+  relatedStrats           Strat[]
 }
 
 model VodTag {
-  id String @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String    @id @default(cuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
   name String
@@ -78,40 +78,40 @@ model VodTag {
 }
 
 model Strat {
-  id String @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String    @id @default(cuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId String
+  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId   String
   isPublic Boolean @default(false)
 
-  map String
-  agent String
-  title String
-  tags StratTag[]
-  miscLinks String[]
+  map                                      String
+  agent                                    String
+  title                                    String
+  tags                                     StratTag[]
+  miscLinks                                String[]
   lineupsAndAbilityTricksAttackerSideNotes String?
   lineupsAndAbilityTricksDefenderSideNotes String?
-  earlyRoundAttackerSideNotes String?
-  earlyRoundDefenderSideNotes String?
-  midRoundAttackerSideNotes String?
-  midRoundDefenderSideNotes String?
-  lateRoundAttackerSideNotes String?
-  lateRoundDefenderSideNotes String?
-  miscNotes String?
-  relatedVods Vod[]
-  images StratImage[]
+  earlyRoundAttackerSideNotes              String?
+  earlyRoundDefenderSideNotes              String?
+  midRoundAttackerSideNotes                String?
+  midRoundDefenderSideNotes                String?
+  lateRoundAttackerSideNotes               String?
+  lateRoundDefenderSideNotes               String?
+  miscNotes                                String?
+  relatedVods                              Vod[]
+  images                                   StratImage[]
 }
 
 model StratTag {
-  id String @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String    @id @default(cuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
-  name String
+  name   String
   strats Strat[]
 }
 
@@ -128,14 +128,14 @@ enum StratSection {
 }
 
 model StratImage {
-  id String @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String    @id @default(cuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
-  associatedStrat Strat @relation(fields: [stratId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  stratId String
+  associatedStrat Strat  @relation(fields: [stratId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  stratId         String
 
-  imageURL String
+  imageURL     String
   stratSection StratSection @default(MISC)
 }
