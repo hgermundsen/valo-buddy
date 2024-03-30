@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, StratSection } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
@@ -119,7 +119,7 @@ async function seed() {
       trackerLink:
         "https://tracker.gg/valorant/match/aff15759-5c28-4ade-8f7b-93ec72d4b066",
       tags: {
-        create: [{ name: "Tag Two" }],
+        create: { name: "Tag Two" },
       },
       description:
         "Textbook examples of playing an entry fragger, really demonstrated the fundamentals well. Had good comms re. shot calling and early-round IGLing. We played numbers advantage well.",
@@ -154,8 +154,16 @@ async function seed() {
         "You can add whatever you want here. TODO: Would like to see Markdown support.",
       lateRoundDefenderSideNotes:
         "TODO: Would also like to see image/screenshot upload support (potentially a security vulnerability? potentially a legal liability, since now we host content like a social network?).",
+      miscNotes:
+        "A place at the bottom of the page for whatever the user wants. They can summarize key points to remember, add additional info, whatever.",
       relatedVods: {
         connect: { id: vod3.id },
+      },
+      images: {
+        create: {
+          imageURL: "https://imgur.com/sSOFMDa",
+          stratSection: StratSection.LINEUPS_AND_ABILITY_TRICKS_ATTACKER_SIDE,
+        },
       },
     },
   });
