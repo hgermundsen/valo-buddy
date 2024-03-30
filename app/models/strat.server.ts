@@ -46,6 +46,7 @@ export function getStrats(
       midRoundDefenderSideNotes: true,
       lateRoundAttackerSideNotes: true,
       lateRoundDefenderSideNotes: true,
+      miscNotes: true,
       relatedVods: { select: { id: true, title: true } },
     },
     where,
