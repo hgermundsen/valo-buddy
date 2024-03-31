@@ -213,6 +213,9 @@ export default function StratDetailsPage() {
         <h2 className="text-3xl font-['Space_Mono'] scale-y-125 uppercase">
           Miscellaneous
         </h2>
+        {/* TODO: Either create a OneColumnSection component, or add logic to
+        display "No content" if this is empty. Or consider not even rendering
+        this component if there's nothing here... */}
         <p>{data.strat.miscNotes}</p>
       </section>
     </main>
