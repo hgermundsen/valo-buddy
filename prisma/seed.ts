@@ -151,7 +151,7 @@ async function seed() {
       earlyRoundDefenderSideNotes:
         "- Where do high-rank/pro players start when the barriers drop?\n- What do high-rank/pro players do in the first 5-10 seconds of the round?",
       midRoundDefenderSideNotes:
-        "You can add whatever you want here. TODO: Would like to see Markdown support.",
+        "You can add whatever you want here. Markdown is supported!",
       lateRoundDefenderSideNotes:
         "TODO: Would also like to see image/screenshot upload support (potentially a security vulnerability? potentially a legal liability, since now we host content like a social network?).",
       miscNotes:
