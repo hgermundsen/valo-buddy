@@ -1,11 +1,15 @@
 import { LoaderFunctionArgs, MetaFunction, json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
+import React, { Suspense } from "react";
 import invariant from "tiny-invariant";
 import validator from "validator";
 
 import { getStrat } from "~/models/strat.server";
 import { requireUserId } from "~/session.server";
 import { capitalizeWord } from "~/utils";
+
+// https://stackoverflow.com/a/75527318
+const Markdown = React.lazy(() => import("react-markdown"));
 
 export const meta: MetaFunction = ({ params }) => {
   const mapName = capitalizeWord(params.mapName!);
@@ -193,7 +197,12 @@ export default function StratDetailsPage() {
             <h3 className="text-xl text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
               Attacker Side
             </h3>
-            <p>{data.strat.lineupsAndAbilityTricksAttackerSideNotes}</p>
+            <Suspense>
+              {/* https://stackoverflow.com/a/74607475 */}
+              <Markdown className="markdown pl-4">
+                {data.strat.lineupsAndAbilityTricksAttackerSideNotes}
+              </Markdown>
+            </Suspense>
           </div>
           <div className="flex flex-col space-y-2">
             <h3 className="text-xl text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
