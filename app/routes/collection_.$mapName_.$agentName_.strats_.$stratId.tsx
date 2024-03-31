@@ -188,90 +188,26 @@ export default function StratDetailsPage() {
         )}
       </section>
 
-      <section className="flex flex-col space-y-2">
-        <h2 className="text-3xl font-['Space_Mono'] scale-y-125 uppercase">
-          Lineups and Agent Tricks
-        </h2>
-        <div className="grid grid-cols-2 gap-6">
-          <div className="flex flex-col space-y-2">
-            <h3 className="text-xl text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
-              Attacker Side
-            </h3>
-            <Suspense>
-              {/* https://stackoverflow.com/a/74607475 */}
-              <Markdown className="markdown pl-4">
-                {data.strat.lineupsAndAbilityTricksAttackerSideNotes}
-              </Markdown>
-            </Suspense>
-          </div>
-          <div className="flex flex-col space-y-2">
-            <h3 className="text-xl text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
-              Defender Side
-            </h3>
-            <p>{data.strat.lineupsAndAbilityTricksDefenderSideNotes}</p>
-          </div>
-        </div>
-      </section>
-
-      <section className="flex flex-col space-y-2">
-        <h2 className="text-3xl font-['Space_Mono'] scale-y-125 uppercase">
-          Early Round
-        </h2>
-        <div className="grid grid-cols-2 gap-6">
-          <div className="flex flex-col space-y-2">
-            <h3 className="text-xl text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
-              Attacker Side
-            </h3>
-            <p>{data.strat.earlyRoundAttackerSideNotes}</p>
-          </div>
-          <div className="flex flex-col space-y-2">
-            <h3 className="text-xl text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
-              Defender Side
-            </h3>
-            <p>{data.strat.earlyRoundDefenderSideNotes}</p>
-          </div>
-        </div>
-      </section>
-
-      <section className="flex flex-col space-y-2">
-        <h2 className="text-3xl font-['Space_Mono'] scale-y-125 uppercase">
-          Mid Round
-        </h2>
-        <div className="grid grid-cols-2 gap-6">
-          <div className="flex flex-col space-y-2">
-            <h3 className="text-xl text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
-              Attacker Side
-            </h3>
-            <p>{data.strat.midRoundAttackerSideNotes}</p>
-          </div>
-          <div className="flex flex-col space-y-2">
-            <h3 className="text-xl text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
-              Defender Side
-            </h3>
-            <p>{data.strat.midRoundDefenderSideNotes}</p>
-          </div>
-        </div>
-      </section>
-
-      <section className="flex flex-col space-y-2">
-        <h2 className="text-3xl font-['Space_Mono'] scale-y-125 uppercase">
-          Late Round
-        </h2>
-        <div className="grid grid-cols-2 gap-6">
-          <div className="flex flex-col space-y-2">
-            <h3 className="text-xl text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
-              Attacker Side
-            </h3>
-            <p>{data.strat.lateRoundAttackerSideNotes}</p>
-          </div>
-          <div className="flex flex-col space-y-2">
-            <h3 className="text-xl text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
-              Defender Side
-            </h3>
-            <p>{data.strat.lateRoundDefenderSideNotes}</p>
-          </div>
-        </div>
-      </section>
+      <TwoColumnSection
+        title="Lineups and Agent Tricks"
+        attackSideNotes={data.strat.lineupsAndAbilityTricksAttackerSideNotes}
+        defenderSideNotes={data.strat.lineupsAndAbilityTricksDefenderSideNotes}
+      />
+      <TwoColumnSection
+        title="Early Round"
+        attackSideNotes={data.strat.earlyRoundAttackerSideNotes}
+        defenderSideNotes={data.strat.earlyRoundDefenderSideNotes}
+      />
+      <TwoColumnSection
+        title="Mid Round"
+        attackSideNotes={data.strat.midRoundAttackerSideNotes}
+        defenderSideNotes={data.strat.midRoundDefenderSideNotes}
+      />
+      <TwoColumnSection
+        title="Late Round"
+        attackSideNotes={data.strat.lateRoundAttackerSideNotes}
+        defenderSideNotes={data.strat.lateRoundDefenderSideNotes}
+      />
 
       <section className="flex flex-col space-y-2">
         <h2 className="text-3xl font-['Space_Mono'] scale-y-125 uppercase">
@@ -280,5 +216,56 @@ export default function StratDetailsPage() {
         <p>{data.strat.miscNotes}</p>
       </section>
     </main>
+  );
+}
+
+interface TwoColumnSectionProps {
+  title: string;
+  attackSideNotes: string | null;
+  defenderSideNotes: string | null;
+}
+function TwoColumnSection({
+  title,
+  attackSideNotes,
+  defenderSideNotes,
+}: TwoColumnSectionProps) {
+  return (
+    <section className="flex flex-col space-y-2">
+      <h2 className="text-3xl font-['Space_Mono'] scale-y-125 uppercase">
+        {title}
+      </h2>
+      <div className="grid grid-cols-2 gap-6">
+        <div className="flex flex-col space-y-2">
+          <h3 className="text-xl text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
+            Attacker Side
+          </h3>
+          <div className="pl-4">
+            {attackSideNotes && attackSideNotes.length > 0 ? (
+              <Suspense>
+                {/* https://stackoverflow.com/a/74607475 */}
+                <Markdown className="markdown">{attackSideNotes}</Markdown>
+              </Suspense>
+            ) : (
+              <p className="text-neutral-400 italic">No content.</p>
+            )}
+          </div>
+        </div>
+        <div className="flex flex-col space-y-2">
+          <h3 className="text-xl text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
+            Defender Side
+          </h3>
+          <div className="pl-4">
+            {defenderSideNotes && defenderSideNotes.length > 0 ? (
+              <Suspense>
+                {/* https://stackoverflow.com/a/74607475 */}
+                <Markdown className="markdown">{defenderSideNotes}</Markdown>
+              </Suspense>
+            ) : (
+              <p className="text-neutral-400 italic">No content.</p>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
