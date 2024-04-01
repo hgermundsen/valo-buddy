@@ -246,7 +246,18 @@ function TwoColumnSection({
             {attackSideNotes && attackSideNotes.length > 0 ? (
               <Suspense>
                 {/* https://stackoverflow.com/a/74607475 */}
-                <Markdown className="markdown">{attackSideNotes}</Markdown>
+                <Markdown
+                  className="markdown"
+                  components={{
+                    h1: "h2",
+                    h2: "h3",
+                    h3: "h4",
+                    h4: "h5",
+                    h5: "h6",
+                  }}
+                >
+                  {attackSideNotes}
+                </Markdown>
               </Suspense>
             ) : (
               <p className="text-neutral-400 italic">No content.</p>
@@ -261,7 +272,18 @@ function TwoColumnSection({
             {defenderSideNotes && defenderSideNotes.length > 0 ? (
               <Suspense>
                 {/* https://stackoverflow.com/a/74607475 */}
-                <Markdown className="markdown">{defenderSideNotes}</Markdown>
+                <Markdown
+                  className="markdown"
+                  components={{
+                    h1: "h2",
+                    h2: "h3",
+                    h3: "h4",
+                    h4: "h5",
+                    h5: "h6",
+                  }}
+                >
+                  {defenderSideNotes}
+                </Markdown>
               </Suspense>
             ) : (
               <p className="text-neutral-400 italic">No content.</p>
