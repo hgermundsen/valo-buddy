@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <div className="p-4 bg-neutral-950 text-neutral-400">
+    <div className="p-4 bg-neutral-900 text-neutral-400">
       <p className="text-sm">2024 © The Cracked Software Company, LLC</p>
       <p className="text-xs">
         ValoBuddy isn&apos;t endorsed by Riot Games and doesn&apos;t reflect the

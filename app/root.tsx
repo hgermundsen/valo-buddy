@@ -47,7 +47,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="flex flex-col h-full bg-neutral-900 text-neutral-200">
+      <body className="flex flex-col h-full bg-neutral-800 text-neutral-200">
         <Header />
         <Outlet />
         <Footer />
