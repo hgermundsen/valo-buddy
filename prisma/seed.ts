@@ -161,7 +161,7 @@ async function seed() {
       },
       images: {
         create: {
-          imageURL: "https://imgur.com/sSOFMDa",
+          imageURL: "https://imgur.com/sSOFMDa.png",
           stratSection: StratSection.LINEUPS_AND_ABILITY_TRICKS_ATTACKER_SIDE,
         },
       },

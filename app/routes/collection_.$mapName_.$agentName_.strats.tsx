@@ -226,7 +226,12 @@ function Strat({
       <div className="flex justify-center items-center bg-white/10 w-48 h-48 text-white/40 italic">
         {/* TODO: Display all of them in some kind of grid. Will have to figure out
         how to dynamically style this depending on the length of the list. */}
-        <img src={imageURLs[0]} alt="TODO: Make better" />
+        <img
+          src={imageURLs[0]}
+          // TODO: Come up with a better way to do alt tags. Make the user provide them?
+          alt="User-uploaded content"
+          className="w-48 h-48 object-cover"
+        />
       </div>
       <div className="w-full flex flex-col space-y-2">
         <div className="flex justify-between">
