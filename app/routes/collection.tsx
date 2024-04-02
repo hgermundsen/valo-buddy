@@ -33,7 +33,7 @@ export default function MapSelect() {
     { name: "sunset", image: sunset },
   ];
   return (
-    <main className="flex grow justify-center items-center p-12 lg:p-24">
+    <main className="flex grow justify-center items-center p-6 lg:p-16">
       <div className="grid gap-6 grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
         {maps.map(({ name, image }, i) => (
           <Link
