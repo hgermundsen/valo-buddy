@@ -6,7 +6,7 @@ export default function Header() {
   const user = useOptionalUser();
 
   return (
-    <header className="flex justify-between p-4 bg-neutral-900">
+    <header className="flex justify-between items-center p-4 bg-neutral-900">
       {/* Redirect to /login since if the user is logged in, the login page will
           redirect them to /collection */}
       <Link to="/login">
