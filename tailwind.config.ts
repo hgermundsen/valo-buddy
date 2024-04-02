@@ -12,6 +12,10 @@ export default {
       },
       animation: {
         "rise-and-fade-in": "riseAndFadeIn 0.5s ease forwards",
+        "marquee-rtol": "marqueeRtol 15s linear infinite",
+        "marquee-rtol-two": "marqueeRtolTwo 15s linear infinite",
+        "marquee-ltor": "marqueeLtor 15s linear infinite",
+        "marquee-ltor-two": "marqueeLtorTwo 15s linear infinite",
       },
       keyframes: {
         riseAndFadeIn: {
@@ -26,6 +30,22 @@ export default {
         },
         shimmer: {
           "100%": { maskPosition: "left" },
+        },
+        marqueeRtol: {
+          "0%": { transform: "translateX(0%)" },
+          "100%": { transform: "translateX(-100%)" },
+        },
+        marqueeRtolTwo: {
+          "0%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(0%)" },
+        },
+        marqueeLtor: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(0%)" },
+        },
+        marqueeLtorTwo: {
+          "0%": { transform: "translateX(0%)" },
+          "100%": { transform: "translateX(100%)" },
         },
       },
     },
