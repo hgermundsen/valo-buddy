@@ -99,9 +99,9 @@ export default function MapSelect() {
 function MarqueeRtol() {
   // https://play.tailwindcss.com/VJvK9YXBoB?layout=horizontal
   return (
-    <div className="w-full relative flex overflow-x-hidden">
+    <div className="w-full relative flex overflow-x-hidden bg-neutral-900">
       <div
-        className={`animate-marquee-rtol whitespace-nowrap font-['Space_Mono'] scale-y-110`}
+        className={`animate-marquee-rtol py-2 whitespace-nowrap font-['Space_Mono'] scale-y-110`}
       >
         <span className="mx-8 text-2xl uppercase">Get ValoBuddy</span>
         <span className="mx-8 text-2xl uppercase">Watch film</span>
@@ -111,7 +111,7 @@ function MarqueeRtol() {
         <span className="mx-8 text-2xl uppercase">Climb the ranked ladder</span>
       </div>
       <div
-        className={`absolute top-0 animate-marquee-rtol-two whitespace-nowrap font-['Space_Mono'] scale-y-110`}
+        className={`absolute top-0 animate-marquee-rtol-two py-2 whitespace-nowrap font-['Space_Mono'] scale-y-110`}
       >
         <span className="mx-8 text-2xl uppercase">Get ValoBuddy</span>
         <span className="mx-8 text-2xl uppercase">Watch film</span>
@@ -127,9 +127,9 @@ function MarqueeRtol() {
 function MarqueeLtor() {
   // https://play.tailwindcss.com/VJvK9YXBoB?layout=horizontal
   return (
-    <div className="w-full relative flex overflow-x-hidden">
+    <div className="w-full relative flex overflow-x-hidden bg-neutral-900">
       <div
-        className={`animate-marquee-ltor whitespace-nowrap font-['Space_Mono'] scale-y-110`}
+        className={`animate-marquee-ltor py-2 whitespace-nowrap font-['Space_Mono'] scale-y-110`}
       >
         <span className="mx-8 text-2xl uppercase">Get ValoBuddy</span>
         <span className="mx-8 text-2xl uppercase">Watch film</span>
@@ -139,7 +139,7 @@ function MarqueeLtor() {
         <span className="mx-8 text-2xl uppercase">Climb the ranked ladder</span>
       </div>
       <div
-        className={`absolute top-0 animate-marquee-ltor-two whitespace-nowrap font-['Space_Mono'] scale-y-110`}
+        className={`absolute top-0 animate-marquee-ltor-two py-2 whitespace-nowrap font-['Space_Mono'] scale-y-110`}
       >
         <span className="mx-8 text-2xl uppercase">Get ValoBuddy</span>
         <span className="mx-8 text-2xl uppercase">Watch film</span>
