@@ -69,7 +69,9 @@ export default function MapSelect() {
     <main className="flex flex-col space-y-32 grow justify-center items-center">
       <MarqueeRtol />
       <div className="flex flex-col items-center space-y-4">
-        <h1 className="text-7xl font-['Space_Mono']">{productNameText}</h1>
+        <h1 className="text-7xl font-['Space_Mono'] scale-y-110">
+          {productNameText}
+        </h1>
         <h2 className="text-xl">
           The <em>ultimate</em> notes system for{" "}
           <span className="text-valored-500 font-bold">
