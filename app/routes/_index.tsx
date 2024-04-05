@@ -5,6 +5,15 @@ import { useEffect, useState } from "react";
 export const meta: MetaFunction = () => [{ title: "ValoBuddy" }];
 
 export default function MapSelect() {
+  const marqueePhrases = [
+    "Get ValoBuddy",
+    "Watch film",
+    "Study strats",
+    "Learn fast",
+    "Play with confidence",
+    "Climb the ranked ladder",
+  ];
+
   // Setting this state var's initial value to "ValoBuddy" so that in a
   // situation where JavaScript is being slow to load in or start executing,
   // something still shows up on the page. It's also good for SEO — web crawlers
@@ -74,7 +83,7 @@ export default function MapSelect() {
 
   return (
     <main className="flex flex-col space-y-32 grow justify-center items-center">
-      <MarqueeRtol />
+      <MarqueeRtol phrases={marqueePhrases} />
       <div className="flex flex-col items-center space-y-4">
         <h1 className="text-7xl font-['Space_Mono'] scale-y-110">
           {productNameText}
@@ -100,82 +109,78 @@ export default function MapSelect() {
           </Link>
         </div>
       </div>
-      <MarqueeLtor />
+      <MarqueeLtor phrases={marqueePhrases} />
     </main>
   );
 }
 
-function MarqueeRtol() {
+interface MarqueeProps {
+  phrases: string[];
+}
+function MarqueeRtol({ phrases }: MarqueeProps) {
   // https://play.tailwindcss.com/VJvK9YXBoB?layout=horizontal
   return (
     <div className="w-full relative flex overflow-x-hidden bg-neutral-900">
       <div
         className={`animate-marquee-rtol py-2 whitespace-nowrap font-['Space_Mono'] scale-y-110`}
       >
-        <span className="mx-8 text-2xl uppercase">Get ValoBuddy</span>
-        <span className="mx-8 text-2xl uppercase">Watch film</span>
-        <span className="mx-8 text-2xl uppercase">Study strats</span>
-        <span className="mx-8 text-2xl uppercase">Learn fast</span>
-        <span className="mx-8 text-2xl uppercase">Play with confidence</span>
-        <span className="mx-8 text-2xl uppercase">Climb the ranked ladder</span>
+        {phrases.map((phrase) => (
+          <span key={phrase} className="mx-8 text-2xl uppercase">
+            {phrase}
+          </span>
+        ))}
       </div>
       <div
         className={`absolute top-0 animate-marquee-rtol-two py-2 whitespace-nowrap font-['Space_Mono'] scale-y-110`}
       >
-        <span className="mx-8 text-2xl uppercase">Get ValoBuddy</span>
-        <span className="mx-8 text-2xl uppercase">Watch film</span>
-        <span className="mx-8 text-2xl uppercase">Study strats</span>
-        <span className="mx-8 text-2xl uppercase">Learn fast</span>
-        <span className="mx-8 text-2xl uppercase">Play with confidence</span>
-        <span className="mx-8 text-2xl uppercase">Climb the ranked ladder</span>
+        {phrases.map((phrase) => (
+          <span key={phrase} className="mx-8 text-2xl uppercase">
+            {phrase}
+          </span>
+        ))}
       </div>
       <div
         className={`absolute top-0 animate-marquee-rtol-three py-2 whitespace-nowrap font-['Space_Mono'] scale-y-110`}
       >
-        <span className="mx-8 text-2xl uppercase">Get ValoBuddy</span>
-        <span className="mx-8 text-2xl uppercase">Watch film</span>
-        <span className="mx-8 text-2xl uppercase">Study strats</span>
-        <span className="mx-8 text-2xl uppercase">Learn fast</span>
-        <span className="mx-8 text-2xl uppercase">Play with confidence</span>
-        <span className="mx-8 text-2xl uppercase">Climb the ranked ladder</span>
+        {phrases.map((phrase) => (
+          <span key={phrase} className="mx-8 text-2xl uppercase">
+            {phrase}
+          </span>
+        ))}
       </div>
     </div>
   );
 }
-
-function MarqueeLtor() {
+function MarqueeLtor({ phrases }: MarqueeProps) {
   // https://play.tailwindcss.com/VJvK9YXBoB?layout=horizontal
   return (
     <div className="w-full relative flex overflow-x-hidden bg-neutral-900">
       <div
         className={`animate-marquee-ltor py-2 whitespace-nowrap font-['Space_Mono'] scale-y-110`}
       >
-        <span className="mx-8 text-2xl uppercase">Get ValoBuddy</span>
-        <span className="mx-8 text-2xl uppercase">Watch film</span>
-        <span className="mx-8 text-2xl uppercase">Study strats</span>
-        <span className="mx-8 text-2xl uppercase">Learn fast</span>
-        <span className="mx-8 text-2xl uppercase">Play with confidence</span>
-        <span className="mx-8 text-2xl uppercase">Climb the ranked ladder</span>
+        {phrases.map((phrase) => (
+          <span key={phrase} className="mx-8 text-2xl uppercase">
+            {phrase}
+          </span>
+        ))}
       </div>
       <div
         className={`absolute top-0 animate-marquee-ltor-two py-2 whitespace-nowrap font-['Space_Mono'] scale-y-110`}
       >
-        <span className="mx-8 text-2xl uppercase">Get ValoBuddy</span>
-        <span className="mx-8 text-2xl uppercase">Watch film</span>
-        <span className="mx-8 text-2xl uppercase">Study strats</span>
-        <span className="mx-8 text-2xl uppercase">Learn fast</span>
-        <span className="mx-8 text-2xl uppercase">Play with confidence</span>
-        <span className="mx-8 text-2xl uppercase">Climb the ranked ladder</span>
+        {phrases.map((phrase) => (
+          <span key={phrase} className="mx-8 text-2xl uppercase">
+            {phrase}
+          </span>
+        ))}
       </div>
       <div
         className={`absolute top-0 animate-marquee-ltor-three py-2 whitespace-nowrap font-['Space_Mono'] scale-y-110`}
       >
-        <span className="mx-8 text-2xl uppercase">Get ValoBuddy</span>
-        <span className="mx-8 text-2xl uppercase">Watch film</span>
-        <span className="mx-8 text-2xl uppercase">Study strats</span>
-        <span className="mx-8 text-2xl uppercase">Learn fast</span>
-        <span className="mx-8 text-2xl uppercase">Play with confidence</span>
-        <span className="mx-8 text-2xl uppercase">Climb the ranked ladder</span>
+        {phrases.map((phrase) => (
+          <span key={phrase} className="mx-8 text-2xl uppercase">
+            {phrase}
+          </span>
+        ))}
       </div>
     </div>
   );
