@@ -129,6 +129,16 @@ function MarqueeRtol() {
         <span className="mx-8 text-2xl uppercase">Play with confidence</span>
         <span className="mx-8 text-2xl uppercase">Climb the ranked ladder</span>
       </div>
+      <div
+        className={`absolute top-0 animate-marquee-rtol-three py-2 whitespace-nowrap font-['Space_Mono'] scale-y-110`}
+      >
+        <span className="mx-8 text-2xl uppercase">Get ValoBuddy</span>
+        <span className="mx-8 text-2xl uppercase">Watch film</span>
+        <span className="mx-8 text-2xl uppercase">Study strats</span>
+        <span className="mx-8 text-2xl uppercase">Learn fast</span>
+        <span className="mx-8 text-2xl uppercase">Play with confidence</span>
+        <span className="mx-8 text-2xl uppercase">Climb the ranked ladder</span>
+      </div>
     </div>
   );
 }
@@ -149,6 +159,16 @@ function MarqueeLtor() {
       </div>
       <div
         className={`absolute top-0 animate-marquee-ltor-two py-2 whitespace-nowrap font-['Space_Mono'] scale-y-110`}
+      >
+        <span className="mx-8 text-2xl uppercase">Get ValoBuddy</span>
+        <span className="mx-8 text-2xl uppercase">Watch film</span>
+        <span className="mx-8 text-2xl uppercase">Study strats</span>
+        <span className="mx-8 text-2xl uppercase">Learn fast</span>
+        <span className="mx-8 text-2xl uppercase">Play with confidence</span>
+        <span className="mx-8 text-2xl uppercase">Climb the ranked ladder</span>
+      </div>
+      <div
+        className={`absolute top-0 animate-marquee-ltor-three py-2 whitespace-nowrap font-['Space_Mono'] scale-y-110`}
       >
         <span className="mx-8 text-2xl uppercase">Get ValoBuddy</span>
         <span className="mx-8 text-2xl uppercase">Watch film</span>
