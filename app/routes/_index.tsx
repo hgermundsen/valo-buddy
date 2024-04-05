@@ -2,7 +2,7 @@ import type { MetaFunction } from "@remix-run/node";
 import { Link } from "@remix-run/react";
 import { useEffect, useState } from "react";
 
-export const meta: MetaFunction = () => [{ title: "Valo Buddy" }];
+export const meta: MetaFunction = () => [{ title: "ValoBuddy" }];
 
 export default function MapSelect() {
   // Setting this state var's initial value to "ValoBuddy" so that in a
