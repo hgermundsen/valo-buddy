@@ -5,13 +5,20 @@ import { useEffect, useState } from "react";
 export const meta: MetaFunction = () => [{ title: "Valo Buddy" }];
 
 export default function MapSelect() {
-  const [productNameText, setProductNameText] = useState("");
+  // Setting this state var's initial value to "ValoBuddy" so that in a
+  // situation where JavaScript is being slow to load in or start executing,
+  // something still shows up on the page. It's also good for SEO — web crawlers
+  // will see "ValoBuddy" in the h1 tag.
+  const [productNameText, setProductNameText] = useState("ValoBuddy");
 
   useEffect(() => {
     const animationTickDuration = 60; // Milliseconds
     const encodingChars = ["!", "@", "#", "$", "%", "^", "&", "*", "?"];
 
-    const curProductNameTextAsArray = ["", "", "", "", "", "", "", "", ""];
+    // Starting with one character instead of none so that on (very) initial
+    // page load, there isn't a pop or a jerk between when the h1 tag is empty
+    // and when it suddenly has content.
+    const curProductNameTextAsArray = ["$", "", "", "", "", "", "", "", ""];
     const finalProductNameTextAsArray = [
       "V",
       "a",
