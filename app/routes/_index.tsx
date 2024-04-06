@@ -88,10 +88,10 @@ export default function MapSelect() {
     <main className="flex flex-col space-y-32 grow justify-center items-center">
       <MarqueeRtol phrases={marqueePhrases} />
       <div className="flex flex-col items-center space-y-4">
-        <h1 className="text-7xl font-['Space_Mono'] scale-y-110">
+        <h1 className="text-5xl lg:text-7xl font-['Space_Mono'] scale-y-110">
           {productNameText}
         </h1>
-        <h2 className="text-xl">
+        <h2 className="lg:text-xl text-center">
           The <em>ultimate</em> notes system for{" "}
           <span className="text-valored-500 font-bold">
             high-ELO Valorant players
