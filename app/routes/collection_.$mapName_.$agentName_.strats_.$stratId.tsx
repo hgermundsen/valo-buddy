@@ -103,73 +103,78 @@ export default function StratDetailsPage() {
   const sortedTagNames = data.strat.tags.map((tag) => tag.name).sort();
 
   return (
-    <main className="flex flex-col grow px-16 py-8 space-y-8">
-      <nav className="flex space-x-2 text-neutral-400 text-sm font-['Space_Mono'] scale-y-110 uppercase">
-        <Link
-          to="/collection"
-          className="text-blue-500 hover:underline visited:text-purple-500"
-        >
-          Collection
-        </Link>
-        <span>&gt;</span>
-        <Link
-          to={`/collection/${data.mapName}`}
-          className="text-blue-500 hover:underline visited:text-purple-500"
-        >
-          {data.mapName}
-        </Link>
-        <span>&gt;</span>
-        <Link
-          to={`/collection/${data.mapName}/${data.agentName}`}
-          className="text-blue-500 hover:underline visited:text-purple-500"
-        >
-          {data.agentName}
-        </Link>
-        <span>&gt;</span>
-        <Link
-          to={`/collection/${data.mapName}/${data.agentName}/strats`}
-          className="text-blue-500 hover:underline visited:text-purple-500"
-        >
-          Strats
-        </Link>
-      </nav>
+    <main className="flex flex-col grow px-16 py-8 space-y-12">
+      <div className="flex flex-col space-y-4">
+        <nav className="flex space-x-2 text-neutral-400 text-sm font-['Space_Mono'] scale-y-110 uppercase">
+          <Link
+            to="/collection"
+            className="text-blue-500 hover:underline visited:text-purple-500"
+          >
+            Collection
+          </Link>
+          <span>&gt;</span>
+          <Link
+            to={`/collection/${data.mapName}`}
+            className="text-blue-500 hover:underline visited:text-purple-500"
+          >
+            {data.mapName}
+          </Link>
+          <span>&gt;</span>
+          <Link
+            to={`/collection/${data.mapName}/${data.agentName}`}
+            className="text-blue-500 hover:underline visited:text-purple-500"
+          >
+            {data.agentName}
+          </Link>
+          <span>&gt;</span>
+          <Link
+            to={`/collection/${data.mapName}/${data.agentName}/strats`}
+            className="text-blue-500 hover:underline visited:text-purple-500"
+          >
+            Strats
+          </Link>
+        </nav>
 
-      <header className="flex flex-col space-y-2">
-        <div className="flex justify-between items-center">
-          <h1 className="text-6xl font-medium font-['Impact'] uppercase">
-            {data.strat.title}
-          </h1>
-          <button className="h-min flex space-x-2 px-5 py-3 font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out">
-            {/* btw this came from https://flowbite.com/icons/ */}
-            {/* TODO: Consider moving this into some kind of shared component.
+        <header className="flex flex-col space-y-2">
+          <div className="flex justify-between items-center">
+            <h1 className="text-6xl font-medium font-['Impact'] uppercase">
+              {data.strat.title}
+            </h1>
+            <button className="h-min flex space-x-2 px-5 py-3 font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out">
+              {/* btw this came from https://flowbite.com/icons/ */}
+              {/* TODO: Consider moving this into some kind of shared component.
             /components/icons folder, maybe? */}
-            <svg
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="butt"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
-              />
-            </svg>
-            <span>Edit</span>
-          </button>
-        </div>
-        <div className="space-x-2">
-          {sortedTagNames.map((tagName) => (
-            <span key={tagName} className="px-4 py-2 rounded-full bg-white/10">
-              {tagName}
-            </span>
-          ))}
-        </div>
-      </header>
+              <svg
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="butt"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
+                />
+              </svg>
+              <span>Edit</span>
+            </button>
+          </div>
+          <div className="space-x-2">
+            {sortedTagNames.map((tagName) => (
+              <span
+                key={tagName}
+                className="px-4 py-2 rounded-full bg-white/10"
+              >
+                {tagName}
+              </span>
+            ))}
+          </div>
+        </header>
+      </div>
 
       <section>
         <h2 className="text-3xl font-['Space_Mono'] scale-y-125 uppercase">
