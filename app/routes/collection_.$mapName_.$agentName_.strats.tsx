@@ -260,7 +260,8 @@ function ImageGrid({ imageURLs }: ImageGridProps) {
     <div className="relative min-w-[100px] w-1/4 min-h-[100px] after:content-[''] after:block after:pb-[100%]">
       <img
         src={imageURLs[0]}
-        // TODO: Come up with a better way to do alt tags. Make the user provide them?
+        // TODO: Come up with a better way to do alt tags. Make the user provide
+        // them? Maybe the title attached to imgur upload?
         alt="User-uploaded content"
         className="absolute w-full h-full object-cover"
       />
