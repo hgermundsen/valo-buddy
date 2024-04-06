@@ -223,16 +223,7 @@ function Strat({
 
   return (
     <div className="flex space-x-4">
-      <div className="flex justify-center items-center bg-white/10 w-48 h-48 text-white/40 italic">
-        {/* TODO: Display all of them in some kind of grid. Will have to figure out
-        how to dynamically style this depending on the length of the list. */}
-        <img
-          src={imageURLs[0]}
-          // TODO: Come up with a better way to do alt tags. Make the user provide them?
-          alt="User-uploaded content"
-          className="w-48 h-48 object-cover"
-        />
-      </div>
+      <ImageGrid imageURLs={imageURLs} />
       <div className="w-full flex flex-col space-y-2">
         <div className="flex justify-between">
           <div className="flex flex-col font-['Space_Mono']">
@@ -255,6 +246,24 @@ function Strat({
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+interface ImageGridProps {
+  imageURLs: string[];
+}
+function ImageGrid({ imageURLs }: ImageGridProps) {
+  // TODO: Display all of them in some kind of grid. Will have to figure out
+  // how to dynamically style this depending on the length of the list.
+  return (
+    <div className="relative min-w-[100px] w-1/4 min-h-[100px] after:content-[''] after:block after:pb-[100%]">
+      <img
+        src={imageURLs[0]}
+        // TODO: Come up with a better way to do alt tags. Make the user provide them?
+        alt="User-uploaded content"
+        className="absolute w-full h-full object-cover"
+      />
     </div>
   );
 }
