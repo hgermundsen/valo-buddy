@@ -121,7 +121,7 @@ export default function Vods() {
 
   return (
     <main className="flex flex-col grow space-y-16 px-16 py-8">
-      <section className="sticky top-8 w-full p-8 rounded-xl shadow-xl border-solid border-t border-neutral-700 bg-neutral-800">
+      <section className="z-10 sticky top-8 w-full p-8 rounded-xl shadow-xl border-solid border-t border-neutral-700 bg-neutral-800">
         <Form
           role="search"
           onChange={(event) => {
