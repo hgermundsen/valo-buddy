@@ -12,12 +12,12 @@ export default {
       },
       animation: {
         "rise-and-fade-in": "riseAndFadeIn 0.5s ease forwards",
-        "marquee-rtol": "marqueeRtol 15s linear infinite",
-        "marquee-rtol-two": "marqueeRtolTwo 15s linear infinite",
-        "marquee-rtol-three": "marqueeRtolThree 15s linear infinite",
-        "marquee-ltor": "marqueeLtor 15s linear infinite",
-        "marquee-ltor-two": "marqueeLtorTwo 15s linear infinite",
-        "marquee-ltor-three": "marqueeLtorThree 15s linear infinite",
+        "marquee-rtol": "marqueeRtol 25s linear infinite",
+        "marquee-rtol-two": "marqueeRtolTwo 25s linear infinite",
+        "marquee-rtol-three": "marqueeRtolThree 25s linear infinite",
+        "marquee-ltor": "marqueeLtor 25s linear infinite",
+        "marquee-ltor-two": "marqueeLtorTwo 25s linear infinite",
+        "marquee-ltor-three": "marqueeLtorThree 25s linear infinite",
       },
       keyframes: {
         riseAndFadeIn: {

@@ -7,11 +7,14 @@ export const meta: MetaFunction = () => [{ title: "ValoBuddy" }];
 export default function MapSelect() {
   const marqueePhrases = [
     "Get ValoBuddy",
-    "Watch film",
+    "Find lineups",
+    "Watch VODs",
     "Study strats",
     "Learn fast",
+    "Prep for any scenario",
     "Play with confidence",
     "Climb the ranked ladder",
+    "Buy the SEN bundle",
   ];
 
   // Setting this state var's initial value to "ValoBuddy" so that in a
