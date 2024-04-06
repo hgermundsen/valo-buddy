@@ -132,8 +132,8 @@ export default function Strats() {
   const submit = useSubmit();
 
   return (
-    <main className="flex flex-col grow space-y-16 px-16 py-8">
-      <section className="z-10 sticky top-8 w-full p-8 rounded-xl shadow-xl border-solid border-t border-neutral-700 bg-neutral-800">
+    <main className="flex flex-col grow space-y-4 px-16 py-4">
+      <section className="z-10 sticky top-8 p-8 w-full bg-neutral-900">
         <Form
           role="search"
           onChange={(event) => {
@@ -143,12 +143,12 @@ export default function Strats() {
           className="flex flex-col space-y-4"
         >
           <div className="flex justify-between">
-            {/* The "relative -left-4" styles are necessary because "space-x-4"
+            {/* The "relative -left-2" styles are necessary because "space-x-2"
                 gives every child element margin-left: 1rem, except for the
                 first one. In our case, the first element is a hidden checkbox.
                 The first _visible_ element is the label, and it has left margin
                 on it, which we don't want. These two styles offset that. */}
-            <div className="flex space-x-4 relative -left-4">
+            <div className="flex space-x-2 relative -left-2">
               {sortedAndUniqueTags.map((tag) => (
                 <Fragment key={tag.id}>
                   <input
@@ -161,8 +161,8 @@ export default function Strats() {
                     htmlFor={tag.id}
                     className={
                       data.selectedTagIds.includes(tag.id)
-                        ? "select-none cursor-pointer px-4 py-2 bg-white/40 rounded-full ring-2 ring-white/40 hover:ring-4 hover:ring-green-200 transition"
-                        : "select-none cursor-pointer px-4 py-2 bg-white/10 rounded-full ring-2 ring-white/40 hover:ring-4 hover:ring-green-200 transition"
+                        ? "select-none cursor-pointer px-4 py-2 bg-neutral-700 rounded-full ring-1 ring-white/40 hover:ring-2 hover:ring-green-200 transition"
+                        : "select-none cursor-pointer px-4 py-2 bg-neutral-800 rounded-full ring-1 ring-white/40 hover:ring-2 hover:ring-green-200 transition"
                     }
                   >
                     {tag.name}
@@ -181,7 +181,7 @@ export default function Strats() {
               defaultValue={data.q as string} // TODO: Address this type casting.
               // eslint-disable-next-line jsx-a11y/no-autofocus
               autoFocus
-              className="w-full px-4 py-3 rounded-lg placeholder:italic text-neutral-200 bg-neutral-700 border-t border-neutral-600 outline-none hover:bg-neutral-600 focus:bg-neutral-600 focus:shadow-lg transition"
+              className="w-full px-4 py-3 text-neutral-200 placeholder:italic placeholder:text-neutral-400 bg-neutral-700 outline-none hover:bg-neutral-600 focus:bg-neutral-600 transition"
             />
           </div>
         </Form>
