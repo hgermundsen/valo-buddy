@@ -1,4 +1,3 @@
-import { StratTag } from "@prisma/client";
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { Form, Link, json, useLoaderData, useSubmit } from "@remix-run/react";
 import { Fragment } from "react";
@@ -161,8 +160,8 @@ export default function Strats() {
                     htmlFor={tag.id}
                     className={
                       data.selectedTagIds.includes(tag.id)
-                        ? "select-none cursor-pointer px-4 py-2 bg-neutral-700 rounded-full ring-1 ring-white/40 hover:ring-2 hover:ring-green-200 transition"
-                        : "select-none cursor-pointer px-4 py-2 bg-neutral-800 rounded-full ring-1 ring-white/40 hover:ring-2 hover:ring-green-200 transition"
+                        ? "select-none cursor-pointer px-4 py-2 bg-neutral-700 rounded-full ring-1 ring-neutral-500 text-sm font-['Space_Mono'] uppercase hover:ring-2 hover:ring-green-200 transition"
+                        : "select-none cursor-pointer px-4 py-2 bg-neutral-800 rounded-full ring-1 ring-neutral-500 text-sm font-['Space_Mono'] uppercase hover:ring-2 hover:ring-green-200 transition"
                     }
                   >
                     {tag.name}
@@ -241,9 +240,11 @@ function Strat({
       <ImageGrid imageURLs={imageURLs} />
       <div className="w-full flex flex-col space-y-2">
         <div className="flex justify-between">
-          <div className="flex flex-col font-['Space_Mono']">
+          <div className="flex flex-col">
             <Link to={id} className="hover:underline">
-              <h1 className="text-2xl">{title}</h1>
+              <h1 className="text-2xl uppercase font-['Space_Mono'] scale-y-110">
+                {title}
+              </h1>
             </Link>
             <div className="flex space-x-4">
               <span className="text-neutral-400">
@@ -254,7 +255,10 @@ function Strat({
           </div>
           <div className="flex-none space-x-2">
             {sortedTags.map((tag) => (
-              <span key={tag} className="px-4 py-2 rounded-full bg-neutral-700">
+              <span
+                key={tag}
+                className="px-4 py-2 rounded-full bg-neutral-700 text-sm uppercase font-['Space_Mono']"
+              >
                 {tag}
               </span>
             ))}
