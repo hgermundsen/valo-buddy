@@ -1,3 +1,4 @@
+import { StratTag } from "@prisma/client";
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { Form, Link, json, useLoaderData, useSubmit } from "@remix-run/react";
 import { Fragment } from "react";
@@ -107,12 +108,26 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 }
 
 export default function Strats() {
+  interface Tag {
+    id: string;
+    name: string;
+  }
+
+  function getSortedAndUniqueTags(tags: Tag[]) {
+    const seenTagIds = new Set();
+    const uniqueTags = tags.filter((tag) => {
+      if (!seenTagIds.has(tag.id)) {
+        seenTagIds.add(tag.id);
+        return true;
+      }
+      return false;
+    });
+    return Array.from(uniqueTags).sort((a, b) => a.name.localeCompare(b.name));
+  }
+
   const data = useLoaderData<typeof loader>();
-  const tags = data.strats.flatMap((strat) => strat.tags);
-  const uniqueTags = new Set(tags);
-  const sortedAndUniqueTags = Array.from(uniqueTags).sort((a, b) =>
-    a.name.localeCompare(b.name),
-  );
+  const tags = data.strats.flatMap((strat) => strat.tags as Tag[]);
+  const sortedAndUniqueTags = getSortedAndUniqueTags(tags);
 
   const submit = useSubmit();
 
@@ -254,17 +269,84 @@ interface ImageGridProps {
   imageURLs: string[];
 }
 function ImageGrid({ imageURLs }: ImageGridProps) {
-  // TODO: Display all of them in some kind of grid. Will have to figure out
-  // how to dynamically style this depending on the length of the list.
-  return (
-    <div className="relative min-w-[100px] w-1/4 min-h-[100px] after:content-[''] after:block after:pb-[100%]">
+  let content = (
+    <div className="absolute w-full h-full flex justify-center items-center bg-neutral-900">
+      <span>No images</span>
+    </div>
+  );
+  if (imageURLs.length === 1) {
+    content = (
       <img
         src={imageURLs[0]}
         // TODO: Come up with a better way to do alt tags. Make the user provide
         // them? Maybe the title attached to imgur upload?
         alt="User-uploaded content"
-        className="absolute w-full h-full object-cover"
+        className="absolute w-full h-full p-1 object-cover bg-neutral-900"
       />
+    );
+  } else if (imageURLs.length === 2) {
+    content = (
+      <div className="absolute w-full h-full p-1 grid grid-rows-2 gap-1 bg-neutral-900">
+        <img
+          src={imageURLs[0]}
+          alt="User-uploaded content"
+          className="w-full h-full object-cover"
+        />
+        <img
+          src={imageURLs[1]}
+          alt="User-uploaded content"
+          className="w-full h-full object-cover"
+        />
+      </div>
+    );
+  } else if (imageURLs.length === 3) {
+    content = (
+      <div className="absolute h-full p-1 grid grid-rows-2 grid-cols-2 gap-1 bg-neutral-900">
+        <img
+          src={imageURLs[0]}
+          alt="User-uploaded content"
+          className="h-full object-cover"
+        />
+        <img
+          src={imageURLs[1]}
+          alt="User-uploaded content"
+          className="h-full object-cover"
+        />
+        <img
+          src={imageURLs[2]}
+          alt="User-uploaded content"
+          className="w-full h-full col-span-2 object-cover"
+        />
+      </div>
+    );
+  } else if (imageURLs.length > 3) {
+    content = (
+      <div className="absolute h-full p-1 grid grid-rows-2 grid-cols-2 gap-1 bg-neutral-900">
+        <img
+          src={imageURLs[0]}
+          alt="User-uploaded content"
+          className="h-full object-cover"
+        />
+        <img
+          src={imageURLs[1]}
+          alt="User-uploaded content"
+          className="h-full object-cover"
+        />
+        <img
+          src={imageURLs[2]}
+          alt="User-uploaded content"
+          className="h-full object-cover"
+        />
+        <div className="flex justify-center items-center">
+          <span>+{imageURLs.length - 3} more</span>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative min-w-[100px] w-1/4 min-h-[100px] after:content-[''] after:block after:pb-[100%]">
+      {content}
     </div>
   );
 }

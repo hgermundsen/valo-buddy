@@ -128,6 +128,43 @@ async function seed() {
     },
   });
 
+  const passiveStratTag = await prisma.stratTag.create({
+    data: {
+      name: "Passive",
+    },
+  });
+  const woohoojinStratTag = await prisma.stratTag.create({
+    data: {
+      name: "Woohoojin",
+    },
+  });
+  const retakeStratTag = await prisma.stratTag.create({
+    data: {
+      name: "Retake",
+    },
+  });
+
+  await prisma.strat.create({
+    data: {
+      userId: user.id,
+      map: "ascent",
+      agent: "killjoy",
+      title: "Barebones Strat",
+      lineupsAndAbilityTricksDefenderSideNotes:
+        "This section doesn't just have to be for lineups. There are some neat places you can throw Reyna's eye, or ways you can toss Phoenix's flash, for instance. Those aren't lineups, but users will want a place to document stuff like that.",
+      earlyRoundAttackerSideNotes:
+        "- Where do high-rank/pro players start when the barriers drop?\n- What do high-rank/pro players do in the first 5-10 seconds of the round?",
+      earlyRoundDefenderSideNotes:
+        "- Where do high-rank/pro players start when the barriers drop?\n- What do high-rank/pro players do in the first 5-10 seconds of the round?",
+      midRoundDefenderSideNotes:
+        "You can add whatever you want here. Markdown is supported!",
+      lateRoundDefenderSideNotes:
+        "TODO: Would also like to see image/screenshot upload support (potentially a security vulnerability? potentially a legal liability, since now we host content like a social network?).",
+      miscNotes:
+        "A place at the bottom of the page for whatever the user wants. They can summarize key points to remember, add additional info, whatever.",
+    },
+  });
+
   await prisma.strat.create({
     data: {
       userId: user.id,
@@ -135,14 +172,7 @@ async function seed() {
       agent: "killjoy",
       title: "Strat 1",
       tags: {
-        create: [
-          {
-            name: "Passive",
-          },
-          {
-            name: "Woohoojin",
-          },
-        ],
+        connect: [{ id: passiveStratTag.id }, { id: woohoojinStratTag.id }],
       },
       lineupsAndAbilityTricksDefenderSideNotes:
         "This section doesn't just have to be for lineups. There are some neat places you can throw Reyna's eye, or ways you can toss Phoenix's flash, for instance. Those aren't lineups, but users will want a place to document stuff like that.",
@@ -163,6 +193,157 @@ async function seed() {
         create: {
           imageURL: "https://imgur.com/sSOFMDa.png",
           stratSection: StratSection.LINEUPS_AND_ABILITY_TRICKS_ATTACKER_SIDE,
+        },
+      },
+    },
+  });
+
+  await prisma.strat.create({
+    data: {
+      userId: user.id,
+      map: "ascent",
+      agent: "killjoy",
+      title: "Strat 2",
+      tags: {
+        connect: [{ id: retakeStratTag.id }, { id: woohoojinStratTag.id }],
+      },
+      lineupsAndAbilityTricksDefenderSideNotes:
+        "This section doesn't just have to be for lineups. There are some neat places you can throw Reyna's eye, or ways you can toss Phoenix's flash, for instance. Those aren't lineups, but users will want a place to document stuff like that.",
+      earlyRoundAttackerSideNotes:
+        "- Where do high-rank/pro players start when the barriers drop?\n- What do high-rank/pro players do in the first 5-10 seconds of the round?",
+      earlyRoundDefenderSideNotes:
+        "- Where do high-rank/pro players start when the barriers drop?\n- What do high-rank/pro players do in the first 5-10 seconds of the round?",
+      midRoundDefenderSideNotes:
+        "You can add whatever you want here. Markdown is supported!",
+      lateRoundDefenderSideNotes:
+        "TODO: Would also like to see image/screenshot upload support (potentially a security vulnerability? potentially a legal liability, since now we host content like a social network?).",
+      miscNotes:
+        "A place at the bottom of the page for whatever the user wants. They can summarize key points to remember, add additional info, whatever.",
+      relatedVods: {
+        connect: { id: vod3.id },
+      },
+      images: {
+        createMany: {
+          data: [
+            {
+              imageURL: "https://i.imgur.com/10jVymu.png",
+              stratSection:
+                StratSection.LINEUPS_AND_ABILITY_TRICKS_ATTACKER_SIDE,
+            },
+            {
+              imageURL: "https://imgur.com/sSOFMDa.png",
+              stratSection:
+                StratSection.LINEUPS_AND_ABILITY_TRICKS_ATTACKER_SIDE,
+            },
+          ],
+        },
+      },
+    },
+  });
+
+  await prisma.strat.create({
+    data: {
+      userId: user.id,
+      map: "ascent",
+      agent: "killjoy",
+      title: "Strat 3",
+      tags: {
+        connect: { id: retakeStratTag.id },
+      },
+      lineupsAndAbilityTricksDefenderSideNotes:
+        "This section doesn't just have to be for lineups. There are some neat places you can throw Reyna's eye, or ways you can toss Phoenix's flash, for instance. Those aren't lineups, but users will want a place to document stuff like that.",
+      earlyRoundAttackerSideNotes:
+        "- Where do high-rank/pro players start when the barriers drop?\n- What do high-rank/pro players do in the first 5-10 seconds of the round?",
+      earlyRoundDefenderSideNotes:
+        "- Where do high-rank/pro players start when the barriers drop?\n- What do high-rank/pro players do in the first 5-10 seconds of the round?",
+      midRoundDefenderSideNotes:
+        "You can add whatever you want here. Markdown is supported!",
+      lateRoundDefenderSideNotes:
+        "TODO: Would also like to see image/screenshot upload support (potentially a security vulnerability? potentially a legal liability, since now we host content like a social network?).",
+      miscNotes:
+        "A place at the bottom of the page for whatever the user wants. They can summarize key points to remember, add additional info, whatever.",
+      relatedVods: {
+        connect: { id: vod3.id },
+      },
+      images: {
+        createMany: {
+          data: [
+            {
+              imageURL: "https://i.imgur.com/10jVymu.png",
+              stratSection:
+                StratSection.LINEUPS_AND_ABILITY_TRICKS_ATTACKER_SIDE,
+            },
+            {
+              imageURL: "https://imgur.com/sSOFMDa.png",
+              stratSection:
+                StratSection.LINEUPS_AND_ABILITY_TRICKS_ATTACKER_SIDE,
+            },
+            {
+              imageURL: "https://i.imgur.com/xJkhTkO.png",
+              stratSection:
+                StratSection.LINEUPS_AND_ABILITY_TRICKS_ATTACKER_SIDE,
+            },
+          ],
+        },
+      },
+    },
+  });
+
+  await prisma.strat.create({
+    data: {
+      userId: user.id,
+      map: "ascent",
+      agent: "killjoy",
+      title: "Strat 4",
+      lineupsAndAbilityTricksDefenderSideNotes:
+        "This section doesn't just have to be for lineups. There are some neat places you can throw Reyna's eye, or ways you can toss Phoenix's flash, for instance. Those aren't lineups, but users will want a place to document stuff like that.",
+      earlyRoundAttackerSideNotes:
+        "- Where do high-rank/pro players start when the barriers drop?\n- What do high-rank/pro players do in the first 5-10 seconds of the round?",
+      earlyRoundDefenderSideNotes:
+        "- Where do high-rank/pro players start when the barriers drop?\n- What do high-rank/pro players do in the first 5-10 seconds of the round?",
+      midRoundDefenderSideNotes:
+        "You can add whatever you want here. Markdown is supported!",
+      lateRoundDefenderSideNotes:
+        "TODO: Would also like to see image/screenshot upload support (potentially a security vulnerability? potentially a legal liability, since now we host content like a social network?).",
+      miscNotes:
+        "A place at the bottom of the page for whatever the user wants. They can summarize key points to remember, add additional info, whatever.",
+      relatedVods: {
+        connect: { id: vod3.id },
+      },
+      images: {
+        createMany: {
+          data: [
+            {
+              imageURL: "https://i.imgur.com/10jVymu.png",
+              stratSection:
+                StratSection.LINEUPS_AND_ABILITY_TRICKS_ATTACKER_SIDE,
+            },
+            {
+              imageURL: "https://imgur.com/sSOFMDa.png",
+              stratSection:
+                StratSection.LINEUPS_AND_ABILITY_TRICKS_ATTACKER_SIDE,
+            },
+            {
+              imageURL: "https://i.imgur.com/xJkhTkO.png",
+              stratSection:
+                StratSection.LINEUPS_AND_ABILITY_TRICKS_ATTACKER_SIDE,
+            },
+            {
+              imageURL: "https://i.imgur.com/10jVymu.png",
+              stratSection:
+                StratSection.LINEUPS_AND_ABILITY_TRICKS_ATTACKER_SIDE,
+            },
+            {
+              imageURL: "https://imgur.com/sSOFMDa.png",
+              stratSection:
+                StratSection.LINEUPS_AND_ABILITY_TRICKS_ATTACKER_SIDE,
+            },
+            {
+              imageURL: "https://i.imgur.com/xJkhTkO.png",
+              stratSection:
+                StratSection.LINEUPS_AND_ABILITY_TRICKS_ATTACKER_SIDE,
+            },
+          ],
         },
       },
     },
