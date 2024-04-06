@@ -254,7 +254,7 @@ function Strat({
           </div>
           <div className="flex-none space-x-2">
             {sortedTags.map((tag) => (
-              <span key={tag} className="px-4 py-2 rounded-full bg-white/10">
+              <span key={tag} className="px-4 py-2 rounded-full bg-neutral-700">
                 {tag}
               </span>
             ))}
