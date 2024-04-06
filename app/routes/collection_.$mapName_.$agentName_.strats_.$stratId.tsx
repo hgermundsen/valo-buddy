@@ -176,22 +176,24 @@ export default function StratDetailsPage() {
         </header>
       </div>
 
-      <section>
-        <h2 className="text-3xl font-['Space_Mono'] scale-y-125 uppercase">
-          Links
-        </h2>
-        {data.strat.miscLinks.length === 0 ? (
-          <p className="text-neutral-400 italic">No content.</p>
-        ) : (
-          <ul>
-            <div className="grid gap-6 grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-              {data.strat.miscLinks.map((link) => (
-                <li key={link}>{link}</li>
-              ))}
-            </div>
-          </ul>
-        )}
-      </section>
+      {data.strat.miscLinks.length > 0 ? (
+        <section>
+          <h2 className="text-3xl font-['Space_Mono'] scale-y-125 uppercase">
+            Links
+          </h2>
+          {data.strat.miscLinks.length === 0 ? (
+            <p className="text-neutral-400 italic">No content.</p>
+          ) : (
+            <ul>
+              <div className="grid gap-6 grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+                {data.strat.miscLinks.map((link) => (
+                  <li key={link}>{link}</li>
+                ))}
+              </div>
+            </ul>
+          )}
+        </section>
+      ) : null}
 
       <TwoColumnSection
         title="Lineups and Agent Tricks"
@@ -214,15 +216,14 @@ export default function StratDetailsPage() {
         defenderSideNotes={data.strat.lateRoundDefenderSideNotes}
       />
 
-      <section className="flex flex-col space-y-2">
-        <h2 className="text-3xl font-['Space_Mono'] scale-y-125 uppercase">
-          Miscellaneous
-        </h2>
-        {/* TODO: Either create a OneColumnSection component, or add logic to
-        display "No content" if this is empty. Or consider not even rendering
-        this component if there's nothing here... */}
-        <p>{data.strat.miscNotes}</p>
-      </section>
+      {data.strat.miscNotes !== null ? (
+        <section className="flex flex-col space-y-2">
+          <h2 className="text-3xl font-['Space_Mono'] scale-y-125 uppercase">
+            Miscellaneous
+          </h2>
+          <p>{data.strat.miscNotes}</p>
+        </section>
+      ) : null}
     </main>
   );
 }
@@ -237,6 +238,9 @@ function TwoColumnSection({
   attackSideNotes,
   defenderSideNotes,
 }: TwoColumnSectionProps) {
+  if (attackSideNotes === null && defenderSideNotes === null) {
+    return null;
+  }
   return (
     <section className="flex flex-col space-y-2">
       <h2 className="text-3xl font-['Space_Mono'] scale-y-125 uppercase">
