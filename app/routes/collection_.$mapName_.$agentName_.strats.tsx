@@ -141,6 +141,36 @@ export default function Strats() {
           }}
           className="flex flex-col space-y-4"
         >
+          <div className="relative">
+            <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+              <svg
+                className="w-6 h-6 text-neutral-200"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeWidth="2"
+                  d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
+                />
+              </svg>
+            </div>
+            <input
+              type="search"
+              name="q"
+              aria-label="Search strats"
+              defaultValue={data.q as string} // TODO: Address this type casting.
+              // eslint-disable-next-line jsx-a11y/no-autofocus
+              autoFocus
+              className="block w-full p-4 ps-11 text-neutral-200 bg-neutral-700 outline-none hover:bg-neutral-600 focus:bg-neutral-600 transition"
+            />
+          </div>
+
           <div className="flex justify-between">
             {/* The "relative -left-2" styles are necessary because "space-x-2"
                 gives every child element margin-left: 1rem, except for the
@@ -169,19 +199,6 @@ export default function Strats() {
                 </Fragment>
               ))}
             </div>
-          </div>
-
-          <div className="flex space-x-4">
-            <input
-              type="search"
-              name="q"
-              placeholder="Search for anything... (Just by title for now. Hopefully you'll be able to fuzzy search across all attributes soon)"
-              aria-label="Search strats"
-              defaultValue={data.q as string} // TODO: Address this type casting.
-              // eslint-disable-next-line jsx-a11y/no-autofocus
-              autoFocus
-              className="w-full px-4 py-3 text-neutral-200 placeholder:italic placeholder:text-neutral-400 bg-neutral-700 outline-none hover:bg-neutral-600 focus:bg-neutral-600 transition"
-            />
           </div>
         </Form>
       </section>
