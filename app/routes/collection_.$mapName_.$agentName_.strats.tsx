@@ -134,7 +134,34 @@ export default function Strats() {
     <main className="flex flex-col grow">
       {/* When there is no content behind/underneath this box, 96% against
       bg-neutral-800 makes this section's background exactly bg-neutral-900. */}
-      <section className="z-10 sticky top-0 p-6 w-full bg-neutral-900 bg-opacity-[96%]">
+      <section className="flex flex-col space-y-4 z-10 sticky top-0 p-6 w-full bg-neutral-900 bg-opacity-[96%]">
+        <div className="flex justify-between">
+          <h1 className="text-5xl font-['Druk_Wide_Bold']">STRATS</h1>
+          <Link
+            to={"create"}
+            className="h-min flex space-x-2 px-4 py-3 text-sm font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out"
+          >
+            <svg
+              className="w-5 h-5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M18 5V4a1 1 0 0 0-1-1H8.914a1 1 0 0 0-.707.293L4.293 7.207A1 1 0 0 0 4 7.914V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5M9 3v4a1 1 0 0 1-1 1H4m11.383.772 2.745 2.746m1.215-3.906a2.089 2.089 0 0 1 0 2.953l-6.65 6.646L9 17.95l.739-3.692 6.646-6.646a2.087 2.087 0 0 1 2.958 0Z"
+              />
+            </svg>
+            <span>CREATE</span>
+          </Link>
+        </div>
+
         <Form
           role="search"
           onChange={(event) => {
@@ -173,34 +200,32 @@ export default function Strats() {
             />
           </div>
 
-          <div className="flex justify-between">
-            {/* The "relative -left-2" styles are necessary because "space-x-2"
+          {/* The "relative -left-2" styles are necessary because "space-x-2"
                 gives every child element margin-left: 1rem, except for the
                 first one. In our case, the first element is a hidden checkbox.
                 The first _visible_ element is the label, and it has left margin
                 on it, which we don't want. These two styles offset that. */}
-            <div className="flex space-x-2 relative -left-2">
-              {sortedAndUniqueTags.map((tag) => (
-                <Fragment key={tag.id}>
-                  <input
-                    type="checkbox"
-                    id={tag.id}
-                    name={tag.id}
-                    className="hidden"
-                  />
-                  <label
-                    htmlFor={tag.id}
-                    className={
-                      data.selectedTagIds.includes(tag.id)
-                        ? "select-none cursor-pointer px-4 py-2 bg-neutral-700 rounded-full ring-1 ring-neutral-500 text-sm font-['Space_Mono'] uppercase hover:ring-2 hover:ring-green-200 transition"
-                        : "select-none cursor-pointer px-4 py-2 bg-neutral-800 rounded-full ring-1 ring-neutral-500 text-sm font-['Space_Mono'] uppercase hover:ring-2 hover:ring-green-200 transition"
-                    }
-                  >
-                    {tag.name}
-                  </label>
-                </Fragment>
-              ))}
-            </div>
+          <div className="flex space-x-2 relative -left-2">
+            {sortedAndUniqueTags.map((tag) => (
+              <Fragment key={tag.id}>
+                <input
+                  type="checkbox"
+                  id={tag.id}
+                  name={tag.id}
+                  className="hidden"
+                />
+                <label
+                  htmlFor={tag.id}
+                  className={
+                    data.selectedTagIds.includes(tag.id)
+                      ? "select-none cursor-pointer h-min px-4 py-2 bg-neutral-700 rounded-full ring-1 ring-neutral-500 text-sm font-['Space_Mono'] uppercase hover:ring-2 hover:ring-green-200 transition"
+                      : "select-none cursor-pointer h-min px-4 py-2 bg-neutral-800 rounded-full ring-1 ring-neutral-500 text-sm font-['Space_Mono'] uppercase hover:ring-2 hover:ring-green-200 transition"
+                  }
+                >
+                  {tag.name}
+                </label>
+              </Fragment>
+            ))}
           </div>
         </Form>
       </section>
