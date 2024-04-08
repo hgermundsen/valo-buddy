@@ -131,8 +131,10 @@ export default function Strats() {
   const submit = useSubmit();
 
   return (
-    <main className="flex flex-col grow space-y-4 px-16 py-4">
-      <section className="z-10 sticky top-8 p-8 w-full bg-neutral-900">
+    <main className="flex flex-col grow space-y-4">
+      {/* When there is no content behind/underneath this box, 96% against
+      bg-neutral-800 makes this section's background exactly bg-neutral-900. */}
+      <section className="z-10 sticky top-0 p-6 w-full bg-neutral-900 bg-opacity-[96%]">
         <Form
           role="search"
           onChange={(event) => {
@@ -144,7 +146,7 @@ export default function Strats() {
           <div className="relative">
             <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
               <svg
-                className="w-6 h-6 text-neutral-200"
+                className="w-5 h-5 text-neutral-200"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -167,7 +169,7 @@ export default function Strats() {
               defaultValue={data.q as string} // TODO: Address this type casting.
               // eslint-disable-next-line jsx-a11y/no-autofocus
               autoFocus
-              className="block w-full p-4 ps-11 text-neutral-200 bg-neutral-700 outline-none hover:bg-neutral-600 focus:bg-neutral-600 transition"
+              className="block w-full p-3 ps-10 text-neutral-200 bg-neutral-700 outline-none hover:bg-neutral-600 focus:bg-neutral-600 transition"
             />
           </div>
 
