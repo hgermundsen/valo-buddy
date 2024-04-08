@@ -103,8 +103,8 @@ export default function StratDetailsPage() {
   const sortedTagNames = data.strat.tags.map((tag) => tag.name).sort();
 
   return (
-    <main className="flex flex-col grow px-16 py-8 space-y-12">
-      <div className="flex flex-col space-y-4">
+    <div className="flex flex-col grow">
+      <div className="flex flex-col space-y-4 z-10 sticky top-0 p-6 bg-neutral-900 bg-opacity-[96%]">
         <nav className="flex space-x-2 text-neutral-400 text-sm font-['Space_Mono'] scale-y-110 uppercase">
           <Link
             to="/collection"
@@ -140,11 +140,12 @@ export default function StratDetailsPage() {
             <h1 className="text-5xl font-['Druk_Wide_Bold'] uppercase">
               {data.strat.title}
             </h1>
-            <button className="h-min flex space-x-2 px-5 py-3 font-['Space_Mono'] uppercase text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out">
+            <button className="h-min flex space-x-2 px-4 py-3 text-sm font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out">
               {/* btw this came from https://flowbite.com/icons/ */}
               {/* TODO: Consider moving this into some kind of shared component.
             /components/icons folder, maybe? */}
               <svg
+                className="w-5 h-5"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -160,7 +161,7 @@ export default function StratDetailsPage() {
                   d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
                 />
               </svg>
-              <span>Edit</span>
+              <span>EDIT</span>
             </button>
           </div>
           <div className="space-x-2">
@@ -176,53 +177,57 @@ export default function StratDetailsPage() {
         </header>
       </div>
 
-      {data.strat.miscLinks.length > 0 ? (
-        <section>
-          <h2 className="text-2xl font-['Druk_Wide_Bold'] uppercase">Links</h2>
-          {data.strat.miscLinks.length === 0 ? (
-            <p className="text-neutral-400 italic">No content.</p>
-          ) : (
-            <ul>
-              <div className="grid gap-6 grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-                {data.strat.miscLinks.map((link) => (
-                  <li key={link}>{link}</li>
-                ))}
-              </div>
-            </ul>
-          )}
-        </section>
-      ) : null}
-
-      <TwoColumnSection
-        title="Lineups and Agent Tricks"
-        attackSideNotes={data.strat.lineupsAndAbilityTricksAttackerSideNotes}
-        defenderSideNotes={data.strat.lineupsAndAbilityTricksDefenderSideNotes}
-      />
-      <TwoColumnSection
-        title="Early Round"
-        attackSideNotes={data.strat.earlyRoundAttackerSideNotes}
-        defenderSideNotes={data.strat.earlyRoundDefenderSideNotes}
-      />
-      <TwoColumnSection
-        title="Mid Round"
-        attackSideNotes={data.strat.midRoundAttackerSideNotes}
-        defenderSideNotes={data.strat.midRoundDefenderSideNotes}
-      />
-      <TwoColumnSection
-        title="Late Round"
-        attackSideNotes={data.strat.lateRoundAttackerSideNotes}
-        defenderSideNotes={data.strat.lateRoundDefenderSideNotes}
-      />
-
-      {data.strat.miscNotes !== null ? (
-        <section className="flex flex-col space-y-2">
-          <h2 className="text-2xl font-['Druk_Wide_Bold'] uppercase">
-            Miscellaneous
-          </h2>
-          <p>{data.strat.miscNotes}</p>
-        </section>
-      ) : null}
-    </main>
+      <main className="flex flex-col space-y-12 px-16 py-4">
+        {data.strat.miscLinks.length > 0 ? (
+          <section>
+            <h2 className="text-2xl font-['Druk_Wide_Bold'] uppercase">
+              Links
+            </h2>
+            {data.strat.miscLinks.length === 0 ? (
+              <p className="text-neutral-400 italic">No content.</p>
+            ) : (
+              <ul>
+                <div className="grid gap-6 grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+                  {data.strat.miscLinks.map((link) => (
+                    <li key={link}>{link}</li>
+                  ))}
+                </div>
+              </ul>
+            )}
+          </section>
+        ) : null}
+        <TwoColumnSection
+          title="Lineups and Agent Tricks"
+          attackSideNotes={data.strat.lineupsAndAbilityTricksAttackerSideNotes}
+          defenderSideNotes={
+            data.strat.lineupsAndAbilityTricksDefenderSideNotes
+          }
+        />
+        <TwoColumnSection
+          title="Early Round"
+          attackSideNotes={data.strat.earlyRoundAttackerSideNotes}
+          defenderSideNotes={data.strat.earlyRoundDefenderSideNotes}
+        />
+        <TwoColumnSection
+          title="Mid Round"
+          attackSideNotes={data.strat.midRoundAttackerSideNotes}
+          defenderSideNotes={data.strat.midRoundDefenderSideNotes}
+        />
+        <TwoColumnSection
+          title="Late Round"
+          attackSideNotes={data.strat.lateRoundAttackerSideNotes}
+          defenderSideNotes={data.strat.lateRoundDefenderSideNotes}
+        />
+        {data.strat.miscNotes !== null ? (
+          <section className="flex flex-col space-y-2">
+            <h2 className="text-2xl font-['Druk_Wide_Bold'] uppercase">
+              Miscellaneous
+            </h2>
+            <p>{data.strat.miscNotes}</p>
+          </section>
+        ) : null}
+      </main>
+    </div>
   );
 }
 
