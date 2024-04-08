@@ -75,7 +75,7 @@ export function getStrat({
       lateRoundDefenderSideNotes: true,
       miscNotes: true,
       relatedVods: { select: { id: true, title: true } },
-      images: true,
+      images: { select: { id: true, stratSection: true, imageURL: true } },
     },
     where: {
       id,
