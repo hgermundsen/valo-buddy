@@ -169,7 +169,7 @@ export default function Strats() {
               defaultValue={data.q as string} // TODO: Address this type casting.
               // eslint-disable-next-line jsx-a11y/no-autofocus
               autoFocus
-              className="block w-full p-3 ps-10 text-neutral-200 bg-neutral-700 outline-none hover:bg-neutral-600 focus:bg-neutral-600 transition"
+              className="block w-full p-3 ps-10 text-neutral-200 bg-neutral-700 border-b-2 border-neutral-600 outline-none hover:bg-neutral-600 hover:border-neutral-500 focus:bg-neutral-600 focus:border-neutral-500 transition"
             />
           </div>
 
