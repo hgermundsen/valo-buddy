@@ -131,7 +131,7 @@ export default function Strats() {
   const submit = useSubmit();
 
   return (
-    <main className="flex flex-col grow space-y-4">
+    <main className="flex flex-col grow">
       {/* When there is no content behind/underneath this box, 96% against
       bg-neutral-800 makes this section's background exactly bg-neutral-900. */}
       <section className="z-10 sticky top-0 p-6 w-full bg-neutral-900 bg-opacity-[96%]">
@@ -205,7 +205,7 @@ export default function Strats() {
         </Form>
       </section>
 
-      <section className="flex flex-col space-y-4 px-16">
+      <section className="flex flex-col space-y-4 px-16 py-4">
         {data.strats.length === 0 ? (
           data.q === undefined ? (
             <p className="text-neutral-400 italic">
