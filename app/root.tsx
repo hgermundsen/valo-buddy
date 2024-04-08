@@ -18,6 +18,7 @@ import Header from "./components/header";
 
 export const links: LinksFunction = () => [
   // Custom fonts
+
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
     rel: "preconnect",
@@ -28,6 +29,9 @@ export const links: LinksFunction = () => [
     rel: "stylesheet",
     href: "https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap",
   },
+
+  { rel: "preconnect", href: "https://fonts.cdnfonts.com" },
+  { rel: "stylesheet", href: "https://fonts.cdnfonts.com/css/druk-wide-bold" },
 
   // CSS
   { rel: "stylesheet", href: stylesheet },
