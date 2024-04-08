@@ -1,3 +1,4 @@
+import { StratSection } from "@prisma/client";
 import { LoaderFunctionArgs, MetaFunction, json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import React, { Suspense } from "react";
@@ -197,24 +198,40 @@ export default function StratDetailsPage() {
           </section>
         ) : null}
         <TwoColumnSection
+          attackerSideSection={
+            StratSection.LINEUPS_AND_ABILITY_TRICKS_ATTACKER_SIDE
+          }
+          defenderSideSection={
+            StratSection.LINEUPS_AND_ABILITY_TRICKS_DEFENDER_SIDE
+          }
           title="Lineups and Agent Tricks"
+          images={data.strat.images}
           attackSideNotes={data.strat.lineupsAndAbilityTricksAttackerSideNotes}
           defenderSideNotes={
             data.strat.lineupsAndAbilityTricksDefenderSideNotes
           }
         />
         <TwoColumnSection
+          attackerSideSection={StratSection.EARLY_ROUND_ATTACKER_SIDE}
+          defenderSideSection={StratSection.EARLY_ROUND_DEFENDER_SIDE}
           title="Early Round"
+          images={data.strat.images}
           attackSideNotes={data.strat.earlyRoundAttackerSideNotes}
           defenderSideNotes={data.strat.earlyRoundDefenderSideNotes}
         />
         <TwoColumnSection
+          attackerSideSection={StratSection.MID_ROUND_ATTACKER_SIDE}
+          defenderSideSection={StratSection.MID_ROUND_DEFENDER_SIDE}
           title="Mid Round"
+          images={data.strat.images}
           attackSideNotes={data.strat.midRoundAttackerSideNotes}
           defenderSideNotes={data.strat.midRoundDefenderSideNotes}
         />
         <TwoColumnSection
+          attackerSideSection={StratSection.LATE_ROUND_ATTACKER_SIDE}
+          defenderSideSection={StratSection.LATE_ROUND_DEFENDER_SIDE}
           title="Late Round"
+          images={data.strat.images}
           attackSideNotes={data.strat.lateRoundAttackerSideNotes}
           defenderSideNotes={data.strat.lateRoundDefenderSideNotes}
         />
@@ -231,13 +248,24 @@ export default function StratDetailsPage() {
   );
 }
 
+interface StratImage {
+  id: string;
+  stratSection: StratSection;
+  imageURL: string;
+}
 interface TwoColumnSectionProps {
+  attackerSideSection: StratSection;
+  defenderSideSection: StratSection;
   title: string;
+  images: StratImage[];
   attackSideNotes: string | null;
   defenderSideNotes: string | null;
 }
 function TwoColumnSection({
+  attackerSideSection,
+  defenderSideSection,
   title,
+  images,
   attackSideNotes,
   defenderSideNotes,
 }: TwoColumnSectionProps) {
@@ -253,6 +281,19 @@ function TwoColumnSection({
             Attacker Side
           </h3>
           <div className="pl-4">
+            {images
+              .filter((image) => image.stratSection === attackerSideSection)
+              .map((image) => (
+                <img
+                  key={image.id}
+                  src={image.imageURL}
+                  // TODO: Come up with a better way to do alt tags. Make the
+                  // user provide them? Maybe the title attached to imgur
+                  // upload?
+                  alt="User-uploaded content"
+                />
+              ))}
+
             {attackSideNotes && attackSideNotes.length > 0 ? (
               <Suspense>
                 {/* https://stackoverflow.com/a/74607475 */}
@@ -279,6 +320,19 @@ function TwoColumnSection({
             Defender Side
           </h3>
           <div className="pl-4">
+            {images
+              .filter((image) => image.stratSection === defenderSideSection)
+              .map((image) => (
+                <img
+                  key={image.id}
+                  src={image.imageURL}
+                  // TODO: Come up with a better way to do alt tags. Make the
+                  // user provide them? Maybe the title attached to imgur
+                  // upload?
+                  alt="User-uploaded content"
+                />
+              ))}
+
             {defenderSideNotes && defenderSideNotes.length > 0 ? (
               <Suspense>
                 {/* https://stackoverflow.com/a/74607475 */}
