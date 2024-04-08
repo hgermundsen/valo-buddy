@@ -259,16 +259,16 @@ function Strat({
         <div className="flex justify-between">
           <div className="flex flex-col">
             <Link to={id} className="hover:underline">
-              <h1 className="text-2xl uppercase font-['Space_Mono'] scale-y-110">
+              <h1 className="text-2xl uppercase font-['Druk_Wide_Bold']">
                 {title}
               </h1>
             </Link>
-            <div className="flex space-x-4">
-              <span className="text-neutral-400">
-                Created on {createdAt.toDateString()}, last updated on{" "}
-                {updatedAt.toDateString()}
-              </span>
-            </div>
+            <span className="text-neutral-400 text-sm font-['Space_Mono'] scale-y-110">
+              Created: {createdAt.toDateString()}
+            </span>
+            <span className="text-neutral-400 text-sm font-['Space_Mono'] scale-y-110">
+              Last updated: {updatedAt.toDateString()}
+            </span>
           </div>
           <div className="flex-none space-x-2">
             {sortedTags.map((tag) => (
