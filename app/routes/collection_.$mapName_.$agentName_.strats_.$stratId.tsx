@@ -137,7 +137,7 @@ export default function StratDetailsPage() {
 
         <header className="flex flex-col space-y-2">
           <div className="flex justify-between items-center">
-            <h1 className="text-6xl font-medium font-['Impact'] uppercase">
+            <h1 className="text-5xl font-['Druk_Wide_Bold'] uppercase">
               {data.strat.title}
             </h1>
             <button className="h-min flex space-x-2 px-5 py-3 font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out">
@@ -178,9 +178,7 @@ export default function StratDetailsPage() {
 
       {data.strat.miscLinks.length > 0 ? (
         <section>
-          <h2 className="text-3xl font-['Space_Mono'] scale-y-125 uppercase">
-            Links
-          </h2>
+          <h2 className="text-2xl font-['Druk_Wide_Bold'] uppercase">Links</h2>
           {data.strat.miscLinks.length === 0 ? (
             <p className="text-neutral-400 italic">No content.</p>
           ) : (
@@ -218,7 +216,7 @@ export default function StratDetailsPage() {
 
       {data.strat.miscNotes !== null ? (
         <section className="flex flex-col space-y-2">
-          <h2 className="text-3xl font-['Space_Mono'] scale-y-125 uppercase">
+          <h2 className="text-2xl font-['Druk_Wide_Bold'] uppercase">
             Miscellaneous
           </h2>
           <p>{data.strat.miscNotes}</p>
@@ -243,9 +241,7 @@ function TwoColumnSection({
   }
   return (
     <section className="flex flex-col space-y-2">
-      <h2 className="text-3xl font-['Space_Mono'] scale-y-125 uppercase">
-        {title}
-      </h2>
+      <h2 className="text-2xl font-['Druk_Wide_Bold'] uppercase">{title}</h2>
       <div className="grid grid-cols-2 gap-6">
         <div className="flex flex-col space-y-2">
           <h3 className="text-xl text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">

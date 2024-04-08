@@ -15,7 +15,7 @@ export const meta: MetaFunction = ({ params }) => {
 
 export default function VodsOrStratsSelect() {
   return (
-    <main className="flex grow text-8xl font-medium font-['Impact'] uppercase">
+    <main className="flex grow text-6xl font-['Druk_Wide_Bold'] uppercase">
       <div className="w-full grid grid-cols-2">
         <Link
           to="vods"
