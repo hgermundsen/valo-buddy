@@ -31,13 +31,12 @@ export function getStratListItems({
     where.title = { contains: query, mode: "insensitive" };
   }
   if (tagIds.length > 0) {
-    where.tags = {
-      some: {
-        id: {
-          in: tagIds,
-        },
-      },
-    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const whereAnd: any = [];
+    tagIds.forEach((tagId) => {
+      whereAnd.push({ tags: { some: { id: tagId } } });
+    });
+    where.AND = whereAnd;
   }
 
   return prisma.strat.findMany({
