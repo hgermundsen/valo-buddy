@@ -181,7 +181,7 @@ export default function StratDetailsPage() {
       <main className="flex flex-col space-y-12 px-16 py-4">
         {data.strat.miscLinks.length > 0 ? (
           <section>
-            <h2 className="text-2xl font-['Druk_Wide_Bold'] uppercase">
+            <h2 className="text-3xl font-['Druk_Wide_Bold'] uppercase">
               Links
             </h2>
             {data.strat.miscLinks.length === 0 ? (
@@ -237,7 +237,7 @@ export default function StratDetailsPage() {
         />
         {data.strat.miscNotes !== null ? (
           <section className="flex flex-col space-y-2">
-            <h2 className="text-2xl font-['Druk_Wide_Bold'] uppercase">
+            <h2 className="text-3xl font-['Druk_Wide_Bold'] uppercase">
               Miscellaneous
             </h2>
             <p>{data.strat.miscNotes}</p>
@@ -274,7 +274,7 @@ function TwoColumnSection({
   }
   return (
     <section className="flex flex-col space-y-2">
-      <h2 className="text-2xl font-['Druk_Wide_Bold'] uppercase">{title}</h2>
+      <h2 className="text-3xl font-['Druk_Wide_Bold'] uppercase">{title}</h2>
       <div className="grid grid-cols-2 gap-6">
         <div className="flex flex-col space-y-2">
           <h3 className="text-xl text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
