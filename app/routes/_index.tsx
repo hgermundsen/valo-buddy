@@ -8,7 +8,7 @@ export default function MapSelect() {
   const marqueePhrases = [
     "Get ValoBuddy",
     "Find lineups",
-    "Watch VODs",
+    "Review your VODs",
     "Study strats",
     "Learn fast",
     "Prep for any scenario",
