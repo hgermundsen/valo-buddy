@@ -141,7 +141,10 @@ export default function StratDetailsPage() {
             <h1 className="text-5xl font-['Druk_Wide_Bold'] uppercase">
               {data.strat.title}
             </h1>
-            <button className="h-min flex space-x-2 px-4 py-3 text-sm font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out">
+            <Link
+              to="edit"
+              className="h-min flex space-x-2 px-4 py-3 text-sm font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out"
+            >
               {/* btw this came from https://flowbite.com/icons/ */}
               {/* TODO: Consider moving this into some kind of shared component.
             /components/icons folder, maybe? */}
@@ -163,7 +166,7 @@ export default function StratDetailsPage() {
                 />
               </svg>
               <span>EDIT</span>
-            </button>
+            </Link>
           </div>
           <div className="space-x-2">
             {sortedTagNames.map((tagName) => (
