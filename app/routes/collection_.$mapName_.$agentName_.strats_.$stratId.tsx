@@ -136,7 +136,7 @@ export default function StratDetailsPage() {
           </Link>
         </nav>
 
-        <header className="flex flex-col space-y-2">
+        <header className="flex flex-col space-y-4">
           <div className="flex justify-between items-center">
             <h1 className="text-5xl font-['Druk_Wide_Bold'] uppercase">
               {data.strat.title}
