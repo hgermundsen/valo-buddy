@@ -55,7 +55,26 @@ export default function App() {
         <Header />
         <Outlet />
         <Footer />
-        <ScrollRestoration />
+        <ScrollRestoration
+          getKey={(location) => {
+            // TODO: Revisit once you implement functionality to edit VODs.
+            const re = new RegExp(
+              // Thanks ChatGPT, you a real one for this.
+              "/collection/[^/]+/[^/]+/strats/[^/]+(?:/edit)?",
+            );
+            if (re.test(location.pathname)) {
+              // Keep scroll position on strat detail page and strat edit page
+              // the same. Return the same key for both URLs/locations.
+              const key = location.pathname;
+              const suffix = "/edit";
+              if (key.endsWith(suffix)) {
+                return key.slice(0, -suffix.length);
+              }
+              return key;
+            }
+            return location.key;
+          }}
+        />
         <Scripts />
         <LiveReload />
       </body>
