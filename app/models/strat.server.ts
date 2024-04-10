@@ -86,3 +86,16 @@ export function getStrat({
     },
   });
 }
+
+export function doesStratBelongToUser({
+  id,
+  userId,
+}: Pick<Strat, "id"> & { userId: User["id"] }) {
+  return prisma.strat.findFirstOrThrow({ where: { id, userId } });
+}
+
+// Assumes whoever called this owns the strat being updated.
+export function updateStrat(id: Strat["id"], fields: Partial<Strat>) {
+  // // https://stackoverflow.com/a/69529379
+  return prisma.strat.update({ where: { id }, data: { ...fields } });
+}
