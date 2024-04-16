@@ -1,6 +1,7 @@
 import { Strat, StratTag, User } from "@prisma/client";
 
 import { prisma } from "~/db.server";
+import { replaceEmptyStringsWithNull } from "./utils.server";
 
 // Only supports querying by title.
 //
@@ -96,6 +97,10 @@ export function doesStratBelongToUser({
 
 // Assumes whoever called this owns the strat being updated.
 export function updateStrat(id: Strat["id"], fields: Partial<Strat>) {
-  // // https://stackoverflow.com/a/69529379
-  return prisma.strat.update({ where: { id }, data: { ...fields } });
+  const preprocessedFields = replaceEmptyStringsWithNull(fields);
+  // https://stackoverflow.com/a/69529379
+  return prisma.strat.update({
+    where: { id },
+    data: { ...preprocessedFields },
+  });
 }
