@@ -189,7 +189,7 @@ export default function StratDetailsPage() {
           defenderSideSection={
             StratSection.LINEUPS_AND_ABILITY_TRICKS_DEFENDER_SIDE
           }
-          title="Lineups and Agent Tricks"
+          title="Lineups and Ability Tricks"
           images={data.strat.images}
           attackSideNotes={data.strat.lineupsAndAbilityTricksAttackerSideNotes}
           defenderSideNotes={
