@@ -4,6 +4,7 @@ import { Link, useLoaderData } from "@remix-run/react";
 import React, { Suspense } from "react";
 import invariant from "tiny-invariant";
 import validator from "validator";
+import Breadcrumbs from "~/components/breadcrumbs";
 import { EditIcon } from "~/components/svgs";
 
 import { getStrat } from "~/models/strat.server";
@@ -107,35 +108,11 @@ export default function StratDetailsPage() {
   return (
     <div className="flex flex-col grow">
       <div className="flex flex-col space-y-4 z-10 sticky top-0 p-6 bg-neutral-900 bg-opacity-[96%]">
-        <nav className="flex space-x-2 text-neutral-400 text-sm font-['Space_Mono'] scale-y-110 uppercase">
-          <Link
-            to="/collection"
-            className="text-blue-500 hover:underline visited:text-purple-500"
-          >
-            Collection
-          </Link>
-          <span>&gt;</span>
-          <Link
-            to={`/collection/${data.mapName}`}
-            className="text-blue-500 hover:underline visited:text-purple-500"
-          >
-            {data.mapName}
-          </Link>
-          <span>&gt;</span>
-          <Link
-            to={`/collection/${data.mapName}/${data.agentName}`}
-            className="text-blue-500 hover:underline visited:text-purple-500"
-          >
-            {data.agentName}
-          </Link>
-          <span>&gt;</span>
-          <Link
-            to={`/collection/${data.mapName}/${data.agentName}/strats`}
-            className="text-blue-500 hover:underline visited:text-purple-500"
-          >
-            Strats
-          </Link>
-        </nav>
+        <Breadcrumbs
+          mapName={data.mapName}
+          agentName={data.agentName}
+          resourceName="strats"
+        />
 
         <header className="flex flex-col space-y-4">
           <div className="flex justify-between items-center">
