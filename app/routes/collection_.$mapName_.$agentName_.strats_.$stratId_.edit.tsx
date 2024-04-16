@@ -218,7 +218,9 @@ export default function EditStratPage() {
           }
           title="Lineups and Ability Tricks"
           images={data.strat.images}
-          attackSideNotes={data.strat.lineupsAndAbilityTricksAttackerSideNotes}
+          attackerSideNotes={
+            data.strat.lineupsAndAbilityTricksAttackerSideNotes
+          }
           defenderSideNotes={
             data.strat.lineupsAndAbilityTricksDefenderSideNotes
           }
@@ -229,7 +231,7 @@ export default function EditStratPage() {
           defenderSideSection={StratSection.EARLY_ROUND_DEFENDER_SIDE}
           title="Early Round"
           images={data.strat.images}
-          attackSideNotes={data.strat.earlyRoundAttackerSideNotes}
+          attackerSideNotes={data.strat.earlyRoundAttackerSideNotes}
           defenderSideNotes={data.strat.earlyRoundDefenderSideNotes}
         />
         <TwoColumnSection
@@ -238,7 +240,7 @@ export default function EditStratPage() {
           defenderSideSection={StratSection.MID_ROUND_DEFENDER_SIDE}
           title="Mid Round"
           images={data.strat.images}
-          attackSideNotes={data.strat.midRoundAttackerSideNotes}
+          attackerSideNotes={data.strat.midRoundAttackerSideNotes}
           defenderSideNotes={data.strat.midRoundDefenderSideNotes}
         />
         <TwoColumnSection
@@ -247,7 +249,7 @@ export default function EditStratPage() {
           defenderSideSection={StratSection.LATE_ROUND_DEFENDER_SIDE}
           title="Late Round"
           images={data.strat.images}
-          attackSideNotes={data.strat.lateRoundAttackerSideNotes}
+          attackerSideNotes={data.strat.lateRoundAttackerSideNotes}
           defenderSideNotes={data.strat.lateRoundDefenderSideNotes}
         />
         {data.strat.miscNotes !== null ? (
@@ -274,10 +276,25 @@ interface TwoColumnSectionProps {
   defenderSideSection: StratSection;
   title: string;
   images: StratImage[];
-  attackSideNotes: string | null;
+  attackerSideNotes: string | null;
   defenderSideNotes: string | null;
 }
 function TwoColumnSection(props: TwoColumnSectionProps) {
+  const TEXTAREA_MIN_ROWS = 4;
+
+  const attackerSideNotesNumLines =
+    props.attackerSideNotes?.split("\n").length || 0;
+  const defenderSideNotesNumLines =
+    props.defenderSideNotes?.split("\n").length || 0;
+  const attackerSideNotesNumRows = Math.max(
+    TEXTAREA_MIN_ROWS,
+    attackerSideNotesNumLines,
+  );
+  const defenderSideNotesNumRows = Math.max(
+    TEXTAREA_MIN_ROWS,
+    defenderSideNotesNumLines,
+  );
+
   return (
     <section className="flex flex-col space-y-2">
       <h2 className="text-3xl font-['Druk_Wide_Bold'] uppercase">
@@ -305,10 +322,10 @@ function TwoColumnSection(props: TwoColumnSectionProps) {
               ))}
             <textarea
               name={`${props.sectionPrefixForInputNames}AttackerSideNotes`}
-              rows={4}
+              rows={attackerSideNotesNumRows}
               className="w-full px-2 py-1 text-neutral-200 bg-neutral-700 border-b-2 border-neutral-600 outline-none hover:bg-neutral-600 hover:border-neutral-500 focus:bg-neutral-600 focus:border-neutral-500 transition"
             >
-              {props.attackSideNotes || ""}
+              {props.attackerSideNotes || ""}
             </textarea>
           </div>
         </div>
@@ -333,7 +350,7 @@ function TwoColumnSection(props: TwoColumnSectionProps) {
               ))}
             <textarea
               name={`${props.sectionPrefixForInputNames}DefenderSideNotes`}
-              rows={4}
+              rows={defenderSideNotesNumRows}
               className="w-full px-2 py-1 text-neutral-200 bg-neutral-700 border-b-2 border-neutral-600 outline-none hover:bg-neutral-600 hover:border-neutral-500 focus:bg-neutral-600 focus:border-neutral-500 transition"
             >
               {props.defenderSideNotes || ""}
