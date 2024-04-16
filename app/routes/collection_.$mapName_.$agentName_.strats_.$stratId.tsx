@@ -168,7 +168,9 @@ export default function StratDetailsPage() {
           }
           title="Lineups and Ability Tricks"
           images={data.strat.images}
-          attackSideNotes={data.strat.lineupsAndAbilityTricksAttackerSideNotes}
+          attackerSideNotes={
+            data.strat.lineupsAndAbilityTricksAttackerSideNotes
+          }
           defenderSideNotes={
             data.strat.lineupsAndAbilityTricksDefenderSideNotes
           }
@@ -178,7 +180,7 @@ export default function StratDetailsPage() {
           defenderSideSection={StratSection.EARLY_ROUND_DEFENDER_SIDE}
           title="Early Round"
           images={data.strat.images}
-          attackSideNotes={data.strat.earlyRoundAttackerSideNotes}
+          attackerSideNotes={data.strat.earlyRoundAttackerSideNotes}
           defenderSideNotes={data.strat.earlyRoundDefenderSideNotes}
         />
         <TwoColumnSection
@@ -186,7 +188,7 @@ export default function StratDetailsPage() {
           defenderSideSection={StratSection.MID_ROUND_DEFENDER_SIDE}
           title="Mid Round"
           images={data.strat.images}
-          attackSideNotes={data.strat.midRoundAttackerSideNotes}
+          attackerSideNotes={data.strat.midRoundAttackerSideNotes}
           defenderSideNotes={data.strat.midRoundDefenderSideNotes}
         />
         <TwoColumnSection
@@ -194,7 +196,7 @@ export default function StratDetailsPage() {
           defenderSideSection={StratSection.LATE_ROUND_DEFENDER_SIDE}
           title="Late Round"
           images={data.strat.images}
-          attackSideNotes={data.strat.lateRoundAttackerSideNotes}
+          attackerSideNotes={data.strat.lateRoundAttackerSideNotes}
           defenderSideNotes={data.strat.lateRoundDefenderSideNotes}
         />
         {data.strat.miscNotes !== null ? (
@@ -220,7 +222,7 @@ interface TwoColumnSectionProps {
   defenderSideSection: StratSection;
   title: string;
   images: StratImage[];
-  attackSideNotes: string | null;
+  attackerSideNotes: string | null;
   defenderSideNotes: string | null;
 }
 function TwoColumnSection({
@@ -228,10 +230,10 @@ function TwoColumnSection({
   defenderSideSection,
   title,
   images,
-  attackSideNotes,
+  attackerSideNotes,
   defenderSideNotes,
 }: TwoColumnSectionProps) {
-  if (attackSideNotes === null && defenderSideNotes === null) {
+  if (attackerSideNotes === null && defenderSideNotes === null) {
     return null;
   }
   return (
@@ -256,7 +258,7 @@ function TwoColumnSection({
                 />
               ))}
 
-            {attackSideNotes && attackSideNotes.length > 0 ? (
+            {attackerSideNotes && attackerSideNotes.length > 0 ? (
               <Suspense>
                 {/* https://stackoverflow.com/a/74607475 */}
                 <Markdown
@@ -269,7 +271,7 @@ function TwoColumnSection({
                     h5: "h6",
                   }}
                 >
-                  {attackSideNotes}
+                  {attackerSideNotes}
                 </Markdown>
               </Suspense>
             ) : (
