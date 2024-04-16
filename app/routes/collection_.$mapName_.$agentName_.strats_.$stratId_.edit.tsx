@@ -191,17 +191,13 @@ export default function EditStratPage() {
             <h2 className="text-3xl font-['Druk_Wide_Bold'] uppercase">
               Links
             </h2>
-            {data.strat.miscLinks.length === 0 ? (
-              <p className="text-neutral-400 italic">No content.</p>
-            ) : (
-              <ul>
-                <div className="grid gap-6 grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-                  {data.strat.miscLinks.map((link) => (
-                    <li key={link}>{link}</li>
-                  ))}
-                </div>
-              </ul>
-            )}
+            <ul>
+              <div className="grid gap-6 grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+                {data.strat.miscLinks.map((link) => (
+                  <li key={link}>{link}</li>
+                ))}
+              </div>
+            </ul>
           </section>
         ) : null}
         <TwoColumnSection
