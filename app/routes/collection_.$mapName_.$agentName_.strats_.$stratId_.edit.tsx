@@ -153,7 +153,7 @@ export default function EditStratPage() {
               name="title"
               aria-label="Strat title"
               defaultValue={data.strat.title}
-              className="grow text-4xl font-['Druk_Wide_Bold'] uppercase px-2 py-1 text-neutral-200 bg-neutral-700 border-b-2 border-neutral-600 outline-none hover:bg-neutral-600 hover:border-neutral-500 focus:bg-neutral-600 focus:border-neutral-500 transition"
+              className="grow text-5xl font-['Druk_Wide_Bold'] uppercase px-2 py-1 text-neutral-200 bg-neutral-700 border-b-2 border-neutral-600 outline-none hover:bg-neutral-600 hover:border-neutral-500 focus:bg-neutral-600 focus:border-neutral-500 transition"
             />
             <button
               type="submit"
