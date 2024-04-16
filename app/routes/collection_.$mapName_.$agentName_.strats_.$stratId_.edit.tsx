@@ -6,17 +6,11 @@ import {
   json,
   redirect,
 } from "@remix-run/node";
-import {
-  Form,
-  useLoaderData,
-  useNavigate,
-  useSearchParams,
-} from "@remix-run/react";
-import React, { Suspense } from "react";
+import { Form, useLoaderData, useNavigate } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import validator from "validator";
-import Breadcrumbs from "~/components/breadcrumbs";
 
+import Breadcrumbs from "~/components/breadcrumbs";
 import { CancelIcon, SaveIcon } from "~/components/svgs";
 import {
   doesStratBelongToUser,
@@ -25,9 +19,6 @@ import {
 } from "~/models/strat.server";
 import { requireUserId } from "~/session.server";
 import { safeRedirect } from "~/utils";
-
-// https://stackoverflow.com/a/75527318
-const Markdown = React.lazy(() => import("react-markdown"));
 
 export const meta: MetaFunction = () => {
   return [

@@ -1,18 +1,15 @@
 import { StratSection } from "@prisma/client";
 import { LoaderFunctionArgs, MetaFunction, json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
-import React, { Suspense } from "react";
 import invariant from "tiny-invariant";
 import validator from "validator";
-import Breadcrumbs from "~/components/breadcrumbs";
-import { EditIcon } from "~/components/svgs";
 
+import Breadcrumbs from "~/components/breadcrumbs";
+import Markdown from "~/components/markdown";
+import { EditIcon } from "~/components/svgs";
 import { getStrat } from "~/models/strat.server";
 import { requireUserId } from "~/session.server";
 import { capitalizeWord } from "~/utils";
-
-// https://stackoverflow.com/a/75527318
-const Markdown = React.lazy(() => import("react-markdown"));
 
 export const meta: MetaFunction = ({ params }) => {
   const mapName = capitalizeWord(params.mapName!);
@@ -259,21 +256,7 @@ function TwoColumnSection({
               ))}
 
             {attackerSideNotes && attackerSideNotes.length > 0 ? (
-              <Suspense>
-                {/* https://stackoverflow.com/a/74607475 */}
-                <Markdown
-                  className="markdown"
-                  components={{
-                    h1: "h2",
-                    h2: "h3",
-                    h3: "h4",
-                    h4: "h5",
-                    h5: "h6",
-                  }}
-                >
-                  {attackerSideNotes}
-                </Markdown>
-              </Suspense>
+              <Markdown content={attackerSideNotes} />
             ) : (
               <p className="text-neutral-400 italic">No content.</p>
             )}
@@ -298,21 +281,7 @@ function TwoColumnSection({
               ))}
 
             {defenderSideNotes && defenderSideNotes.length > 0 ? (
-              <Suspense>
-                {/* https://stackoverflow.com/a/74607475 */}
-                <Markdown
-                  className="markdown"
-                  components={{
-                    h1: "h2",
-                    h2: "h3",
-                    h3: "h4",
-                    h4: "h5",
-                    h5: "h6",
-                  }}
-                >
-                  {defenderSideNotes}
-                </Markdown>
-              </Suspense>
+              <Markdown content={defenderSideNotes} />
             ) : (
               <p className="text-neutral-400 italic">No content.</p>
             )}
