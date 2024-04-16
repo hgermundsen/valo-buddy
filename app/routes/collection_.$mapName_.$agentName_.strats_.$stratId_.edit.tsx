@@ -209,6 +209,7 @@ export default function EditStratPage() {
           </section>
         ) : null}
         <TwoColumnSection
+          sectionPrefixForInputNames="lineupsAndAbilityTricks"
           attackerSideSection={
             StratSection.LINEUPS_AND_ABILITY_TRICKS_ATTACKER_SIDE
           }
@@ -223,6 +224,7 @@ export default function EditStratPage() {
           }
         />
         <TwoColumnSection
+          sectionPrefixForInputNames="earlyRound"
           attackerSideSection={StratSection.EARLY_ROUND_ATTACKER_SIDE}
           defenderSideSection={StratSection.EARLY_ROUND_DEFENDER_SIDE}
           title="Early Round"
@@ -231,6 +233,7 @@ export default function EditStratPage() {
           defenderSideNotes={data.strat.earlyRoundDefenderSideNotes}
         />
         <TwoColumnSection
+          sectionPrefixForInputNames="midRound"
           attackerSideSection={StratSection.MID_ROUND_ATTACKER_SIDE}
           defenderSideSection={StratSection.MID_ROUND_DEFENDER_SIDE}
           title="Mid Round"
@@ -239,6 +242,7 @@ export default function EditStratPage() {
           defenderSideNotes={data.strat.midRoundDefenderSideNotes}
         />
         <TwoColumnSection
+          sectionPrefixForInputNames="lateRound"
           attackerSideSection={StratSection.LATE_ROUND_ATTACKER_SIDE}
           defenderSideSection={StratSection.LATE_ROUND_DEFENDER_SIDE}
           title="Late Round"
@@ -265,6 +269,7 @@ interface StratImage {
   imageURL: string;
 }
 interface TwoColumnSectionProps {
+  sectionPrefixForInputNames: string;
   attackerSideSection: StratSection;
   defenderSideSection: StratSection;
   title: string;
@@ -272,28 +277,22 @@ interface TwoColumnSectionProps {
   attackSideNotes: string | null;
   defenderSideNotes: string | null;
 }
-function TwoColumnSection({
-  attackerSideSection,
-  defenderSideSection,
-  title,
-  images,
-  attackSideNotes,
-  defenderSideNotes,
-}: TwoColumnSectionProps) {
-  if (attackSideNotes === null && defenderSideNotes === null) {
-    return null;
-  }
+function TwoColumnSection(props: TwoColumnSectionProps) {
   return (
     <section className="flex flex-col space-y-2">
-      <h2 className="text-3xl font-['Druk_Wide_Bold'] uppercase">{title}</h2>
+      <h2 className="text-3xl font-['Druk_Wide_Bold'] uppercase">
+        {props.title}
+      </h2>
       <div className="grid grid-cols-2 gap-6">
         <div className="flex flex-col space-y-2">
           <h3 className="text-xl text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
             Attacker Side
           </h3>
           <div className="pl-4">
-            {images
-              .filter((image) => image.stratSection === attackerSideSection)
+            {props.images
+              .filter(
+                (image) => image.stratSection === props.attackerSideSection,
+              )
               .map((image) => (
                 <img
                   key={image.id}
@@ -304,26 +303,13 @@ function TwoColumnSection({
                   alt="User-uploaded content"
                 />
               ))}
-
-            {attackSideNotes && attackSideNotes.length > 0 ? (
-              <Suspense>
-                {/* https://stackoverflow.com/a/74607475 */}
-                <Markdown
-                  className="markdown"
-                  components={{
-                    h1: "h2",
-                    h2: "h3",
-                    h3: "h4",
-                    h4: "h5",
-                    h5: "h6",
-                  }}
-                >
-                  {attackSideNotes}
-                </Markdown>
-              </Suspense>
-            ) : (
-              <p className="text-neutral-400 italic">No content.</p>
-            )}
+            <textarea
+              name={`${props.sectionPrefixForInputNames}AttackerSideNotes`}
+              rows={4}
+              className="w-full px-2 py-1 text-neutral-200 bg-neutral-700 border-b-2 border-neutral-600 outline-none hover:bg-neutral-600 hover:border-neutral-500 focus:bg-neutral-600 focus:border-neutral-500 transition"
+            >
+              {props.attackSideNotes || ""}
+            </textarea>
           </div>
         </div>
         <div className="flex flex-col space-y-2">
@@ -331,8 +317,10 @@ function TwoColumnSection({
             Defender Side
           </h3>
           <div className="pl-4">
-            {images
-              .filter((image) => image.stratSection === defenderSideSection)
+            {props.images
+              .filter(
+                (image) => image.stratSection === props.defenderSideSection,
+              )
               .map((image) => (
                 <img
                   key={image.id}
@@ -343,26 +331,13 @@ function TwoColumnSection({
                   alt="User-uploaded content"
                 />
               ))}
-
-            {defenderSideNotes && defenderSideNotes.length > 0 ? (
-              <Suspense>
-                {/* https://stackoverflow.com/a/74607475 */}
-                <Markdown
-                  className="markdown"
-                  components={{
-                    h1: "h2",
-                    h2: "h3",
-                    h3: "h4",
-                    h4: "h5",
-                    h5: "h6",
-                  }}
-                >
-                  {defenderSideNotes}
-                </Markdown>
-              </Suspense>
-            ) : (
-              <p className="text-neutral-400 italic">No content.</p>
-            )}
+            <textarea
+              name={`${props.sectionPrefixForInputNames}DefenderSideNotes`}
+              rows={4}
+              className="w-full px-2 py-1 text-neutral-200 bg-neutral-700 border-b-2 border-neutral-600 outline-none hover:bg-neutral-600 hover:border-neutral-500 focus:bg-neutral-600 focus:border-neutral-500 transition"
+            >
+              {props.defenderSideNotes || ""}
+            </textarea>
           </div>
         </div>
       </div>
