@@ -147,6 +147,16 @@ export default function EditStratPage() {
   return (
     <Form method="post" className="flex flex-col grow">
       <div className="flex flex-col space-y-4 z-10 sticky top-0 p-6 bg-neutral-900 bg-opacity-[96%]">
+        <div className="flex space-x-2 text-neutral-400 text-sm font-['Space_Mono'] scale-y-110 uppercase">
+          <span className="cursor-default">Collection</span>
+          <span>&gt;</span>
+          <span className="cursor-default">{data.mapName}</span>
+          <span>&gt;</span>
+          <span className="cursor-default">{data.agentName}</span>
+          <span>&gt;</span>
+          <span className="cursor-default">Strats</span>
+        </div>
+
         <header className="flex flex-col space-y-4">
           <div className="flex items-center space-x-2">
             <input
