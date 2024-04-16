@@ -313,11 +313,10 @@ function TwoColumnSection(props: TwoColumnSectionProps) {
               ))}
             <textarea
               name={`${props.sectionPrefixForInputNames}AttackerSideNotes`}
+              defaultValue={props.attackerSideNotes || ""}
               rows={attackerSideNotesNumRows}
               className="w-full px-2 py-1 text-neutral-200 bg-neutral-700 border-b-2 border-neutral-600 outline-none hover:bg-neutral-600 hover:border-neutral-500 focus:bg-neutral-600 focus:border-neutral-500 transition"
-            >
-              {props.attackerSideNotes || ""}
-            </textarea>
+            />
           </div>
         </div>
         <div className="flex flex-col space-y-2">
@@ -341,11 +340,10 @@ function TwoColumnSection(props: TwoColumnSectionProps) {
               ))}
             <textarea
               name={`${props.sectionPrefixForInputNames}DefenderSideNotes`}
+              defaultValue={props.defenderSideNotes || ""}
               rows={defenderSideNotesNumRows}
               className="w-full px-2 py-1 text-neutral-200 bg-neutral-700 border-b-2 border-neutral-600 outline-none hover:bg-neutral-600 hover:border-neutral-500 focus:bg-neutral-600 focus:border-neutral-500 transition"
-            >
-              {props.defenderSideNotes || ""}
-            </textarea>
+            />
           </div>
         </div>
       </div>
