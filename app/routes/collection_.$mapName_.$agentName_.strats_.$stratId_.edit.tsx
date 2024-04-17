@@ -6,12 +6,12 @@ import {
   json,
   redirect,
 } from "@remix-run/node";
-import { Form, useLoaderData, useNavigate } from "@remix-run/react";
+import { Form, useFetcher, useLoaderData, useNavigate } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import validator from "validator";
 
 import Breadcrumbs from "~/components/breadcrumbs";
-import { CancelIcon, SaveIcon } from "~/components/svgs";
+import { CancelIcon, PlusIcon, SaveIcon } from "~/components/svgs";
 import {
   doesStratBelongToUser,
   getStrat,
@@ -132,9 +132,20 @@ export async function action({ request, params }: ActionFunctionArgs) {
 }
 
 export default function EditStratPage() {
+  const fetcher = useFetcher();
   const navigate = useNavigate();
   const data = useLoaderData<typeof loader>();
   const sortedTagNames = data.strat.tags.map((tag) => tag.name).sort();
+
+  function addSection(sectionPrefixForInputNames: string) {
+    fetcher.submit(
+      { sectionPrefixForInputNames },
+      {
+        method: "POST",
+        action: `/collection/${data.mapName}/${data.agentName}/strats/${data.strat.id}/addSection`,
+      },
+    );
+  }
 
   return (
     <Form method="post" className="flex flex-col grow">
@@ -200,6 +211,7 @@ export default function EditStratPage() {
           </section>
         ) : null}
         <TwoColumnSection
+          addSection={addSection}
           sectionPrefixForInputNames="lineupsAndAbilityTricks"
           attackerSideSection={
             StratSection.LINEUPS_AND_ABILITY_TRICKS_ATTACKER_SIDE
@@ -217,6 +229,7 @@ export default function EditStratPage() {
           }
         />
         <TwoColumnSection
+          addSection={addSection}
           sectionPrefixForInputNames="earlyRound"
           attackerSideSection={StratSection.EARLY_ROUND_ATTACKER_SIDE}
           defenderSideSection={StratSection.EARLY_ROUND_DEFENDER_SIDE}
@@ -226,6 +239,7 @@ export default function EditStratPage() {
           defenderSideNotes={data.strat.earlyRoundDefenderSideNotes}
         />
         <TwoColumnSection
+          addSection={addSection}
           sectionPrefixForInputNames="midRound"
           attackerSideSection={StratSection.MID_ROUND_ATTACKER_SIDE}
           defenderSideSection={StratSection.MID_ROUND_DEFENDER_SIDE}
@@ -235,6 +249,7 @@ export default function EditStratPage() {
           defenderSideNotes={data.strat.midRoundDefenderSideNotes}
         />
         <TwoColumnSection
+          addSection={addSection}
           sectionPrefixForInputNames="lateRound"
           attackerSideSection={StratSection.LATE_ROUND_ATTACKER_SIDE}
           defenderSideSection={StratSection.LATE_ROUND_DEFENDER_SIDE}
@@ -262,6 +277,7 @@ interface StratImage {
   imageURL: string;
 }
 interface TwoColumnSectionProps {
+  addSection(sectionPrefixForInputNames: string): unknown; // TODO: Revisit type.
   sectionPrefixForInputNames: string;
   attackerSideSection: StratSection;
   defenderSideSection: StratSection;
@@ -271,8 +287,22 @@ interface TwoColumnSectionProps {
   defenderSideNotes: string | null;
 }
 function TwoColumnSection(props: TwoColumnSectionProps) {
-  const TEXTAREA_MIN_ROWS = 4;
+  if (props.attackerSideNotes === null && props.defenderSideNotes === null) {
+    return (
+      <div>
+        <button
+          type="button"
+          className="h-min flex space-x-2 px-4 py-3 text-sm font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out"
+          onClick={() => props.addSection(props.sectionPrefixForInputNames)}
+        >
+          <PlusIcon />
+          <span className="uppercase">Add {props.title} section</span>
+        </button>
+      </div>
+    );
+  }
 
+  const TEXTAREA_MIN_ROWS = 4;
   const attackerSideNotesNumLines =
     props.attackerSideNotes?.split("\n").length || 0;
   const defenderSideNotesNumLines =
