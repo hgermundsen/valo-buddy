@@ -174,7 +174,11 @@ export default function EditStratPage() {
               <span>SAVE</span>
             </button>
             <button
-              onClick={() => navigate(-1)}
+              onClick={() =>
+                navigate(
+                  `/collection/${data.mapName}/${data.agentName}/strats/${data.strat.id}`,
+                )
+              }
               type="button"
               className="h-min flex space-x-2 px-4 py-3 text-sm font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out"
             >
