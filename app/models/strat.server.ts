@@ -92,7 +92,13 @@ export function doesStratBelongToUser({
   id,
   userId,
 }: Pick<Strat, "id"> & { userId: User["id"] }) {
-  return prisma.strat.findFirstOrThrow({ where: { id, userId } });
+  // TODO: Is there a way to do this without sending any data from this strat
+  // across the wire from the database to the server? Looking for the cheapest
+  // possible way to get a yes-or-no answer.
+  return prisma.strat.findFirstOrThrow({
+    select: { id: true },
+    where: { id, userId },
+  });
 }
 
 // Assumes whoever called this owns the strat being updated.
