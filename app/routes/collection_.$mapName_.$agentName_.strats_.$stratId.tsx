@@ -241,51 +241,47 @@ function TwoColumnSection({
           <h3 className="text-xl text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
             Attacker Side
           </h3>
-          <div className="pl-4">
-            {images
-              .filter((image) => image.stratSection === attackerSideSection)
-              .map((image) => (
-                <img
-                  key={image.id}
-                  src={image.imageURL}
-                  // TODO: Come up with a better way to do alt tags. Make the
-                  // user provide them? Maybe the title attached to imgur
-                  // upload?
-                  alt="User-uploaded content"
-                />
-              ))}
+          {images
+            .filter((image) => image.stratSection === attackerSideSection)
+            .map((image) => (
+              <img
+                key={image.id}
+                src={image.imageURL}
+                // TODO: Come up with a better way to do alt tags. Make the
+                // user provide them? Maybe the title attached to imgur
+                // upload?
+                alt="User-uploaded content"
+              />
+            ))}
 
-            {attackerSideNotes && attackerSideNotes.length > 0 ? (
-              <Markdown content={attackerSideNotes} />
-            ) : (
-              <p className="text-neutral-400 italic">No content.</p>
-            )}
-          </div>
+          {attackerSideNotes && attackerSideNotes.length > 0 ? (
+            <Markdown content={attackerSideNotes} />
+          ) : (
+            <p className="text-neutral-400 italic">No content.</p>
+          )}
         </div>
         <div className="flex flex-col space-y-2">
           <h3 className="text-xl text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
             Defender Side
           </h3>
-          <div className="pl-4">
-            {images
-              .filter((image) => image.stratSection === defenderSideSection)
-              .map((image) => (
-                <img
-                  key={image.id}
-                  src={image.imageURL}
-                  // TODO: Come up with a better way to do alt tags. Make the
-                  // user provide them? Maybe the title attached to imgur
-                  // upload?
-                  alt="User-uploaded content"
-                />
-              ))}
+          {images
+            .filter((image) => image.stratSection === defenderSideSection)
+            .map((image) => (
+              <img
+                key={image.id}
+                src={image.imageURL}
+                // TODO: Come up with a better way to do alt tags. Make the
+                // user provide them? Maybe the title attached to imgur
+                // upload?
+                alt="User-uploaded content"
+              />
+            ))}
 
-            {defenderSideNotes && defenderSideNotes.length > 0 ? (
-              <Markdown content={defenderSideNotes} />
-            ) : (
-              <p className="text-neutral-400 italic">No content.</p>
-            )}
-          </div>
+          {defenderSideNotes && defenderSideNotes.length > 0 ? (
+            <Markdown content={defenderSideNotes} />
+          ) : (
+            <p className="text-neutral-400 italic">No content.</p>
+          )}
         </div>
       </div>
     </section>
