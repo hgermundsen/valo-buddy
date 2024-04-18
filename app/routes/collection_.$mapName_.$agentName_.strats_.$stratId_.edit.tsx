@@ -6,7 +6,8 @@ import {
   json,
   redirect,
 } from "@remix-run/node";
-import { Form, useFetcher, useLoaderData, useNavigate } from "@remix-run/react";
+import { Form, useLoaderData, useNavigate } from "@remix-run/react";
+import { useState } from "react";
 import invariant from "tiny-invariant";
 import validator from "validator";
 
@@ -132,20 +133,28 @@ export async function action({ request, params }: ActionFunctionArgs) {
 }
 
 export default function EditStratPage() {
-  const fetcher = useFetcher();
   const navigate = useNavigate();
   const data = useLoaderData<typeof loader>();
   const sortedTagNames = data.strat.tags.map((tag) => tag.name).sort();
-
-  function addSection(sectionPrefixForInputNames: string) {
-    fetcher.submit(
-      { sectionPrefixForInputNames },
-      {
-        method: "POST",
-        action: `/collection/${data.mapName}/${data.agentName}/strats/${data.strat.id}/addSection`,
-      },
-    );
-  }
+  const [
+    isLineupsAndAbilityTricksSectionPresent,
+    setIsLineupsAndAbilityTricksSectionPresent,
+  ] = useState(
+    data.strat.lineupsAndAbilityTricksAttackerSideNotes !== null ||
+      data.strat.lineupsAndAbilityTricksDefenderSideNotes !== null,
+  );
+  const [isEarlyRoundSectionPresent, setIsEarlyRoundSectionPresent] = useState(
+    data.strat.earlyRoundAttackerSideNotes !== null ||
+      data.strat.earlyRoundDefenderSideNotes !== null,
+  );
+  const [isMidRoundSectionPresent, setIsMidRoundSectionPresent] = useState(
+    data.strat.midRoundAttackerSideNotes !== null ||
+      data.strat.midRoundDefenderSideNotes !== null,
+  );
+  const [isLateRoundSectionPresent, setIsLateRoundSectionPresent] = useState(
+    data.strat.lateRoundAttackerSideNotes !== null ||
+      data.strat.lateRoundDefenderSideNotes !== null,
+  );
 
   return (
     <Form method="post" className="flex flex-col grow">
@@ -215,8 +224,9 @@ export default function EditStratPage() {
           </section>
         ) : null}
         <TwoColumnSection
-          addSection={addSection}
           sectionPrefixForInputNames="lineupsAndAbilityTricks"
+          isSectionPresent={isLineupsAndAbilityTricksSectionPresent}
+          addSection={() => setIsLineupsAndAbilityTricksSectionPresent(true)}
           attackerSideSection={
             StratSection.LINEUPS_AND_ABILITY_TRICKS_ATTACKER_SIDE
           }
@@ -233,8 +243,9 @@ export default function EditStratPage() {
           }
         />
         <TwoColumnSection
-          addSection={addSection}
           sectionPrefixForInputNames="earlyRound"
+          isSectionPresent={isEarlyRoundSectionPresent}
+          addSection={() => setIsEarlyRoundSectionPresent(true)}
           attackerSideSection={StratSection.EARLY_ROUND_ATTACKER_SIDE}
           defenderSideSection={StratSection.EARLY_ROUND_DEFENDER_SIDE}
           title="Early Round"
@@ -243,8 +254,9 @@ export default function EditStratPage() {
           defenderSideNotes={data.strat.earlyRoundDefenderSideNotes}
         />
         <TwoColumnSection
-          addSection={addSection}
           sectionPrefixForInputNames="midRound"
+          isSectionPresent={isMidRoundSectionPresent}
+          addSection={() => setIsMidRoundSectionPresent(true)}
           attackerSideSection={StratSection.MID_ROUND_ATTACKER_SIDE}
           defenderSideSection={StratSection.MID_ROUND_DEFENDER_SIDE}
           title="Mid Round"
@@ -253,8 +265,9 @@ export default function EditStratPage() {
           defenderSideNotes={data.strat.midRoundDefenderSideNotes}
         />
         <TwoColumnSection
-          addSection={addSection}
           sectionPrefixForInputNames="lateRound"
+          isSectionPresent={isLateRoundSectionPresent}
+          addSection={() => setIsLateRoundSectionPresent(true)}
           attackerSideSection={StratSection.LATE_ROUND_ATTACKER_SIDE}
           defenderSideSection={StratSection.LATE_ROUND_DEFENDER_SIDE}
           title="Late Round"
@@ -281,8 +294,10 @@ interface StratImage {
   imageURL: string;
 }
 interface TwoColumnSectionProps {
-  addSection(sectionPrefixForInputNames: string): unknown; // TODO: Revisit type.
   sectionPrefixForInputNames: string;
+  isSectionPresent: boolean;
+  addSection(): void;
+
   attackerSideSection: StratSection;
   defenderSideSection: StratSection;
   title: string;
@@ -291,13 +306,13 @@ interface TwoColumnSectionProps {
   defenderSideNotes: string | null;
 }
 function TwoColumnSection(props: TwoColumnSectionProps) {
-  if (props.attackerSideNotes === null && props.defenderSideNotes === null) {
+  if (!props.isSectionPresent) {
     return (
       <div>
         <button
           type="button"
           className="h-min flex space-x-2 px-4 py-3 text-sm font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out"
-          onClick={() => props.addSection(props.sectionPrefixForInputNames)}
+          onClick={() => props.addSection()}
         >
           <PlusIcon />
           <span className="uppercase">Add {props.title} section</span>
