@@ -138,6 +138,7 @@ export default function StratDetailsPage() {
       </div>
 
       <main className="flex flex-col space-y-12 px-16 py-4">
+        {/* TODO: Create OneColumnSection component. */}
         {data.strat.miscLinks.length > 0 ? (
           <section>
             <h2 className="text-3xl font-['Druk_Wide_Bold'] uppercase">
