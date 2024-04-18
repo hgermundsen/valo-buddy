@@ -134,6 +134,7 @@ export async function action({ request, params }: ActionFunctionArgs) {
 
 export default function EditStratPage() {
   const navigate = useNavigate();
+
   const data = useLoaderData<typeof loader>();
   const sortedTagNames = data.strat.tags.map((tag) => tag.name).sort();
   const [
@@ -154,6 +155,9 @@ export default function EditStratPage() {
   const [isLateRoundSectionPresent, setIsLateRoundSectionPresent] = useState(
     data.strat.lateRoundAttackerSideNotes !== null ||
       data.strat.lateRoundDefenderSideNotes !== null,
+  );
+  const [isMiscNotesSectionPresent, setIsMiscNotesSectionPresent] = useState(
+    data.strat.miscNotes !== null,
   );
 
   return (
@@ -275,16 +279,59 @@ export default function EditStratPage() {
           attackerSideNotes={data.strat.lateRoundAttackerSideNotes}
           defenderSideNotes={data.strat.lateRoundDefenderSideNotes}
         />
-        {data.strat.miscNotes !== null ? (
-          <section className="flex flex-col space-y-2">
-            <h2 className="text-3xl font-['Druk_Wide_Bold'] uppercase">
-              Miscellaneous
-            </h2>
-            <p>{data.strat.miscNotes}</p>
-          </section>
-        ) : null}
+        <OneColumnSection
+          inputName="miscNotes"
+          isSectionPresent={isMiscNotesSectionPresent}
+          addSection={() => setIsMiscNotesSectionPresent(true)}
+          title="Miscellaneous"
+          content={data.strat.miscNotes}
+        />
       </main>
     </Form>
+  );
+}
+
+const TEXTAREA_MIN_ROWS = 4;
+
+interface OneColumnSectionProps {
+  inputName: string;
+  isSectionPresent: boolean;
+  addSection(): void;
+
+  title: string;
+  content: string | null;
+}
+function OneColumnSection(props: OneColumnSectionProps) {
+  if (!props.isSectionPresent) {
+    return (
+      <div>
+        <button
+          type="button"
+          className="h-min flex space-x-2 px-4 py-3 text-sm font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out"
+          onClick={() => props.addSection()}
+        >
+          <PlusIcon />
+          <span className="uppercase">Add {props.title} section</span>
+        </button>
+      </div>
+    );
+  }
+
+  const contentNumLines = props.content?.split("\n").length || 0;
+  const contentNumRows = Math.max(TEXTAREA_MIN_ROWS, contentNumLines);
+
+  return (
+    <section className="flex flex-col space-y-2">
+      <h2 className="text-3xl font-['Druk_Wide_Bold'] uppercase">
+        {props.title}
+      </h2>
+      <textarea
+        name={props.inputName}
+        defaultValue={props.content || ""}
+        rows={contentNumRows}
+        className="w-full px-2 py-1 text-neutral-200 bg-neutral-700 border-b-2 border-neutral-600 outline-none hover:bg-neutral-600 hover:border-neutral-500 focus:bg-neutral-600 focus:border-neutral-500 transition"
+      />
+    </section>
   );
 }
 
@@ -321,7 +368,6 @@ function TwoColumnSection(props: TwoColumnSectionProps) {
     );
   }
 
-  const TEXTAREA_MIN_ROWS = 4;
   const attackerSideNotesNumLines =
     props.attackerSideNotes?.split("\n").length || 0;
   const defenderSideNotesNumLines =
@@ -345,55 +391,47 @@ function TwoColumnSection(props: TwoColumnSectionProps) {
           <h3 className="text-xl text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
             Attacker Side
           </h3>
-          <div className="pl-4">
-            {props.images
-              .filter(
-                (image) => image.stratSection === props.attackerSideSection,
-              )
-              .map((image) => (
-                <img
-                  key={image.id}
-                  src={image.imageURL}
-                  // TODO: Come up with a better way to do alt tags. Make the
-                  // user provide them? Maybe the title attached to imgur
-                  // upload?
-                  alt="User-uploaded content"
-                />
-              ))}
-            <textarea
-              name={`${props.sectionPrefixForInputNames}AttackerSideNotes`}
-              defaultValue={props.attackerSideNotes || ""}
-              rows={attackerSideNotesNumRows}
-              className="w-full px-2 py-1 text-neutral-200 bg-neutral-700 border-b-2 border-neutral-600 outline-none hover:bg-neutral-600 hover:border-neutral-500 focus:bg-neutral-600 focus:border-neutral-500 transition"
-            />
-          </div>
+          {props.images
+            .filter((image) => image.stratSection === props.attackerSideSection)
+            .map((image) => (
+              <img
+                key={image.id}
+                src={image.imageURL}
+                // TODO: Come up with a better way to do alt tags. Make the
+                // user provide them? Maybe the title attached to imgur
+                // upload?
+                alt="User-uploaded content"
+              />
+            ))}
+          <textarea
+            name={`${props.sectionPrefixForInputNames}AttackerSideNotes`}
+            defaultValue={props.attackerSideNotes || ""}
+            rows={attackerSideNotesNumRows}
+            className="w-full px-2 py-1 text-neutral-200 bg-neutral-700 border-b-2 border-neutral-600 outline-none hover:bg-neutral-600 hover:border-neutral-500 focus:bg-neutral-600 focus:border-neutral-500 transition"
+          />
         </div>
         <div className="flex flex-col space-y-2">
           <h3 className="text-xl text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
             Defender Side
           </h3>
-          <div className="pl-4">
-            {props.images
-              .filter(
-                (image) => image.stratSection === props.defenderSideSection,
-              )
-              .map((image) => (
-                <img
-                  key={image.id}
-                  src={image.imageURL}
-                  // TODO: Come up with a better way to do alt tags. Make the
-                  // user provide them? Maybe the title attached to imgur
-                  // upload?
-                  alt="User-uploaded content"
-                />
-              ))}
-            <textarea
-              name={`${props.sectionPrefixForInputNames}DefenderSideNotes`}
-              defaultValue={props.defenderSideNotes || ""}
-              rows={defenderSideNotesNumRows}
-              className="w-full px-2 py-1 text-neutral-200 bg-neutral-700 border-b-2 border-neutral-600 outline-none hover:bg-neutral-600 hover:border-neutral-500 focus:bg-neutral-600 focus:border-neutral-500 transition"
-            />
-          </div>
+          {props.images
+            .filter((image) => image.stratSection === props.defenderSideSection)
+            .map((image) => (
+              <img
+                key={image.id}
+                src={image.imageURL}
+                // TODO: Come up with a better way to do alt tags. Make the
+                // user provide them? Maybe the title attached to imgur
+                // upload?
+                alt="User-uploaded content"
+              />
+            ))}
+          <textarea
+            name={`${props.sectionPrefixForInputNames}DefenderSideNotes`}
+            defaultValue={props.defenderSideNotes || ""}
+            rows={defenderSideNotesNumRows}
+            className="w-full px-2 py-1 text-neutral-200 bg-neutral-700 border-b-2 border-neutral-600 outline-none hover:bg-neutral-600 hover:border-neutral-500 focus:bg-neutral-600 focus:border-neutral-500 transition"
+          />
         </div>
       </div>
     </section>
