@@ -84,6 +84,7 @@ export default function AgentSelect() {
                 mask: "linear-gradient(-60deg, black 30%, #0008, black 70%) right/350% 100%",
               }}
               className="hover:animate-[shimmer_0.5s]"
+              draggable={false}
             />
           </Link>
         ))}

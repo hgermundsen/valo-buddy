@@ -46,9 +46,10 @@ export default function MapSelect() {
               {name}
             </span>
             <img
-              className="group-hover:scale-110 transition ease-out"
               src={image}
               alt={name}
+              className="group-hover:scale-110 transition ease-out"
+              draggable={false}
             />
           </Link>
         ))}
