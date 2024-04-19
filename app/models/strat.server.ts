@@ -1,6 +1,7 @@
 import { Strat, StratTag, User } from "@prisma/client";
 
 import { prisma } from "~/db.server";
+
 import { replaceEmptyStringsWithNull } from "./utils.server";
 
 // Only supports querying by title.
@@ -109,4 +110,12 @@ export function updateStrat(id: Strat["id"], fields: Partial<Strat>) {
     where: { id },
     data: { ...preprocessedFields },
   });
+}
+
+export function createEmptyStrat(
+  map: Strat["map"],
+  agent: Strat["agent"],
+  userId: User["id"],
+) {
+  return prisma.strat.create({ data: { userId, map, agent, title: "" } });
 }
