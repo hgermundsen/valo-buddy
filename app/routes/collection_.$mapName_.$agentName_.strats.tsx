@@ -1,11 +1,22 @@
-import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
-import { Form, Link, json, useLoaderData, useSubmit } from "@remix-run/react";
+import type {
+  ActionFunctionArgs,
+  LoaderFunctionArgs,
+  MetaFunction,
+} from "@remix-run/node";
+import {
+  Form,
+  Link,
+  json,
+  redirect,
+  useLoaderData,
+  useSubmit,
+} from "@remix-run/react";
 import { Fragment } from "react";
 import invariant from "tiny-invariant";
 import validator from "validator";
-import { CreateIcon } from "~/components/svgs";
 
-import { getStratListItems } from "~/models/strat.server";
+import { CreateIcon } from "~/components/svgs";
+import { createEmptyStrat, getStratListItems } from "~/models/strat.server";
 import { requireUserId } from "~/session.server";
 import { capitalizeWord } from "~/utils";
 
@@ -107,6 +118,34 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   return json({ mapName, agentName, strats, q, selectedTagIds });
 }
 
+export async function action({ request, params }: ActionFunctionArgs) {
+  const userId = await requireUserId(request);
+
+  // TODO: From a security perspective, is this enough?
+  //
+  // Should we also be sanitizing the input by removing or escaping dangerous
+  // characters? Is it possible for there be some kind of JavaScript code
+  // injection here?
+  //
+  // Consider passing the entire request URL through something like
+  // https://github.com/braintree/sanitize-url
+  const mapName = params.mapName;
+  const agentName = params.agentName;
+  invariant(mapName, "Map name not found");
+  invariant(agentName, "Agent name not found");
+  const isMapNameValid = validator.isIn(mapName, mapNames);
+  const isAgentNameValid = validator.isIn(agentName, agentNames);
+  if (!isMapNameValid || !isAgentNameValid) {
+    // Intentionally being vague with this error message. Something like
+    // "Invalid map name" or "Invalid agent name" would indicate to attackers
+    // that they're on to something here.
+    throw new Response("Not Found", { status: 404 });
+  }
+
+  const newStrat = await createEmptyStrat(mapName, agentName, userId);
+  return redirect(`${newStrat.id}/edit`);
+}
+
 export default function Strats() {
   interface Tag {
     id: string;
@@ -136,16 +175,16 @@ export default function Strats() {
       {/* When there is no content behind/underneath this box, 96% against
       bg-neutral-800 makes this section's background exactly bg-neutral-900. */}
       <section className="flex flex-col space-y-4 z-10 sticky top-0 p-6 w-full bg-neutral-900 bg-opacity-[96%]">
-        <div className="flex justify-between">
+        <Form method="post" className="flex justify-between">
           <h1 className="text-5xl font-['Druk_Wide_Bold']">STRATS</h1>
-          <Link
-            to={"create"}
+          <button
+            type="submit"
             className="h-min flex space-x-2 px-4 py-3 text-sm font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out"
           >
             <CreateIcon />
             <span>CREATE</span>
-          </Link>
-        </div>
+          </button>
+        </Form>
 
         <Form
           role="search"
