@@ -4,10 +4,9 @@ import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, useLoaderData, useSubmit } from "@remix-run/react";
 import { Fragment } from "react";
-import invariant from "tiny-invariant";
-import validator from "validator";
 
 import { getVodListItems } from "~/models/vod.server";
+import { validateMapAndAgentNames } from "~/security";
 import { requireUserId } from "~/session.server";
 import { capitalizeWord } from "~/utils";
 
@@ -21,68 +20,10 @@ export const meta: MetaFunction = ({ params }) => {
   ];
 };
 
-// TODO: Move these into some utils file.
-const mapNames = [
-  "ascent",
-  "bind",
-  "breeze",
-  "fracture",
-  "haven",
-  "icebox",
-  "lotus",
-  "pearl",
-  "split",
-  "sunset",
-];
-const agentNames = [
-  "astra",
-  "breach",
-  "brimstone",
-  "chamber",
-  "cypher",
-  "deadlock",
-  "fade",
-  "gekko",
-  "harbor",
-  "iso",
-  "jett",
-  "kayo",
-  "killjoy",
-  "neon",
-  "omen",
-  "phoenix",
-  "raze",
-  "reyna",
-  "sage",
-  "skye",
-  "sova",
-  "viper",
-  "yoru",
-];
-
 export async function loader({ request, params }: LoaderFunctionArgs) {
   const userId = await requireUserId(request);
 
-  // TODO: From a security perspective, is this enough?
-  //
-  // Should we also be sanitizing the input by removing or escaping dangerous
-  // characters? Is it possible for there be some kind of JavaScript code
-  // injection here?
-  //
-  // Consider passing the entire request URL through something like
-  // https://github.com/braintree/sanitize-url
-  const mapName = params.mapName;
-  const agentName = params.agentName;
-  invariant(mapName, "Map name not found");
-  invariant(agentName, "Agent name not found");
-  const isMapNameValid = validator.isIn(mapName, mapNames);
-  const isAgentNameValid = validator.isIn(agentName, agentNames);
-  if (!isMapNameValid || !isAgentNameValid) {
-    // Intentionally being vague with this error message. Something like
-    // "Invalid map name" or "Invalid agent name" would indicate to attackers
-    // that they're on to something here.
-    throw new Response("Not Found", { status: 404 });
-  }
+  const { mapName, agentName } = validateMapAndAgentNames(params);
 
   const url = new URL(request.url);
   const q = url.searchParams.get("q") || undefined;
