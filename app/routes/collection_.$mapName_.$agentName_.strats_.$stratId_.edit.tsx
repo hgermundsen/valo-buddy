@@ -11,8 +11,10 @@ import { useState } from "react";
 import invariant from "tiny-invariant";
 
 import Breadcrumbs from "~/components/breadcrumbs";
+import DeleteModal from "~/components/deleteModal";
 import { CancelIcon, PlusIcon, SaveIcon } from "~/components/svgs";
 import {
+  deleteStrat,
   doesStratBelongToUser,
   getStrat,
   updateStrat,
@@ -60,9 +62,20 @@ export async function action({ request, params }: ActionFunctionArgs) {
   }
 
   const formData = await request.formData();
+
+  if (formData.get("isDeleteAction") === "true") {
+    // TODO: Error handling?
+    // TODO: Optimistic UI?
+    await deleteStrat(stratId, userId);
+
+    // It's safe to just include user input in the form of params here. The page
+    // we're redirecting to performs input sanitization and validation.
+    const stratsPageURL = `/collection/${params.mapName}/${params.agentName}/strats`;
+    return redirect(stratsPageURL);
+  }
+
   // If the user edits a field and ends up retyping the same thing, then that
-  // field will appear in this object. Your server function needs to handle
-  // that.
+  // field will appear in this object. The server function handles this.
   const updates = Object.fromEntries(formData);
   // TODO: Error handling?
   // TODO: Optimistic UI?
@@ -71,11 +84,13 @@ export async function action({ request, params }: ActionFunctionArgs) {
   // It's safe to just include user input in the form of params here. The page
   // we're redirecting to performs input sanitization and validation.
   const correspondingStratDetailPageURL = `/collection/${params.mapName}/${params.agentName}/strats/${params.stratId}`;
-  return redirect(safeRedirect(correspondingStratDetailPageURL));
+  return redirect(correspondingStratDetailPageURL);
 }
 
 export default function EditStratPage() {
   const navigate = useNavigate();
+
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
 
   const data = useLoaderData<typeof loader>();
   const sortedTagNames = data.strat.tags.map((tag) => tag.name).sort();
@@ -103,133 +118,151 @@ export default function EditStratPage() {
   );
 
   return (
-    <Form method="post" className="flex flex-col grow">
-      <div className="flex flex-col space-y-4 z-10 sticky top-0 p-6 bg-neutral-900 bg-opacity-[96%]">
-        <Breadcrumbs
-          disabled
-          mapName={data.mapName}
-          agentName={data.agentName}
-          resourceName="strats"
+    <>
+      {isDeleteModalVisible ? (
+        <DeleteModal
+          cancelButtonCallback={() => setIsDeleteModalVisible(false)}
+          isForStrat
+          title={data.strat.title}
         />
+      ) : null}
 
-        <header className="flex flex-col space-y-4">
-          <div className="flex items-center space-x-2">
-            <input
-              type="text"
-              name="title"
-              aria-label="Strat title"
-              defaultValue={data.strat.title}
-              className="grow text-5xl font-['Druk_Wide_Bold'] uppercase px-2 py-1 text-neutral-200 bg-neutral-700 border-b-2 border-neutral-600 outline-none hover:bg-neutral-600 hover:border-neutral-500 focus:bg-neutral-600 focus:border-neutral-500 transition"
-            />
-            <button
-              type="submit"
-              className="h-min flex space-x-2 px-4 py-3 text-sm font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out"
-            >
-              <SaveIcon />
-              <span>SAVE</span>
-            </button>
-            <button
-              onClick={() =>
-                navigate(
-                  `/collection/${data.mapName}/${data.agentName}/strats/${data.strat.id}`,
-                )
-              }
-              type="button"
-              className="h-min flex space-x-2 px-4 py-3 text-sm font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out"
-            >
-              <CancelIcon />
-              <span>CANCEL</span>
-            </button>
-          </div>
-          <div className="space-x-2">
-            {sortedTagNames.map((tagName) => (
-              <span
-                key={tagName}
-                className="px-4 py-2 rounded-full bg-neutral-700 text-sm uppercase font-['Space_Mono']"
+      <Form method="post" className="flex flex-col grow">
+        <div className="flex flex-col space-y-4 z-10 sticky top-0 p-6 bg-neutral-900 bg-opacity-[96%]">
+          <Breadcrumbs
+            disabled
+            mapName={data.mapName}
+            agentName={data.agentName}
+            resourceName="strats"
+          />
+
+          <header className="flex flex-col space-y-4">
+            <div className="flex items-center space-x-2">
+              <input
+                type="text"
+                name="title"
+                aria-label="Strat title"
+                defaultValue={data.strat.title}
+                className="grow text-5xl font-['Druk_Wide_Bold'] uppercase px-2 py-1 text-neutral-200 bg-neutral-700 border-b-2 border-neutral-600 outline-none hover:bg-neutral-600 hover:border-neutral-500 focus:bg-neutral-600 focus:border-neutral-500 transition"
+              />
+              <button
+                type="submit"
+                className="h-min flex space-x-2 px-4 py-3 text-sm font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out"
               >
-                {tagName}
-              </span>
-            ))}
-          </div>
-        </header>
-      </div>
+                <SaveIcon />
+                <span>SAVE</span>
+              </button>
+              <button
+                onClick={() =>
+                  navigate(
+                    `/collection/${data.mapName}/${data.agentName}/strats/${data.strat.id}`,
+                  )
+                }
+                type="button"
+                className="h-min flex space-x-2 px-4 py-3 text-sm font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out"
+              >
+                <CancelIcon />
+                <span>CANCEL</span>
+              </button>
+            </div>
+            <div className="space-x-2">
+              {sortedTagNames.map((tagName) => (
+                <span
+                  key={tagName}
+                  className="px-4 py-2 rounded-full bg-neutral-700 text-sm uppercase font-['Space_Mono']"
+                >
+                  {tagName}
+                </span>
+              ))}
+            </div>
+          </header>
+        </div>
 
-      <main className="flex flex-col space-y-12 px-16 py-4">
-        {data.strat.miscLinks.length > 0 ? (
-          <section>
-            <h2 className="text-3xl font-['Druk_Wide_Bold'] uppercase">
-              Links
-            </h2>
-            <ul>
-              <div className="grid gap-6 grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-                {data.strat.miscLinks.map((link) => (
-                  <li key={link}>{link}</li>
-                ))}
-              </div>
-            </ul>
-          </section>
-        ) : null}
-        <TwoColumnSection
-          sectionPrefixForInputNames="lineupsAndAbilityTricks"
-          isSectionPresent={isLineupsAndAbilityTricksSectionPresent}
-          addSection={() => setIsLineupsAndAbilityTricksSectionPresent(true)}
-          attackerSideSection={
-            StratSection.LINEUPS_AND_ABILITY_TRICKS_ATTACKER_SIDE
-          }
-          defenderSideSection={
-            StratSection.LINEUPS_AND_ABILITY_TRICKS_DEFENDER_SIDE
-          }
-          title="Lineups and Ability Tricks"
-          images={data.strat.images}
-          attackerSideNotes={
-            data.strat.lineupsAndAbilityTricksAttackerSideNotes
-          }
-          defenderSideNotes={
-            data.strat.lineupsAndAbilityTricksDefenderSideNotes
-          }
-        />
-        <TwoColumnSection
-          sectionPrefixForInputNames="earlyRound"
-          isSectionPresent={isEarlyRoundSectionPresent}
-          addSection={() => setIsEarlyRoundSectionPresent(true)}
-          attackerSideSection={StratSection.EARLY_ROUND_ATTACKER_SIDE}
-          defenderSideSection={StratSection.EARLY_ROUND_DEFENDER_SIDE}
-          title="Early Round"
-          images={data.strat.images}
-          attackerSideNotes={data.strat.earlyRoundAttackerSideNotes}
-          defenderSideNotes={data.strat.earlyRoundDefenderSideNotes}
-        />
-        <TwoColumnSection
-          sectionPrefixForInputNames="midRound"
-          isSectionPresent={isMidRoundSectionPresent}
-          addSection={() => setIsMidRoundSectionPresent(true)}
-          attackerSideSection={StratSection.MID_ROUND_ATTACKER_SIDE}
-          defenderSideSection={StratSection.MID_ROUND_DEFENDER_SIDE}
-          title="Mid Round"
-          images={data.strat.images}
-          attackerSideNotes={data.strat.midRoundAttackerSideNotes}
-          defenderSideNotes={data.strat.midRoundDefenderSideNotes}
-        />
-        <TwoColumnSection
-          sectionPrefixForInputNames="lateRound"
-          isSectionPresent={isLateRoundSectionPresent}
-          addSection={() => setIsLateRoundSectionPresent(true)}
-          attackerSideSection={StratSection.LATE_ROUND_ATTACKER_SIDE}
-          defenderSideSection={StratSection.LATE_ROUND_DEFENDER_SIDE}
-          title="Late Round"
-          images={data.strat.images}
-          attackerSideNotes={data.strat.lateRoundAttackerSideNotes}
-          defenderSideNotes={data.strat.lateRoundDefenderSideNotes}
-        />
-        <OneColumnSection
-          inputName="miscNotes"
-          isSectionPresent={isMiscNotesSectionPresent}
-          addSection={() => setIsMiscNotesSectionPresent(true)}
-          title="Miscellaneous"
-          content={data.strat.miscNotes}
-        />
-      </main>
-    </Form>
+        <main className="flex flex-col space-y-12 px-16 py-4">
+          {data.strat.miscLinks.length > 0 ? (
+            <section>
+              <h2 className="text-3xl font-['Druk_Wide_Bold'] uppercase">
+                Links
+              </h2>
+              <ul>
+                <div className="grid gap-6 grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+                  {data.strat.miscLinks.map((link) => (
+                    <li key={link}>{link}</li>
+                  ))}
+                </div>
+              </ul>
+            </section>
+          ) : null}
+          <TwoColumnSection
+            sectionPrefixForInputNames="lineupsAndAbilityTricks"
+            isSectionPresent={isLineupsAndAbilityTricksSectionPresent}
+            addSection={() => setIsLineupsAndAbilityTricksSectionPresent(true)}
+            attackerSideSection={
+              StratSection.LINEUPS_AND_ABILITY_TRICKS_ATTACKER_SIDE
+            }
+            defenderSideSection={
+              StratSection.LINEUPS_AND_ABILITY_TRICKS_DEFENDER_SIDE
+            }
+            title="Lineups and Ability Tricks"
+            images={data.strat.images}
+            attackerSideNotes={
+              data.strat.lineupsAndAbilityTricksAttackerSideNotes
+            }
+            defenderSideNotes={
+              data.strat.lineupsAndAbilityTricksDefenderSideNotes
+            }
+          />
+          <TwoColumnSection
+            sectionPrefixForInputNames="earlyRound"
+            isSectionPresent={isEarlyRoundSectionPresent}
+            addSection={() => setIsEarlyRoundSectionPresent(true)}
+            attackerSideSection={StratSection.EARLY_ROUND_ATTACKER_SIDE}
+            defenderSideSection={StratSection.EARLY_ROUND_DEFENDER_SIDE}
+            title="Early Round"
+            images={data.strat.images}
+            attackerSideNotes={data.strat.earlyRoundAttackerSideNotes}
+            defenderSideNotes={data.strat.earlyRoundDefenderSideNotes}
+          />
+          <TwoColumnSection
+            sectionPrefixForInputNames="midRound"
+            isSectionPresent={isMidRoundSectionPresent}
+            addSection={() => setIsMidRoundSectionPresent(true)}
+            attackerSideSection={StratSection.MID_ROUND_ATTACKER_SIDE}
+            defenderSideSection={StratSection.MID_ROUND_DEFENDER_SIDE}
+            title="Mid Round"
+            images={data.strat.images}
+            attackerSideNotes={data.strat.midRoundAttackerSideNotes}
+            defenderSideNotes={data.strat.midRoundDefenderSideNotes}
+          />
+          <TwoColumnSection
+            sectionPrefixForInputNames="lateRound"
+            isSectionPresent={isLateRoundSectionPresent}
+            addSection={() => setIsLateRoundSectionPresent(true)}
+            attackerSideSection={StratSection.LATE_ROUND_ATTACKER_SIDE}
+            defenderSideSection={StratSection.LATE_ROUND_DEFENDER_SIDE}
+            title="Late Round"
+            images={data.strat.images}
+            attackerSideNotes={data.strat.lateRoundAttackerSideNotes}
+            defenderSideNotes={data.strat.lateRoundDefenderSideNotes}
+          />
+          <OneColumnSection
+            inputName="miscNotes"
+            isSectionPresent={isMiscNotesSectionPresent}
+            addSection={() => setIsMiscNotesSectionPresent(true)}
+            title="Miscellaneous"
+            content={data.strat.miscNotes}
+          />
+
+          <button
+            type="button"
+            onClick={() => setIsDeleteModalVisible(true)}
+            className="h-min px-4 py-3 text-sm font-['Space_Mono'] text-valored-500 border-2 border-neutral-700 bg-gradient-to-t from-red-600 to-neutral-900 from-50% to-50% bg-top bg-[length:100%_200%] outline-none hover:bg-bottom hover:text-neutral-900 hover:border-valored-500 focus:bg-valored-400 transition-all duration-300 ease-in-out"
+          >
+            DELETE STRAT
+          </button>
+        </main>
+      </Form>
+    </>
   );
 }
 
