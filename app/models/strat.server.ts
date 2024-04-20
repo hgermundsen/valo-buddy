@@ -119,3 +119,12 @@ export function createEmptyStrat(
 ) {
   return prisma.strat.create({ data: { userId, map, agent, title: "" } });
 }
+
+export function deleteStrat(id: Strat["id"], userId: User["id"]) {
+  // Without the userId check, we have an IDOR vulnerability.
+  //
+  // There will only ever be one record which satisfies these WHERE clauses, but
+  // Prisma doesn't let us include the userId in that block since they aren't
+  // unique on strats (makes sense, but is still a bit frustrating).
+  return prisma.strat.deleteMany({ where: { id, userId } });
+}
