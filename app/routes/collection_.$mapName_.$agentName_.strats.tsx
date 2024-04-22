@@ -1,20 +1,9 @@
-import type {
-  ActionFunctionArgs,
-  LoaderFunctionArgs,
-  MetaFunction,
-} from "@remix-run/node";
-import {
-  Form,
-  Link,
-  json,
-  redirect,
-  useLoaderData,
-  useSubmit,
-} from "@remix-run/react";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
+import { Form, Link, json, useLoaderData, useSubmit } from "@remix-run/react";
 import { Fragment } from "react";
 
 import { CreateIcon } from "~/components/svgs";
-import { createEmptyStrat, getStratListItems } from "~/models/strat.server";
+import { getStratListItems } from "~/models/strat.server";
 import { validateMapAndAgentNames } from "~/security";
 import { requireUserId } from "~/session.server";
 import { capitalizeWord } from "~/utils";
@@ -59,13 +48,6 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   return json({ mapName, agentName, strats, q, selectedTagIds });
 }
 
-export async function action({ request, params }: ActionFunctionArgs) {
-  const userId = await requireUserId(request);
-  const { mapName, agentName } = validateMapAndAgentNames(params);
-  const newStrat = await createEmptyStrat(mapName, agentName, userId);
-  return redirect(`${newStrat.id}/edit`);
-}
-
 export default function Strats() {
   interface Tag {
     id: string;
@@ -95,16 +77,16 @@ export default function Strats() {
       {/* When there is no content behind/underneath this box, 96% against
       bg-neutral-800 makes this section's background exactly bg-neutral-900. */}
       <section className="flex flex-col space-y-4 z-10 sticky top-0 p-6 w-full bg-neutral-900 bg-opacity-[96%]">
-        <Form method="post" className="flex justify-between">
+        <div className="flex justify-between">
           <h1 className="text-5xl font-['Druk_Wide_Bold']">STRATS</h1>
-          <button
-            type="submit"
+          <Link
+            to="create"
             className="h-min flex space-x-2 px-4 py-3 text-sm font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out"
           >
             <CreateIcon />
             <span>CREATE</span>
-          </button>
-        </Form>
+          </Link>
+        </div>
 
         <Form
           role="search"

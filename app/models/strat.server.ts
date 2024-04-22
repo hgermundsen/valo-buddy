@@ -120,6 +120,27 @@ export function createEmptyStrat(
   return prisma.strat.create({ data: { userId, map, agent, title: "" } });
 }
 
+export function createStrat(
+  userId: User["id"],
+  map: Strat["map"],
+  agent: Strat["agent"],
+  title: Strat["title"],
+  fields: Partial<Strat>,
+) {
+  // TODO: Is this necessary for this create func?
+  const preprocessedFields = replaceEmptyStringsWithNull(fields);
+  // https://stackoverflow.com/a/69529379
+  return prisma.strat.create({
+    data: {
+      user: { connect: { id: userId } },
+      map,
+      agent,
+      title,
+      ...preprocessedFields,
+    },
+  });
+}
+
 export function deleteStrat(id: Strat["id"], userId: User["id"]) {
   // Without the userId check, we have an IDOR vulnerability.
   //

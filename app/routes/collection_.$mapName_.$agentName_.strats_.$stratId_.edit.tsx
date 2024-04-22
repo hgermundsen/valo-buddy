@@ -21,7 +21,6 @@ import {
 } from "~/models/strat.server";
 import { validateMapAndAgentNames } from "~/security";
 import { requireUserId } from "~/session.server";
-import { safeRedirect } from "~/utils";
 
 export const meta: MetaFunction = () => {
   return [
