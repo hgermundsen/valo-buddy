@@ -46,7 +46,7 @@ export default function StratDetailsPage() {
 
   return (
     <div className="flex flex-col grow">
-      <div className="flex flex-col space-y-4 z-10 sticky top-0 p-6 bg-neutral-900 bg-opacity-[96%]">
+      <div className="flex flex-col space-y-4 z-10 sticky top-0 p-4 bg-neutral-900 bg-opacity-[96%]">
         <Breadcrumbs
           mapName={data.mapName}
           agentName={data.agentName}

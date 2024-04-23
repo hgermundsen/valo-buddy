@@ -77,7 +77,7 @@ export default function Strats() {
     <main className="flex flex-col grow">
       {/* When there is no content behind/underneath this box, 96% against
       bg-neutral-800 makes this section's background exactly bg-neutral-900. */}
-      <section className="flex flex-col space-y-4 z-10 sticky top-0 p-6 w-full bg-neutral-900 bg-opacity-[96%]">
+      <section className="flex flex-col space-y-4 z-10 sticky top-0 p-4 w-full bg-neutral-900 bg-opacity-[96%]">
         <Breadcrumbs mapName={data.mapName} agentName={data.agentName} />
         <div className="flex justify-between">
           <h1 className="text-5xl font-['Druk_Wide_Bold']">STRATS</h1>
