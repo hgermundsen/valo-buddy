@@ -1,6 +1,7 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { Form, Link, json, useLoaderData, useSubmit } from "@remix-run/react";
 import { Fragment } from "react";
+import Breadcrumbs from "~/components/breadcrumbs";
 
 import { CreateIcon } from "~/components/svgs";
 import { getStratListItems } from "~/models/strat.server";
@@ -77,6 +78,7 @@ export default function Strats() {
       {/* When there is no content behind/underneath this box, 96% against
       bg-neutral-800 makes this section's background exactly bg-neutral-900. */}
       <section className="flex flex-col space-y-4 z-10 sticky top-0 p-6 w-full bg-neutral-900 bg-opacity-[96%]">
+        <Breadcrumbs mapName={data.mapName} agentName={data.agentName} />
         <div className="flex justify-between">
           <h1 className="text-5xl font-['Druk_Wide_Bold']">STRATS</h1>
           <Link

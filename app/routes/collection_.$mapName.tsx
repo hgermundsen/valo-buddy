@@ -1,6 +1,8 @@
-import type { MetaFunction } from "@remix-run/node";
-import { Link } from "@remix-run/react";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
+import { Link, json, useLoaderData } from "@remix-run/react";
 
+import Breadcrumbs from "~/components/breadcrumbs";
+import { getMapName } from "~/security";
 import { capitalizeWord } from "~/utils";
 
 // Agent images: at the bottom of https://valorant.fandom.com/wiki/Iso
@@ -34,12 +36,18 @@ export const meta: MetaFunction = ({ params }) => {
   return [{ title: `ValoBuddy - ${mapName}` }];
 };
 
+export function loader({ params }: LoaderFunctionArgs) {
+  const mapName = getMapName(params);
+  return json({ mapName });
+}
+
 interface Agent {
   name: string;
   image: string;
 }
 
 export default function AgentSelect() {
+  const data = useLoaderData<typeof loader>();
   const agents: Agent[] = [
     { name: "astra", image: astra },
     { name: "breach", image: breach },
@@ -66,29 +74,34 @@ export default function AgentSelect() {
     { name: "yoru", image: yoru },
   ];
   return (
-    <main className="flex grow justify-center items-center">
-      <div className="grid grid-cols-9">
-        {agents.map(({ name, image }) => (
-          <Link
-            key={name}
-            to={name}
-            className="p-1 ring-inset ring-2 ring-white/40 hover:ring-4 hover:ring-green-200 transition"
-          >
-            <img
-              src={image}
-              alt={name}
-              // Have to do this part with raw CSS, Tailwind doesn't have
-              // classes for "mask".
-              style={{
-                // https://stackoverflow.com/a/68217932
-                mask: "linear-gradient(-60deg, black 30%, #0008, black 70%) right/350% 100%",
-              }}
-              className="hover:animate-[shimmer_0.5s]"
-              draggable={false}
-            />
-          </Link>
-        ))}
+    <>
+      <div className="p-4 bg-neutral-900">
+        <Breadcrumbs />
       </div>
-    </main>
+      <main className="flex grow justify-center items-center">
+        <div className="grid grid-cols-9">
+          {agents.map(({ name, image }) => (
+            <Link
+              key={name}
+              to={name}
+              className="p-1 ring-inset ring-2 ring-white/40 hover:ring-4 hover:ring-green-200 transition"
+            >
+              <img
+                src={image}
+                alt={name}
+                // Have to do this part with raw CSS, Tailwind doesn't have
+                // classes for "mask".
+                style={{
+                  // https://stackoverflow.com/a/68217932
+                  mask: "linear-gradient(-60deg, black 30%, #0008, black 70%) right/350% 100%",
+                }}
+                className="hover:animate-[shimmer_0.5s]"
+                draggable={false}
+              />
+            </Link>
+          ))}
+        </div>
+      </main>
+    </>
   );
 }
