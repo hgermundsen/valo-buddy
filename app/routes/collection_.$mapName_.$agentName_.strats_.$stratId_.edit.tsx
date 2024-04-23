@@ -19,7 +19,7 @@ import {
   getStrat,
   updateStrat,
 } from "~/models/strat.server";
-import { validateMapAndAgentNames } from "~/security";
+import { getMapNameAndAgentName } from "~/security";
 import { requireUserId } from "~/session.server";
 
 export const meta: MetaFunction = () => {
@@ -34,7 +34,7 @@ export const meta: MetaFunction = () => {
 export async function loader({ request, params }: LoaderFunctionArgs) {
   const userId = await requireUserId(request);
 
-  const { mapName, agentName } = validateMapAndAgentNames(params);
+  const { mapName, agentName } = getMapNameAndAgentName(params);
 
   const stratId = params.stratId;
   invariant(stratId, "Strat ID not found");

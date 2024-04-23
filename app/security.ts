@@ -40,10 +40,7 @@ const AGENT_NAMES = [
   "yoru",
 ];
 
-export function validateMapAndAgentNames(params: Params<string>): {
-  mapName: string;
-  agentName: string;
-} {
+export function getMapName(params: Params<string>): string {
   // TODO: From a security perspective, is this enough?
   //
   // Should we also be sanitizing the input by removing or escaping dangerous
@@ -53,17 +50,43 @@ export function validateMapAndAgentNames(params: Params<string>): {
   // Consider passing the entire request URL through something like
   // https://github.com/braintree/sanitize-url
   const mapName = params.mapName;
-  const agentName = params.agentName;
   invariant(mapName, "Map name not found");
-  invariant(agentName, "Agent name not found");
   const isMapNameValid = validator.isIn(mapName, MAP_NAMES);
+  if (!isMapNameValid) {
+    // Intentionally being vague with this error message. Something like
+    // "Invalid map name" would indicate to attackers that they're on to
+    // something here.
+    throw new Response("Not Found", { status: 404 });
+  }
+  return mapName;
+}
+
+export function getAgentName(params: Params<string>): string {
+  // TODO: From a security perspective, is this enough?
+  //
+  // Should we also be sanitizing the input by removing or escaping dangerous
+  // characters? Is it possible for there be some kind of JavaScript code
+  // injection here?
+  //
+  // Consider passing the entire request URL through something like
+  // https://github.com/braintree/sanitize-url
+  const agentName = params.agentName;
+  invariant(agentName, "Agent name not found");
   const isAgentNameValid = validator.isIn(agentName, AGENT_NAMES);
-  if (!isMapNameValid || !isAgentNameValid) {
+  if (!isAgentNameValid) {
     // Intentionally being vague with this error message. Something like
     // "Invalid map name" or "Invalid agent name" would indicate to attackers
     // that they're on to something here.
     throw new Response("Not Found", { status: 404 });
   }
+  return agentName;
+}
 
+export function getMapNameAndAgentName(params: Params<string>): {
+  mapName: string;
+  agentName: string;
+} {
+  const mapName = getMapName(params);
+  const agentName = getAgentName(params);
   return { mapName, agentName };
 }

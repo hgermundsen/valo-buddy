@@ -12,7 +12,7 @@ import { useState } from "react";
 import Breadcrumbs from "~/components/breadcrumbs";
 import { CancelIcon, PlusIcon, SaveIcon } from "~/components/svgs";
 import { createStrat } from "~/models/strat.server";
-import { validateMapAndAgentNames } from "~/security";
+import { getMapNameAndAgentName } from "~/security";
 import { requireUserId } from "~/session.server";
 
 export const meta: MetaFunction = () => {
@@ -25,7 +25,7 @@ export const meta: MetaFunction = () => {
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
   await requireUserId(request);
-  const { mapName, agentName } = validateMapAndAgentNames(params);
+  const { mapName, agentName } = getMapNameAndAgentName(params);
   return json({ mapName, agentName });
 }
 
@@ -33,7 +33,7 @@ export async function action({ request, params }: ActionFunctionArgs) {
   // TODO: Input sanitization. Big time.
 
   const userId = await requireUserId(request);
-  const { mapName, agentName } = validateMapAndAgentNames(params);
+  const { mapName, agentName } = getMapNameAndAgentName(params);
   const formData = await request.formData();
   const content = Object.fromEntries(formData);
 

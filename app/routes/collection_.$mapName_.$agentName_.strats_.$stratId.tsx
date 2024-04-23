@@ -7,7 +7,7 @@ import Breadcrumbs from "~/components/breadcrumbs";
 import Markdown from "~/components/markdown";
 import { EditIcon } from "~/components/svgs";
 import { getStrat } from "~/models/strat.server";
-import { validateMapAndAgentNames } from "~/security";
+import { getMapNameAndAgentName } from "~/security";
 import { requireUserId } from "~/session.server";
 import { capitalizeWord } from "~/utils";
 
@@ -26,7 +26,7 @@ export const meta: MetaFunction = ({ params }) => {
 export async function loader({ request, params }: LoaderFunctionArgs) {
   const userId = await requireUserId(request);
 
-  const { mapName, agentName } = validateMapAndAgentNames(params);
+  const { mapName, agentName } = getMapNameAndAgentName(params);
 
   const stratId = params.stratId;
   invariant(stratId, "Strat ID not found");

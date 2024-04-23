@@ -6,7 +6,7 @@ import { Form, useLoaderData, useSubmit } from "@remix-run/react";
 import { Fragment } from "react";
 
 import { getVodListItems } from "~/models/vod.server";
-import { validateMapAndAgentNames } from "~/security";
+import { getMapNameAndAgentName } from "~/security";
 import { requireUserId } from "~/session.server";
 import { capitalizeWord } from "~/utils";
 
@@ -23,7 +23,7 @@ export const meta: MetaFunction = ({ params }) => {
 export async function loader({ request, params }: LoaderFunctionArgs) {
   const userId = await requireUserId(request);
 
-  const { mapName, agentName } = validateMapAndAgentNames(params);
+  const { mapName, agentName } = getMapNameAndAgentName(params);
 
   const url = new URL(request.url);
   const q = url.searchParams.get("q") || undefined;
