@@ -77,7 +77,7 @@ export default function Strats() {
     <main className="flex flex-col grow">
       {/* When there is no content behind/underneath this box, 96% against
       bg-neutral-800 makes this section's background exactly bg-neutral-900. */}
-      <section className="flex flex-col space-y-4 z-10 sticky top-0 p-4 w-full bg-neutral-900 bg-opacity-[96%]">
+      <section className="flex flex-col space-y-2 z-10 sticky top-0 p-4 w-full bg-neutral-900 bg-opacity-[96%]">
         <Breadcrumbs mapName={data.mapName} agentName={data.agentName} />
         <div className="flex justify-between">
           <h1 className="text-5xl font-['Druk_Wide_Bold']">STRATS</h1>
@@ -96,7 +96,10 @@ export default function Strats() {
             const isFirstSearch = data.q === undefined;
             submit(event.currentTarget, { replace: !isFirstSearch });
           }}
-          className="flex flex-col space-y-4"
+          // space-y-3 instead of space-y-2 here because tag labels have rings
+          // around them, which isn't accounted for when calculating that
+          // spacing. So we're giving them a little extra breathing room.
+          className="flex flex-col space-y-3"
         >
           <div className="relative">
             <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -147,8 +150,8 @@ export default function Strats() {
                   htmlFor={tag.id}
                   className={
                     data.selectedTagIds.includes(tag.id)
-                      ? "select-none cursor-pointer h-min px-4 py-2 bg-neutral-700 rounded-full ring-1 ring-neutral-500 text-sm font-['Space_Mono'] uppercase hover:ring-2 hover:ring-green-200 transition"
-                      : "select-none cursor-pointer h-min px-4 py-2 bg-neutral-800 rounded-full ring-1 ring-neutral-500 text-sm font-['Space_Mono'] uppercase hover:ring-2 hover:ring-green-200 transition"
+                      ? "select-none cursor-pointer px-4 py-2 bg-neutral-700 rounded-full ring-1 ring-neutral-500 text-sm font-['Space_Mono'] uppercase hover:ring-2 hover:ring-green-200 transition"
+                      : "select-none cursor-pointer px-4 py-2 bg-neutral-800 rounded-full ring-1 ring-neutral-500 text-sm font-['Space_Mono'] uppercase hover:ring-2 hover:ring-green-200 transition"
                   }
                 >
                   {tag.name}

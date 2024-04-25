@@ -46,14 +46,14 @@ export default function StratDetailsPage() {
 
   return (
     <div className="flex flex-col grow">
-      <div className="flex flex-col space-y-4 z-10 sticky top-0 p-4 bg-neutral-900 bg-opacity-[96%]">
+      <div className="flex flex-col space-y-2 z-10 sticky top-0 p-4 bg-neutral-900 bg-opacity-[96%]">
         <Breadcrumbs
           mapName={data.mapName}
           agentName={data.agentName}
           resourceName="strats"
         />
 
-        <header className="flex flex-col space-y-4">
+        <header className="flex flex-col space-y-2">
           <div className="flex justify-between items-center">
             <h1 className="text-5xl font-['Druk_Wide_Bold'] uppercase">
               {data.strat.title}
@@ -66,14 +66,14 @@ export default function StratDetailsPage() {
               <span>EDIT</span>
             </Link>
           </div>
-          <div className="space-x-2">
+          <div className="flex space-x-2">
             {sortedTagNames.map((tagName) => (
-              <span
+              <div
                 key={tagName}
                 className="px-4 py-2 rounded-full bg-neutral-700 text-sm uppercase font-['Space_Mono']"
               >
                 {tagName}
-              </span>
+              </div>
             ))}
           </div>
         </header>

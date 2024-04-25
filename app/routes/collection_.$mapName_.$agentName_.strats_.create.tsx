@@ -80,14 +80,14 @@ export default function CreateStratPage() {
 
   return (
     <Form method="post" className="flex flex-col grow">
-      <div className="flex flex-col space-y-4 z-10 sticky top-0 p-4 bg-neutral-900 bg-opacity-[96%]">
+      <div className="flex flex-col space-y-2 z-10 sticky top-0 p-4 bg-neutral-900 bg-opacity-[96%]">
         <Breadcrumbs
           mapName={data.mapName}
           agentName={data.agentName}
           resourceName="strats"
         />
 
-        <header className="flex flex-col space-y-4">
+        <header className="flex flex-col space-y-2">
           <div className="flex items-center space-x-2">
             <input
               type="text"
@@ -114,10 +114,10 @@ export default function CreateStratPage() {
               <span>CANCEL</span>
             </button>
           </div>
-          <div>
-            <span className="px-4 py-2 rounded-full bg-neutral-700 text-sm uppercase font-['Space_Mono']">
+          <div className="flex space-x-2">
+            <div className="px-4 py-2 rounded-full bg-neutral-700 text-sm uppercase font-['Space_Mono']">
               TODO: Let users add tags here
-            </span>
+            </div>
           </div>
         </header>
       </div>
