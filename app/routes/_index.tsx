@@ -4,19 +4,49 @@ import { useEffect, useState } from "react";
 
 export const meta: MetaFunction = () => [{ title: "ValoBuddy" }];
 
-export default function MapSelect() {
-  const marqueePhrases = [
-    "Get ValoBuddy",
-    "Find lineups",
-    "Review your VODs",
-    "Study strats",
-    "Learn fast",
-    "Prep for any scenario",
-    "Play with confidence",
-    "Climb the ranked ladder",
-    "Buy the SEN bundle",
-  ];
+const MARQUEE_PHRASES = [
+  "Get ValoBuddy",
+  "Find lineups",
+  "Review your VODs",
+  "Study strats",
+  "Learn fast",
+  "Prep for any scenario",
+  "Play with confidence",
+  "Climb the ranked ladder",
+  "Buy the SEN bundle",
+];
 
+const ENCODING_CHARS = ["!", "@", "#", "$", "%", "^", "&", "*", "?"];
+// Starting with one character instead of none so that on (very) initial page
+// load, there isn't a pop or a jerk between when the h1 tag is empty and when
+// it suddenly has content.
+const INITIAL_PRODUCT_NAME_TEXT_AS_ARRAY = [
+  "$",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+];
+const FINAL_PRODUCT_NAME_TEXT_AS_ARRAY = [
+  "V",
+  "a",
+  "l",
+  "o",
+  "B",
+  "u",
+  "d",
+  "d",
+  "y",
+];
+const WINDOW_SIZE = 8;
+const ANIMATION_TICK_DURATION_IN_MILLIS = 60;
+const ANIMATION_INTERMISSION_DURATION_IN_MILLIS = 3000;
+
+export default function MapSelect() {
   // Setting this state var's initial value to "ValoBuddy" so that in a
   // situation where JavaScript is being slow to load in or start executing,
   // something still shows up on the page. It's also good for SEO — web crawlers
@@ -24,40 +54,26 @@ export default function MapSelect() {
   const [productNameText, setProductNameText] = useState("ValoBuddy");
 
   useEffect(() => {
-    const animationTickDuration = 60; // Milliseconds
-    const encodingChars = ["!", "@", "#", "$", "%", "^", "&", "*", "?"];
-
-    // Starting with one character instead of none so that on (very) initial
-    // page load, there isn't a pop or a jerk between when the h1 tag is empty
-    // and when it suddenly has content.
-    const curProductNameTextAsArray = ["$", "", "", "", "", "", "", "", ""];
-    const finalProductNameTextAsArray = [
-      "V",
-      "a",
-      "l",
-      "o",
-      "B",
-      "u",
-      "d",
-      "d",
-      "y",
-    ];
+    let curProductNameTextAsArray = INITIAL_PRODUCT_NAME_TEXT_AS_ARRAY;
 
     // Sliding window approach to produce the "decoding" animation. Each time
     // the window moves forward by one index, each character inside the window
     // gets a new decode character. Once a character is no longer inside the
     // window, it becomes its final, "decoded" character.
-    const windowSize = 8;
-    let startIdx = -1 * (windowSize - 1);
+    let startIdx = -1 * (WINDOW_SIZE - 1);
     let endIdx = 0;
-    const textDecodingInterval = setInterval(() => {
+    // Fun fact: timeouts and intervals both have the Timeout type.
+    let animationInterval: NodeJS.Timeout;
+    let animationIntermissionTimeout: NodeJS.Timeout;
+
+    function animationLoop() {
       // Change out every char inside the window.
       for (let i = startIdx; i <= endIdx; i++) {
-        if (i < 0 || i >= finalProductNameTextAsArray.length) {
+        if (i < 0 || i >= FINAL_PRODUCT_NAME_TEXT_AS_ARRAY.length) {
           continue;
         }
         const randomEncodingChar =
-          encodingChars[Math.floor(Math.random() * encodingChars.length)];
+          ENCODING_CHARS[Math.floor(Math.random() * ENCODING_CHARS.length)];
         curProductNameTextAsArray[i] = randomEncodingChar;
       }
       // For the character that just exited the window, set it to its "final"
@@ -65,28 +81,46 @@ export default function MapSelect() {
       const idxThatJustExitedWindow = startIdx - 1;
       if (idxThatJustExitedWindow >= 0) {
         curProductNameTextAsArray[idxThatJustExitedWindow] =
-          finalProductNameTextAsArray[idxThatJustExitedWindow];
+          FINAL_PRODUCT_NAME_TEXT_AS_ARRAY[idxThatJustExitedWindow];
       }
       // Update the product name text with the next "frame".
       setProductNameText(curProductNameTextAsArray.join(""));
       // Slide the window forward.
       startIdx++;
       endIdx++;
-      // If the animation/effect is finished, clear this interval.
+      // If the animation/effect is finished, pause for a bit before restarting.
       if (startIdx > curProductNameTextAsArray.length) {
-        clearInterval(textDecodingInterval);
+        curProductNameTextAsArray = INITIAL_PRODUCT_NAME_TEXT_AS_ARRAY;
+        startIdx = -1 * (WINDOW_SIZE - 1);
+        endIdx = 0;
+
+        clearInterval(animationInterval);
+        animationIntermissionTimeout = setTimeout(() => {
+          animationInterval = setInterval(
+            animationLoop,
+            ANIMATION_TICK_DURATION_IN_MILLIS,
+          );
+        }, ANIMATION_INTERMISSION_DURATION_IN_MILLIS);
       }
-    }, animationTickDuration);
+    }
+
+    animationInterval = setInterval(
+      animationLoop,
+      ANIMATION_TICK_DURATION_IN_MILLIS,
+    );
 
     // When this component is unmounted, clear this interval (just in case the
     // animation/effect isn't finished when the user navigates away from this
     // page, for instance).
-    return () => clearInterval(textDecodingInterval);
+    return () => {
+      clearInterval(animationInterval);
+      clearTimeout(animationIntermissionTimeout);
+    };
   }, []);
 
   return (
     <main className="flex flex-col space-y-32 grow justify-center items-center">
-      <MarqueeRtol phrases={marqueePhrases} />
+      <MarqueeRtol phrases={MARQUEE_PHRASES} />
       <div className="flex flex-col items-center space-y-4">
         <h1 className="text-5xl lg:text-7xl font-['Space_Mono'] scale-y-110">
           {productNameText}
@@ -112,7 +146,7 @@ export default function MapSelect() {
           </Link>
         </div>
       </div>
-      <MarqueeLtor phrases={marqueePhrases} />
+      <MarqueeLtor phrases={MARQUEE_PHRASES} />
     </main>
   );
 }
