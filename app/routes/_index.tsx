@@ -40,8 +40,8 @@ const FINAL_PRODUCT_NAME_TEXT_AS_ARRAY = [
   "y",
 ];
 const WINDOW_SIZE = 8;
-const ANIMATION_TICK_DURATION_IN_MILLIS = 60;
-const ANIMATION_INTERMISSION_DURATION_IN_MILLIS = 3000;
+const ANIMATION_TICK_DURATION_IN_MILLIS = 75;
+const ANIMATION_INTERMISSION_DURATION_IN_MILLIS = 5000;
 
 export default function MapSelect() {
   // Setting this state var's initial value to "ValoBuddy" so that in a
