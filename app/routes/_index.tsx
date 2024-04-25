@@ -17,19 +17,16 @@ const MARQUEE_PHRASES = [
 ];
 
 const ENCODING_CHARS = ["!", "@", "#", "$", "%", "^", "&", "*", "?"];
-// Starting with one character instead of none so that on (very) initial page
-// load, there isn't a pop or a jerk between when the h1 tag is empty and when
-// it suddenly has content.
 const INITIAL_PRODUCT_NAME_TEXT_AS_ARRAY = [
-  "$",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
+  "_",
+  "_",
+  "_",
+  "_",
+  "_",
+  "_",
+  "_",
+  "_",
+  "_",
 ];
 const FINAL_PRODUCT_NAME_TEXT_AS_ARRAY = [
   "V",
