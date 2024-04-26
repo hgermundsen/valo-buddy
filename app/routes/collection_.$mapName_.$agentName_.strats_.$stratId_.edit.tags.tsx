@@ -98,7 +98,7 @@ export default function EditStratTagsModal() {
               <h2 className="text-lg text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
                 ATTACHED
               </h2>
-              <div className="flex space-x-2 space-y-2 flex-wrap">
+              <div className="flex flex-wrap gap-2">
                 {sortedTagsForCurStrat.map((tag) => (
                   <div
                     key={tag.id}
@@ -138,7 +138,7 @@ export default function EditStratTagsModal() {
               <h2 className="text-lg text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
                 OTHERS
               </h2>
-              <div className="flex space-x-2">
+              <div className="flex flex-wrap gap-2">
                 {sortedTagsForOtherStrats.map((tag) => (
                   <div
                     key={tag.id}
