@@ -6,7 +6,13 @@ import {
   json,
   redirect,
 } from "@remix-run/node";
-import { Form, useLoaderData, useNavigate } from "@remix-run/react";
+import {
+  Form,
+  Link,
+  Outlet,
+  useLoaderData,
+  useNavigate,
+} from "@remix-run/react";
 import { useState } from "react";
 import invariant from "tiny-invariant";
 
@@ -125,6 +131,7 @@ export default function EditStratPage() {
           title={data.strat.title}
         />
       ) : null}
+      <Outlet />
 
       <Form method="post" className="flex flex-col grow">
         <div className="flex flex-col space-y-2 z-10 sticky top-0 p-4 bg-neutral-900 bg-opacity-[96%]">
@@ -164,15 +171,23 @@ export default function EditStratPage() {
                 <span>CANCEL</span>
               </button>
             </div>
-            <div className="flex space-x-2">
-              {sortedTagNames.map((tagName) => (
-                <div
-                  key={tagName}
-                  className="px-4 py-2 rounded-full bg-neutral-700 text-sm uppercase font-['Space_Mono']"
-                >
-                  {tagName}
-                </div>
-              ))}
+            <div className="flex justify-between">
+              <div className="flex space-x-2">
+                {sortedTagNames.map((tagName) => (
+                  <div
+                    key={tagName}
+                    className="px-4 py-2 rounded-full bg-neutral-700 text-sm uppercase font-['Space_Mono']"
+                  >
+                    {tagName}
+                  </div>
+                ))}
+              </div>
+              <Link
+                to="tags"
+                className="px-4 py-2 rounded-full bg-valored-500 text-sm font-['Space_Mono']"
+              >
+                EDIT TAGS
+              </Link>
             </div>
           </header>
         </div>

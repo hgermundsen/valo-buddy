@@ -60,15 +60,21 @@ export default function App() {
             // TODO: Revisit once you implement functionality to edit VODs.
             const re = new RegExp(
               // Thanks ChatGPT, you a real one for this.
-              "/collection/[^/]+/[^/]+/strats/[^/]+(?:/edit)?",
+              //
+              // This will technically match:
+              // "/collection/ascent/killjoy/strats/:stratId/tags", but this
+              // page doesn't exist anyway, so it's fine.
+              "/collection/[^/]+/[^/]+/strats/[^/]+(?:/edit)?(?:/tags)?",
             );
             if (re.test(location.pathname)) {
-              // Keep scroll position on strat detail page and strat edit page
+              // Keep scroll position on strat detail page and strat edit pages
               // the same. Return the same key for both URLs/locations.
               const key = location.pathname;
-              const suffix = "/edit";
-              if (key.endsWith(suffix)) {
-                return key.slice(0, -suffix.length);
+              const suffixes = ["/edit", "/edit/tags"];
+              for (const suffix of suffixes) {
+                if (key.endsWith(suffix)) {
+                  return key.slice(0, -suffix.length);
+                }
               }
               return key;
             }
