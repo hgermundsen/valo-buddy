@@ -180,14 +180,14 @@ export interface StratTagListItem {
 }
 // Only fetches information about each tag necessary for displaying in a list of
 // them.
-export async function getAllStratTagListItems(
+export async function getAllStratTags(
   userId: User["id"],
+  map: Strat["map"],
+  agent: Strat["agent"],
 ): Promise<StratTagListItem[]> {
-  // TODO: Could be an expensive query. Keep an eye on this, it may be the
-  // source of performance problems one day.
   const allStratTags = await prisma.strat.findMany({
-    where: { userId },
-    select: { tags: true },
+    where: { userId, map, agent },
+    select: { tags: { select: { id: true, name: true } } },
   });
 
   const uniqueTagIds = new Set();
@@ -202,4 +202,11 @@ export async function getAllStratTagListItems(
   });
 
   return uniqueTags;
+}
+
+export async function getTagsForStrat(id: Strat["id"], userId: User["id"]) {
+  return prisma.strat.findFirstOrThrow({
+    where: { userId, id },
+    select: { tags: { select: { id: true, name: true } } },
+  });
 }
