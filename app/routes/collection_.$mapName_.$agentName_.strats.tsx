@@ -137,7 +137,7 @@ export default function Strats() {
                 first one. In our case, the first element is a hidden checkbox.
                 The first _visible_ element is the label, and it has left margin
                 on it, which we don't want. These two styles offset that. */}
-          <div className="flex space-x-2 relative -left-2">
+          <div className="flex flex-wrap gap-2 relative -left-2">
             {sortedAndUniqueTags.map((tag) => (
               <Fragment key={tag.id}>
                 <input
@@ -222,18 +222,18 @@ function Strat({
                 {title}
               </h1>
             </Link>
-            <span className="text-neutral-400 text-sm font-['Space_Mono'] scale-y-110">
+            <p className="text-neutral-400 text-sm font-['Space_Mono'] scale-y-110">
               Created: {createdAt.toDateString()}
-            </span>
-            <span className="text-neutral-400 text-sm font-['Space_Mono'] scale-y-110">
+            </p>
+            <p className="text-neutral-400 text-sm font-['Space_Mono'] scale-y-110">
               Last updated: {updatedAt.toDateString()}
-            </span>
+            </p>
           </div>
-          <div className="flex-none space-x-2">
+          <div className="flex flex-row-reverse flex-wrap gap-2">
             {sortedTags.map((tag) => (
               <span
                 key={tag}
-                className="px-4 py-2 rounded-full bg-neutral-700 text-sm uppercase font-['Space_Mono']"
+                className="h-min px-4 py-2 rounded-full bg-neutral-700 text-sm uppercase font-['Space_Mono']"
               >
                 {tag}
               </span>
