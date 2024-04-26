@@ -9,6 +9,7 @@ import invariant from "tiny-invariant";
 
 import { CloseIcon, CreateIcon } from "~/components/svgs";
 import {
+  addExistingTagToStrat,
   createNewTagAndAddItToStrat,
   doesStratBelongToUser,
   getAllStratTags,
@@ -47,6 +48,25 @@ export async function action({ request, params }: ActionFunctionArgs) {
   }
 
   const formData = await request.formData();
+
+  if (formData.get("isAddExistingTagToStratOperation") === "true") {
+    const tagId = formData.get("tagId");
+    if (typeof tagId !== "string" || tagId.length === 0) {
+      return json(
+        {
+          errors: [
+            {
+              message: `Tag ID to add to strat ID: ${stratId} was not provided`,
+            },
+          ],
+        },
+        { status: 400 },
+      );
+    }
+
+    await addExistingTagToStrat(stratId, tagId);
+    return null;
+  }
 
   const newTagName = formData.get("newTagName");
   // TODO: Abstract this type of error handling away in some kinda helper file.
@@ -140,12 +160,21 @@ export default function EditStratTagsModal() {
               </h2>
               <div className="flex flex-wrap gap-2">
                 {sortedTagsForOtherStrats.map((tag) => (
-                  <div
-                    key={tag.id}
-                    className="px-4 py-2 rounded-full bg-neutral-700 text-sm uppercase font-['Space_Mono']"
-                  >
-                    {tag.name}
-                  </div>
+                  <fetcher.Form method="post" key={tag.id}>
+                    <input
+                      type="hidden"
+                      name="isAddExistingTagToStratOperation"
+                      value="true"
+                    />
+                    <input type="hidden" name="tagId" value={tag.id} />
+
+                    <button
+                      type="submit"
+                      className="select-none cursor-pointer px-4 py-2 bg-neutral-800 rounded-full ring-1 ring-neutral-500 text-sm font-['Space_Mono'] uppercase hover:ring-2 hover:ring-green-200 transition"
+                    >
+                      {tag.name}
+                    </button>
+                  </fetcher.Form>
                 ))}
               </div>
             </div>
