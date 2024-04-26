@@ -102,7 +102,8 @@ export function doesStratBelongToUser({
   });
 }
 
-// Assumes whoever called this owns the strat being updated.
+// TODO: Currently assumes whoever called this owns the strat being updated.
+// Validate this?
 export function updateStrat(id: Strat["id"], fields: Partial<Strat>) {
   const preprocessedFields = replaceEmptyStringsWithNull(fields);
   // https://stackoverflow.com/a/69529379
@@ -112,7 +113,8 @@ export function updateStrat(id: Strat["id"], fields: Partial<Strat>) {
   });
 }
 
-// Assumes whoever called this owns the strat being updated.
+// TODO: Currently assumes whoever called this owns the strat being updated.
+// Validate this?
 export function createNewTagAndAddItToStrat(
   id: Strat["id"],
   tagName: StratTag["name"],
@@ -129,7 +131,12 @@ export function createNewTagAndAddItToStrat(
   });
 }
 
-// Assumes whoever called this owns the strat being updated.
+// TODO: Currently assumes whoever called this owns the strat being updated.
+// Validate this?
+//
+// TODO: What will happen if the provided tagId doesn't exist? What kind of
+// error/exception will Prisma return? Figure this out so we can handle that
+// wherever this is called.
 export function addExistingTagToStrat(id: Strat["id"], tagId: StratTag["id"]) {
   return prisma.strat.update({
     where: { id },
