@@ -173,3 +173,33 @@ export function deleteStrat(id: Strat["id"], userId: User["id"]) {
   // unique on strats (makes sense, but is still a bit frustrating).
   return prisma.strat.deleteMany({ where: { id, userId } });
 }
+
+export interface StratTagListItem {
+  id: string;
+  name: string;
+}
+// Only fetches information about each tag necessary for displaying in a list of
+// them.
+export async function getAllStratTagListItems(
+  userId: User["id"],
+): Promise<StratTagListItem[]> {
+  // TODO: Could be an expensive query. Keep an eye on this, it may be the
+  // source of performance problems one day.
+  const allStratTags = await prisma.strat.findMany({
+    where: { userId },
+    select: { tags: true },
+  });
+
+  const uniqueTagIds = new Set();
+  const uniqueTags: StratTagListItem[] = [];
+  allStratTags.forEach((tagsList) => {
+    tagsList.tags.forEach((tag) => {
+      if (!uniqueTagIds.has(tag.id)) {
+        uniqueTags.push({ ...tag });
+        uniqueTagIds.add(tag.id);
+      }
+    });
+  });
+
+  return uniqueTags;
+}
