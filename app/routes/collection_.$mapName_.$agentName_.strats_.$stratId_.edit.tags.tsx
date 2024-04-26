@@ -95,7 +95,7 @@ export default function EditStratTagsModal() {
             </div>
 
             <div className="flex flex-col space-y-2">
-              <h2 className="text-lg text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
+              <h2 className="text-lg text-neutral-400 font-['Space_Mono'] scale-y-125">
                 ATTACHED
               </h2>
               <div className="flex flex-wrap gap-2">
@@ -135,7 +135,7 @@ export default function EditStratTagsModal() {
             <hr className="border border-neutral-700" />
 
             <div className="flex flex-col space-y-2">
-              <h2 className="text-lg text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
+              <h2 className="text-lg text-neutral-400 font-['Space_Mono'] scale-y-125">
                 OTHERS
               </h2>
               <div className="flex flex-wrap gap-2">
