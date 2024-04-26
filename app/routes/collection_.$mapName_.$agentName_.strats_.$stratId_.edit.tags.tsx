@@ -115,11 +115,11 @@ export default function EditStratTagsModal() {
                 <input
                   type="text"
                   name="newTagName"
-                  placeholder="New tag name..."
+                  placeholder="New tag name"
                   aria-label="Create a new tag"
                   // eslint-disable-next-line jsx-a11y/no-autofocus
                   autoFocus
-                  className="grow p-3 text-neutral-200 placeholder:text-neutral-400 placeholder:italic bg-neutral-700 border-b-2 border-neutral-600 outline-none hover:bg-neutral-600 hover:border-neutral-500 focus:bg-neutral-600 focus:border-neutral-500 transition"
+                  className="grow p-3 text-neutral-200 uppercase font-['Space_Mono'] placeholder:text-neutral-400 bg-neutral-700 border-b-2 border-neutral-600 outline-none hover:bg-neutral-600 hover:border-neutral-500 focus:bg-neutral-600 focus:border-neutral-500 transition"
                 />
                 <button
                   type="submit"
