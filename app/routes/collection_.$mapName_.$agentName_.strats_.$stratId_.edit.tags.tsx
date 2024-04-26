@@ -14,6 +14,7 @@ import {
   doesStratBelongToUser,
   getAllStratTags,
   getTagsForStrat,
+  removeTagFromStrat,
 } from "~/models/strat.server";
 import { getMapNameAndAgentName } from "~/security";
 import { requireUserId } from "~/session.server";
@@ -65,6 +66,25 @@ export async function action({ request, params }: ActionFunctionArgs) {
     }
 
     await addExistingTagToStrat(stratId, tagId);
+    return null;
+  }
+
+  if (formData.get("isRemoveTagFromStratOperation") === "true") {
+    const tagId = formData.get("tagId");
+    if (typeof tagId !== "string" || tagId.length === 0) {
+      return json(
+        {
+          errors: [
+            {
+              message: `Tag ID to remove from strat ID: ${stratId} was not provided`,
+            },
+          ],
+        },
+        { status: 400 },
+      );
+    }
+
+    await removeTagFromStrat(tagId, stratId);
     return null;
   }
 
@@ -120,12 +140,21 @@ export default function EditStratTagsModal() {
               </h2>
               <div className="flex flex-wrap gap-2">
                 {sortedTagsForCurStrat.map((tag) => (
-                  <div
-                    key={tag.id}
-                    className="px-4 py-2 rounded-full bg-neutral-700 text-sm uppercase font-['Space_Mono']"
-                  >
-                    {tag.name}
-                  </div>
+                  <fetcher.Form method="post" key={tag.id}>
+                    <input
+                      type="hidden"
+                      name="isRemoveTagFromStratOperation"
+                      value="true"
+                    />
+                    <input type="hidden" name="tagId" value={tag.id} />
+
+                    <button
+                      type="submit"
+                      className="select-none cursor-pointer px-4 py-2 bg-neutral-700 rounded-full ring-1 ring-neutral-600 text-sm font-['Space_Mono'] uppercase hover:ring-2 hover:ring-green-200 transition"
+                    >
+                      {tag.name}
+                    </button>
+                  </fetcher.Form>
                 ))}
               </div>
               <fetcher.Form
