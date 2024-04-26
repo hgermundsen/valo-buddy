@@ -1,9 +1,19 @@
-import { LoaderFunctionArgs, MetaFunction, json } from "@remix-run/node";
-import { useLoaderData, useNavigate } from "@remix-run/react";
+import {
+  ActionFunctionArgs,
+  LoaderFunctionArgs,
+  MetaFunction,
+  json,
+} from "@remix-run/node";
+import { useFetcher, useLoaderData, useNavigate } from "@remix-run/react";
 import invariant from "tiny-invariant";
-import { CloseIcon } from "~/components/svgs";
 
-import { getAllStratTags, getTagsForStrat } from "~/models/strat.server";
+import { CloseIcon, CreateIcon } from "~/components/svgs";
+import {
+  createNewTagAndAddItToStrat,
+  doesStratBelongToUser,
+  getAllStratTags,
+  getTagsForStrat,
+} from "~/models/strat.server";
 import { getMapNameAndAgentName } from "~/security";
 import { requireUserId } from "~/session.server";
 
@@ -23,8 +33,36 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   const tagsForCurStrat = tagsForCurStratResponse.tags;
   return json({ tagsForAllStrats, tagsForCurStrat });
 }
+export async function action({ request, params }: ActionFunctionArgs) {
+  // TODO: Input sanitization. Big time.
+
+  const userId = await requireUserId(request);
+  const stratId = params.stratId;
+  invariant(stratId, "Strat ID not found");
+  if (!doesStratBelongToUser({ id: stratId, userId })) {
+    // Intentionally being vague with this error message. Something like
+    // "Invalid map name" or "Invalid agent name" would indicate to attackers
+    // that they're on to something here.
+    throw new Response("Not Found", { status: 404 });
+  }
+
+  const formData = await request.formData();
+
+  const newTagName = formData.get("newTagName");
+  // TODO: Abstract this type of error handling away in some kinda helper file.
+  if (typeof newTagName !== "string" || newTagName.length === 0) {
+    return json(
+      { errors: [{ message: "New tag name is required" }] },
+      { status: 400 },
+    );
+  }
+
+  await createNewTagAndAddItToStrat(stratId, newTagName);
+  return null;
+}
 
 export default function EditStratTagsModal() {
+  const fetcher = useFetcher();
   const navigate = useNavigate();
   const data = useLoaderData<typeof loader>();
 
@@ -65,8 +103,31 @@ export default function EditStratTagsModal() {
                 </div>
               ))}
             </div>
+
             {/* TODO: Revisit this purely for style reasons. */}
             <hr className="border border-neutral-700" />
+
+            <fetcher.Form
+              method="post"
+              className="flex justify-between space-x-2"
+            >
+              <input
+                type="text"
+                name="newTagName"
+                placeholder="New tag name..."
+                aria-label="Create a new tag"
+                // eslint-disable-next-line jsx-a11y/no-autofocus
+                autoFocus
+                className="grow p-3 text-neutral-200 placeholder:text-neutral-400 placeholder:italic bg-neutral-700 border-b-2 border-neutral-600 outline-none hover:bg-neutral-600 hover:border-neutral-500 focus:bg-neutral-600 focus:border-neutral-500 transition"
+              />
+              <button
+                type="submit"
+                className="flex items-center space-x-2 px-4 py-3 text-sm font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out"
+              >
+                <CreateIcon />
+                <span>CREATE</span>
+              </button>
+            </fetcher.Form>
             <div className="flex space-x-2">
               {sortedTagsForOtherStrats.map((tag) => (
                 <div
