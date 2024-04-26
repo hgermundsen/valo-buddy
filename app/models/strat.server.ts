@@ -112,6 +112,31 @@ export function updateStrat(id: Strat["id"], fields: Partial<Strat>) {
   });
 }
 
+// Assumes whoever called this owns the strat being updated.
+export function createNewTagAndAddItToStrat(
+  id: Strat["id"],
+  tagName: StratTag["name"],
+) {
+  return prisma.strat.update({
+    where: { id },
+    data: {
+      tags: {
+        create: {
+          name: tagName,
+        },
+      },
+    },
+  });
+}
+
+// Assumes whoever called this owns the strat being updated.
+export function addExistingTagToStrat(id: Strat["id"], tagId: StratTag["id"]) {
+  return prisma.strat.update({
+    where: { id },
+    data: { tags: { connect: { id: tagId } } },
+  });
+}
+
 export function createEmptyStrat(
   map: Strat["map"],
   agent: Strat["agent"],
