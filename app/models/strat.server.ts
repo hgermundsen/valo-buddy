@@ -136,11 +136,28 @@ export function createNewTagAndAddItToStrat(
 //
 // TODO: What will happen if the provided tagId doesn't exist? What kind of
 // error/exception will Prisma return? Figure this out so we can handle that
-// wherever this is called.
+// wherever this is called. What happens if the tag is already attached to the
+// strat?
 export function addExistingTagToStrat(id: Strat["id"], tagId: StratTag["id"]) {
   return prisma.strat.update({
     where: { id },
     data: { tags: { connect: { id: tagId } } },
+  });
+}
+
+// TODO: Currently assumes whoever called this owns the strat being updated.
+// Validate this?
+//
+// TODO: What will happen if the provided tagId doesn't exist? What kind of
+// error/exception will Prisma return? Figure this out so we can handle that
+// wherever this is called. What happens if the tag isn't attached the strat?
+export function removeTagFromStrat(
+  tagId: StratTag["id"],
+  stratId: Strat["id"],
+) {
+  return prisma.strat.update({
+    where: { id: stratId },
+    data: { tags: { disconnect: { id: tagId } } },
   });
 }
 
