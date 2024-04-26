@@ -1,6 +1,7 @@
 import { LoaderFunctionArgs, MetaFunction, json } from "@remix-run/node";
 import { useLoaderData, useNavigate } from "@remix-run/react";
 import invariant from "tiny-invariant";
+import { CloseIcon } from "~/components/svgs";
 
 import { getAllStratTags, getTagsForStrat } from "~/models/strat.server";
 import { getMapNameAndAgentName } from "~/security";
@@ -44,7 +45,16 @@ export default function EditStratTagsModal() {
       <div className="fixed inset-0 z-50 w-screen overflow-y-auto">
         <div className="flex items-center justify-center min-h-full">
           <div className="flex flex-col space-y-2 p-4 w-[480px] lg:w-1/2 bg-neutral-800">
-            <h1 className="text-4xl font-['Druk_Wide_Bold']">TAGS</h1>
+            <div className="flex justify-between items-center">
+              <h1 className="text-4xl font-['Druk_Wide_Bold']">TAGS</h1>
+              <button
+                type="button"
+                onClick={() => navigate(-1)}
+                className="p-2 border-2 border-neutral-700 bg-gradient-to-r from-red-600 to-neutral-900 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 hover:border-valored-500 focus:bg-valored-400 transition-all duration-200 ease-in-out"
+              >
+                <CloseIcon />
+              </button>
+            </div>
             <div className="flex space-x-2">
               {sortedTagsForCurStrat.map((tag) => (
                 <div
@@ -55,7 +65,8 @@ export default function EditStratTagsModal() {
                 </div>
               ))}
             </div>
-            <hr /> {/* TODO: Revisit this purely for style reasons. */}
+            {/* TODO: Revisit this purely for style reasons. */}
+            <hr className="border border-neutral-700" />
             <div className="flex space-x-2">
               {sortedTagsForOtherStrats.map((tag) => (
                 <div
@@ -66,9 +77,6 @@ export default function EditStratTagsModal() {
                 </div>
               ))}
             </div>
-            <button type="button" onClick={() => navigate(-1)}>
-              Close
-            </button>
           </div>
         </div>
       </div>
