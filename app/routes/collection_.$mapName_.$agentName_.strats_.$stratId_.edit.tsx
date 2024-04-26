@@ -184,7 +184,7 @@ export default function EditStratPage() {
               </div>
               <Link
                 to="tags"
-                className="px-4 py-2 rounded-full bg-valored-500 text-sm font-['Space_Mono']"
+                className="px-4 py-2 rounded-full bg-valored-500 text-sm font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out"
               >
                 EDIT TAGS
               </Link>
