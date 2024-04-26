@@ -144,14 +144,6 @@ export function addExistingTagToStrat(id: Strat["id"], tagId: StratTag["id"]) {
   });
 }
 
-export function createEmptyStrat(
-  map: Strat["map"],
-  agent: Strat["agent"],
-  userId: User["id"],
-) {
-  return prisma.strat.create({ data: { userId, map, agent, title: "" } });
-}
-
 export function createStrat(
   userId: User["id"],
   map: Strat["map"],
