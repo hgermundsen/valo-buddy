@@ -84,7 +84,7 @@ export default function EditStratTagsModal() {
         <div className="flex items-center justify-center min-h-full">
           <div className="flex flex-col space-y-2 p-4 w-[480px] lg:w-1/2 bg-neutral-800">
             <div className="flex justify-between items-center">
-              <h1 className="text-4xl font-['Druk_Wide_Bold']">TAGS</h1>
+              <h1 className="text-4xl font-['Druk_Wide_Bold']">EDIT TAGS</h1>
               <button
                 type="button"
                 onClick={() => navigate(-1)}
