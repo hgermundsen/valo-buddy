@@ -172,7 +172,7 @@ export default function EditStratPage() {
               </button>
             </div>
             <div className="flex justify-between">
-              <div className="flex space-x-2">
+              <div className="flex flex-wrap gap-2">
                 {sortedTagNames.map((tagName) => (
                   <div
                     key={tagName}

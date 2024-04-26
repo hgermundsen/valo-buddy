@@ -66,7 +66,7 @@ export default function StratDetailsPage() {
               <span>EDIT</span>
             </Link>
           </div>
-          <div className="flex space-x-2">
+          <div className="flex flex-wrap gap-2">
             {sortedTagNames.map((tagName) => (
               <div
                 key={tagName}
