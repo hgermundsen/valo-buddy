@@ -111,7 +111,7 @@ model StratTag {
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
-  name   String
+  name   String  @unique
   strats Strat[]
 }
 

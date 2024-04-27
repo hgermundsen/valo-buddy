@@ -104,7 +104,8 @@ export async function action({ request, params }: ActionFunctionArgs) {
       );
     }
 
-    await createNewTagAndAddItToStrat(stratId, newTagName);
+    const lowercaseNewTagName = newTagName.toLowerCase();
+    await createNewTagAndAddItToStrat(stratId, lowercaseNewTagName);
     return null;
   }
 

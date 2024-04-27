@@ -63,10 +63,10 @@ async function seed() {
         "https://tracker.gg/valorant/match/aff15759-5c28-4ade-8f7b-93ec72d4b066",
       tags: {
         create: [
-          { name: "Overheat" },
+          { name: "overheat" },
           { name: "1v1s" },
-          { name: "Map awareness" },
-          { name: "Game sense" },
+          { name: "map awareness" },
+          { name: "game sense" },
         ],
       },
       description:
@@ -93,7 +93,7 @@ async function seed() {
       trackerLink:
         "https://tracker.gg/valorant/match/09131180-fdc6-4254-9b37-9d00bfd25e7e",
       tags: {
-        create: [{ name: "Tag One" }, { name: "Tag Five" }],
+        create: [{ name: "tag one" }, { name: "tag five" }],
       },
       description:
         "Got carried ngl but got mine most of the time. Quickly recognized what my job and my place were on our team, and didn't overstep.",
@@ -119,7 +119,7 @@ async function seed() {
       trackerLink:
         "https://tracker.gg/valorant/match/aff15759-5c28-4ade-8f7b-93ec72d4b066",
       tags: {
-        create: { name: "Tag Two" },
+        create: { name: "tag two" },
       },
       description:
         "Textbook examples of playing an entry fragger, really demonstrated the fundamentals well. Had good comms re. shot calling and early-round IGLing. We played numbers advantage well.",
@@ -130,17 +130,17 @@ async function seed() {
 
   const passiveStratTag = await prisma.stratTag.create({
     data: {
-      name: "Passive",
+      name: "passive",
     },
   });
   const woohoojinStratTag = await prisma.stratTag.create({
     data: {
-      name: "Woohoojin",
+      name: "woohoojin",
     },
   });
   const retakeStratTag = await prisma.stratTag.create({
     data: {
-      name: "Retake",
+      name: "retake",
     },
   });
 
