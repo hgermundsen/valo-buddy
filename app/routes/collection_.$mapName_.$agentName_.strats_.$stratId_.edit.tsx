@@ -171,7 +171,7 @@ export default function EditStratPage() {
                 <span>CANCEL</span>
               </button>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-start gap-2">
               <div className="flex flex-wrap gap-2">
                 {sortedTagNames.map((tagName) => (
                   <div
