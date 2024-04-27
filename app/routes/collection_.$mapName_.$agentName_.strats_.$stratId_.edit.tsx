@@ -171,17 +171,15 @@ export default function EditStratPage() {
                 <span>CANCEL</span>
               </button>
             </div>
-            <div className="flex justify-start gap-2">
-              <div className="flex flex-wrap gap-2">
-                {sortedTagNames.map((tagName) => (
-                  <div
-                    key={tagName}
-                    className="px-4 py-2 rounded-full bg-neutral-700 text-sm uppercase font-['Space_Mono']"
-                  >
-                    {tagName}
-                  </div>
-                ))}
-              </div>
+            <div className="flex flex-wrap gap-2">
+              {sortedTagNames.map((tagName) => (
+                <div
+                  key={tagName}
+                  className="px-4 py-2 rounded-full bg-neutral-700 text-sm uppercase font-['Space_Mono']"
+                >
+                  {tagName}
+                </div>
+              ))}
               <Link
                 to="tags"
                 className="px-4 py-2 rounded-full bg-valored-500 text-sm font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out"
