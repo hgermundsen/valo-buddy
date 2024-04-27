@@ -111,7 +111,7 @@ export default function DeleteStratModal() {
               <button
                 type="submit"
                 disabled={isDeletingStrat}
-                className="flex grow space-x-2 px-4 py-3 font-['Space_Mono'] text-sm text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:201%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400disabled:text-white disabled:from-neutral-700 disabled:to-neutral-700 transition-all duration-300 ease-in-out"
+                className="flex grow space-x-2 px-4 py-3 font-['Space_Mono'] text-sm text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:201%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400disabled:text-white disabled:from-neutral-700 disabled:to-neutral-700 disabled:pointer-events-none transition-all duration-300 ease-in-out"
               >
                 {isDeletingStrat ? <AnimatedLoadingSpinner /> : <TrashIcon />}
                 <span>{!isDeletingStrat ? "DELETE" : "DELETING..."}</span>
