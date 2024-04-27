@@ -160,7 +160,7 @@ export function AnimatedLoadingSpinner() {
   return (
     <svg
       aria-hidden="true"
-      className="w-5 h-5 text-neutral-700 animate-spin fill-white"
+      className="w-5 h-5 text-neutral-600 animate-spin fill-white"
       viewBox="0 0 100 101"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

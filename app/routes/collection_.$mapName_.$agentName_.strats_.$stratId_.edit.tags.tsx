@@ -7,7 +7,11 @@ import {
 import { useFetcher, useLoaderData, useNavigate } from "@remix-run/react";
 import invariant from "tiny-invariant";
 
-import { CloseIcon, CreateIcon } from "~/components/svgs";
+import {
+  AnimatedLoadingSpinner,
+  CloseIcon,
+  CreateIcon,
+} from "~/components/svgs";
 import {
   addExistingTagToStrat,
   createNewTagAndAddItToStrat,
@@ -49,8 +53,9 @@ export async function action({ request, params }: ActionFunctionArgs) {
   }
 
   const formData = await request.formData();
+  const _action = formData.get("_action");
 
-  if (formData.get("isAddExistingTagToStratOperation") === "true") {
+  if (_action === "addExistingTagToStrat") {
     const tagId = formData.get("tagId");
     if (typeof tagId !== "string" || tagId.length === 0) {
       return json(
@@ -69,7 +74,7 @@ export async function action({ request, params }: ActionFunctionArgs) {
     return null;
   }
 
-  if (formData.get("isRemoveTagFromStratOperation") === "true") {
+  if (_action === "removeTagFromStrat") {
     const tagId = formData.get("tagId");
     if (typeof tagId !== "string" || tagId.length === 0) {
       return json(
@@ -88,16 +93,20 @@ export async function action({ request, params }: ActionFunctionArgs) {
     return null;
   }
 
-  const newTagName = formData.get("newTagName");
-  // TODO: Abstract this type of error handling away in some kinda helper file.
-  if (typeof newTagName !== "string" || newTagName.length === 0) {
-    return json(
-      { errors: [{ message: "New tag name is required" }] },
-      { status: 400 },
-    );
+  if (_action === "createNewTag") {
+    const newTagName = formData.get("newTagName");
+    // TODO: Abstract this type of error handling away in some kinda helper file.
+    if (typeof newTagName !== "string" || newTagName.length === 0) {
+      return json(
+        { errors: [{ message: "New tag name is required" }] },
+        { status: 400 },
+      );
+    }
+
+    await createNewTagAndAddItToStrat(stratId, newTagName);
+    return null;
   }
 
-  await createNewTagAndAddItToStrat(stratId, newTagName);
   return null;
 }
 
@@ -105,6 +114,10 @@ export default function EditStratTagsModal() {
   const fetcher = useFetcher();
   const navigate = useNavigate();
   const data = useLoaderData<typeof loader>();
+
+  const isCreatingNewTag =
+    fetcher.state === "submitting" &&
+    fetcher.formData?.get("_action") === "createNewTag";
 
   const sortedTagsForCurStrat = data.tagsForCurStrat.sort((a, b) =>
     a.name.localeCompare(b.name),
@@ -143,8 +156,8 @@ export default function EditStratTagsModal() {
                   <fetcher.Form method="post" key={tag.id}>
                     <input
                       type="hidden"
-                      name="isRemoveTagFromStratOperation"
-                      value="true"
+                      name="_action"
+                      value="removeTagFromStrat"
                     />
                     <input type="hidden" name="tagId" value={tag.id} />
 
@@ -161,6 +174,8 @@ export default function EditStratTagsModal() {
                 method="post"
                 className="flex justify-between space-x-2"
               >
+                <input type="hidden" name="_action" value="createNewTag" />
+
                 <input
                   type="text"
                   name="newTagName"
@@ -172,10 +187,15 @@ export default function EditStratTagsModal() {
                 />
                 <button
                   type="submit"
-                  className="flex items-center space-x-2 px-4 py-3 text-sm font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out"
+                  disabled={isCreatingNewTag}
+                  className="flex items-center space-x-2 px-4 py-3 text-sm font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 disabled:text-white disabled:from-neutral-700 disabled:to-neutral-700 disabled:hover:none transition-all duration-300 ease-in-out"
                 >
-                  <CreateIcon />
-                  <span>CREATE</span>
+                  {isCreatingNewTag ? (
+                    <AnimatedLoadingSpinner />
+                  ) : (
+                    <CreateIcon />
+                  )}
+                  <span>{!isCreatingNewTag ? "CREATE" : "CREATING..."}</span>
                 </button>
               </fetcher.Form>
             </div>
@@ -192,8 +212,8 @@ export default function EditStratTagsModal() {
                   <fetcher.Form method="post" key={tag.id}>
                     <input
                       type="hidden"
-                      name="isAddExistingTagToStratOperation"
-                      value="true"
+                      name="_action"
+                      value="addExistingTagToStrat"
                     />
                     <input type="hidden" name="tagId" value={tag.id} />
 
