@@ -5,6 +5,7 @@ import {
   json,
 } from "@remix-run/node";
 import { useFetcher, useLoaderData, useNavigate } from "@remix-run/react";
+import { useEffect, useRef } from "react";
 import invariant from "tiny-invariant";
 
 import {
@@ -118,6 +119,7 @@ export default function EditStratTagsModal() {
   const isCreatingNewTag =
     fetcher.state === "submitting" &&
     fetcher.formData?.get("_action") === "createNewTag";
+  const createNewTagFormRef = useRef<HTMLFormElement>(null);
 
   const sortedTagsForCurStrat = data.tagsForCurStrat.sort((a, b) =>
     a.name.localeCompare(b.name),
@@ -127,6 +129,13 @@ export default function EditStratTagsModal() {
   const sortedTagsForOtherStrats = data.tagsForAllStrats
     .filter((tag) => !idsForCurStratTags.includes(tag.id))
     .sort((a, b) => a.name.localeCompare(b.name));
+
+  // https://www.youtube.com/watch?v=bMLej7bg5Zo
+  useEffect(() => {
+    if (!isCreatingNewTag) {
+      createNewTagFormRef.current?.reset();
+    }
+  }, [isCreatingNewTag]);
 
   return (
     <div className="relative z-50">
@@ -171,6 +180,7 @@ export default function EditStratTagsModal() {
                 ))}
               </div>
               <fetcher.Form
+                ref={createNewTagFormRef}
                 method="post"
                 className="flex justify-between space-x-2"
               >
