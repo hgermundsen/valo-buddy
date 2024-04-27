@@ -89,6 +89,15 @@ export function getStrat({
   });
 }
 
+// TODO: Currently assumes whoever called this owns the strat being updated.
+// Validate this?
+export function getStratTitle(id: Strat["id"]) {
+  return prisma.strat.findFirst({
+    where: { id },
+    select: { title: true },
+  });
+}
+
 export function doesStratBelongToUser({
   id,
   userId,
