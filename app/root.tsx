@@ -62,15 +62,15 @@ export default function App() {
               // Thanks ChatGPT, you a real one for this.
               //
               // This will technically match:
-              // "/collection/ascent/killjoy/strats/:stratId/tags", but this
-              // page doesn't exist anyway, so it's fine.
-              "/collection/[^/]+/[^/]+/strats/[^/]+(?:/edit)?(?:/tags)?",
+              // "/collection/ascent/killjoy/strats/:stratId/tags" and stuff
+              // like that, but these pages don't exist anyway, so it's fine.
+              "/collection/[^/]+/[^/]+/strats/[^/]+(?:/edit)?(?:/tags)?(?:/delete)?",
             );
             if (re.test(location.pathname)) {
               // Keep scroll position on strat detail page and strat edit pages
               // the same. Return the same key for both URLs/locations.
               const key = location.pathname;
-              const suffixes = ["/edit", "/edit/tags"];
+              const suffixes = ["/edit", "/edit/tags", "/edit/delete"];
               for (const suffix of suffixes) {
                 if (key.endsWith(suffix)) {
                   return key.slice(0, -suffix.length);

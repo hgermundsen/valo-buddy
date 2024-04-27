@@ -67,18 +67,6 @@ export async function action({ request, params }: ActionFunctionArgs) {
   }
 
   const formData = await request.formData();
-
-  if (formData.get("isDeleteAction") === "true") {
-    // TODO: Error handling?
-    // TODO: Optimistic UI?
-    await deleteStrat(stratId, userId);
-
-    // It's safe to just include user input in the form of params here. The page
-    // we're redirecting to performs input sanitization and validation.
-    const stratsPageURL = `/collection/${params.mapName}/${params.agentName}/strats`;
-    return redirect(stratsPageURL);
-  }
-
   // If the user edits a field and ends up retyping the same thing, then that
   // field will appear in this object. The server function handles this.
   const updates = Object.fromEntries(formData);
@@ -94,8 +82,6 @@ export async function action({ request, params }: ActionFunctionArgs) {
 
 export default function EditStratPage() {
   const navigate = useNavigate();
-
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
 
   const data = useLoaderData<typeof loader>();
   const sortedTagNames = data.strat.tags.map((tag) => tag.name).sort();
@@ -124,13 +110,6 @@ export default function EditStratPage() {
 
   return (
     <>
-      {isDeleteModalVisible ? (
-        <DeleteModal
-          cancelButtonCallback={() => setIsDeleteModalVisible(false)}
-          isForStrat
-          title={data.strat.title}
-        />
-      ) : null}
       <Outlet />
 
       <Form method="post" className="flex flex-col grow">
@@ -267,13 +246,12 @@ export default function EditStratPage() {
             content={data.strat.miscNotes}
           />
 
-          <button
-            type="button"
-            onClick={() => setIsDeleteModalVisible(true)}
-            className="h-min px-4 py-3 text-sm font-['Space_Mono'] text-valored-500 border-2 border-neutral-700 bg-gradient-to-t from-red-600 to-neutral-900 from-50% to-50% bg-top bg-[length:100%_200%] outline-none hover:bg-bottom hover:text-neutral-900 hover:border-valored-500 focus:bg-valored-400 transition-all duration-300 ease-in-out"
+          <Link
+            to="delete"
+            className="h-min px-4 py-3 text-center text-sm font-['Space_Mono'] text-valored-500 border-2 border-neutral-700 bg-gradient-to-t from-red-600 to-neutral-900 from-50% to-50% bg-top bg-[length:100%_200%] outline-none hover:bg-bottom hover:text-neutral-900 hover:border-valored-500 focus:bg-valored-400 transition-all duration-300 ease-in-out"
           >
             DELETE STRAT
-          </button>
+          </Link>
         </main>
       </Form>
     </>
