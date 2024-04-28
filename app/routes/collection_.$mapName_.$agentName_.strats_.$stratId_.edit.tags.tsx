@@ -104,7 +104,8 @@ export async function action({ request, params }: ActionFunctionArgs) {
       );
     }
 
-    await createNewTagAndAddItToStrat(stratId, newTagName);
+    const lowercaseNewTagName = newTagName.toLowerCase();
+    await createNewTagAndAddItToStrat(stratId, lowercaseNewTagName);
     return null;
   }
 
@@ -198,7 +199,7 @@ export default function EditStratTagsModal() {
                 <button
                   type="submit"
                   disabled={isCreatingNewTag}
-                  className="flex items-center space-x-2 px-4 py-3 text-sm font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 disabled:text-white disabled:from-neutral-700 disabled:to-neutral-700 disabled:hover:none transition-all duration-300 ease-in-out"
+                  className="flex items-center space-x-2 px-4 py-3 text-sm font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 disabled:text-white disabled:from-neutral-700 disabled:to-neutral-700 disabled:pointer-events-none transition-all duration-300 ease-in-out"
                 >
                   {isCreatingNewTag ? (
                     <AnimatedLoadingSpinner />
