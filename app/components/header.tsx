@@ -15,6 +15,9 @@ export default function Header() {
         </h1>
       </Link>
       <nav className="flex space-x-4 text-sm">
+        <Link to="/faq" className="font-medium hover:underline">
+          FAQ
+        </Link>
         {user ? (
           <>
             <span>Signed in as {user.email}</span>
