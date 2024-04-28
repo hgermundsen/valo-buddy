@@ -178,7 +178,10 @@ export default function MapSelect() {
   }, []);
 
   return (
-    <main className="flex flex-col space-y-32 grow justify-center items-center">
+    <main
+      // https://www.ibelick.com/blog/create-grid-and-dot-backgrounds-with-css-tailwind-css
+      className="flex flex-col space-y-32 grow justify-center items-center bg-[radial-gradient(#333333_1px,transparent_2px)] [background-size:32px_32px]"
+    >
       <MarqueeRtol phrases={MARQUEE_PHRASES} />
       <div className="flex flex-col items-center space-y-4">
         <h1 className="text-5xl lg:text-7xl font-['Space_Mono'] scale-y-110">
