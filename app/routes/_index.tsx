@@ -193,15 +193,15 @@ export default function MapSelect() {
         <div className="flex space-x-4">
           <Link
             to="register"
-            className="p-5 font-['Space_Mono'] uppercase text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out"
+            className="p-5 font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out"
           >
-            Sign up now
+            SIGN UP NOW
           </Link>
           <Link
             to="login"
-            className="p-5 font-['Space_Mono'] uppercase text-white bg-gradient-to-r from-red-600 to-neutral-900 from-50% to-50% bg-right-bottom bg-[length:201%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out"
+            className="p-5 font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-neutral-900 from-50% to-50% bg-right-bottom bg-[length:201%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out"
           >
-            Log in
+            LOG IN
           </Link>
         </div>
       </div>
