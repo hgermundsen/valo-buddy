@@ -191,6 +191,14 @@ export function createStrat(
   });
 }
 
+export function createEmptyStrat(
+  map: Strat["map"],
+  agent: Strat["agent"],
+  userId: User["id"],
+) {
+  return prisma.strat.create({ data: { userId, map, agent, title: "" } });
+}
+
 export function deleteStrat(id: Strat["id"], userId: User["id"]) {
   // Without the userId check, we have an IDOR vulnerability.
   //
