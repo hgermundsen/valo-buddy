@@ -127,6 +127,7 @@ export function updateStrat(id: Strat["id"], fields: Partial<Strat>) {
 export function createNewTagAndAddItToStrat(
   id: Strat["id"],
   tagName: StratTag["name"],
+  userId: User["id"],
 ) {
   return prisma.strat.update({
     where: { id },
@@ -134,6 +135,7 @@ export function createNewTagAndAddItToStrat(
       tags: {
         create: {
           name: tagName,
+          userId,
         },
       },
     },
