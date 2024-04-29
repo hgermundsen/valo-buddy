@@ -30,12 +30,12 @@ export const meta: MetaFunction = () => {
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
   const userId = await requireUserId(request);
-  const { mapName, agentName } = getMapNameAndAgentName(params);
+  getMapNameAndAgentName(params);
   const stratId = params.stratId;
   invariant(stratId, "Strat ID not found");
   // TODO: Sanitize stratId. Even though it's in the URL, it's still user input.
 
-  const tagsForAllStrats = await getAllStratTags(userId, mapName, agentName);
+  const tagsForAllStrats = await getAllStratTags(userId);
   const tagsForCurStratResponse = await getTagsForStrat(stratId, userId);
   const tagsForCurStrat = tagsForCurStratResponse.tags;
   return json({ tagsForAllStrats, tagsForCurStrat });

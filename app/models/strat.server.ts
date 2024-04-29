@@ -218,26 +218,11 @@ export interface StratTagListItem {
 // them.
 export async function getAllStratTags(
   userId: User["id"],
-  map: Strat["map"],
-  agent: Strat["agent"],
 ): Promise<StratTagListItem[]> {
-  const allStratTags = await prisma.strat.findMany({
-    where: { userId, map, agent },
-    select: { tags: { select: { id: true, name: true } } },
+  return prisma.stratTag.findMany({
+    where: { userId },
+    select: { id: true, name: true },
   });
-
-  const uniqueTagIds = new Set();
-  const uniqueTags: StratTagListItem[] = [];
-  allStratTags.forEach((tagsList) => {
-    tagsList.tags.forEach((tag) => {
-      if (!uniqueTagIds.has(tag.id)) {
-        uniqueTags.push({ ...tag });
-        uniqueTagIds.add(tag.id);
-      }
-    });
-  });
-
-  return uniqueTags;
 }
 
 export async function getTagsForStrat(id: Strat["id"], userId: User["id"]) {
