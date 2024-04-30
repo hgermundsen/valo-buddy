@@ -1,8 +1,8 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { Form, Link, json, useLoaderData, useSubmit } from "@remix-run/react";
 import { Fragment } from "react";
-import Breadcrumbs from "~/components/breadcrumbs";
 
+import Breadcrumbs from "~/components/breadcrumbs";
 import { CreateIcon } from "~/components/svgs";
 import { getStratListItems } from "~/models/strat.server";
 import { getMapNameAndAgentName } from "~/security";
@@ -79,16 +79,17 @@ export default function Strats() {
       bg-neutral-800 makes this section's background exactly bg-neutral-900. */}
       <section className="flex flex-col space-y-2 z-10 sticky top-0 p-4 w-full bg-neutral-900 bg-opacity-[96%]">
         <Breadcrumbs mapName={data.mapName} agentName={data.agentName} />
-        <div className="flex justify-between">
+
+        <Form method="post" action="create" className="flex justify-between">
           <h1 className="text-5xl font-['Druk_Wide_Bold']">STRATS</h1>
-          <Link
-            to="create"
+          <button
+            type="submit"
             className="h-min flex space-x-2 px-4 py-3 text-sm font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out"
           >
             <CreateIcon />
             <span>CREATE</span>
-          </Link>
-        </div>
+          </button>
+        </Form>
 
         <Form
           role="search"

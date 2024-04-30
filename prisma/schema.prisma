@@ -15,9 +15,10 @@ model User {
   email    String    @unique
   password Password?
 
-  notes  Note[]
-  vods   Vod[]
-  strats Strat[]
+  notes    Note[]
+  vods     Vod[]
+  strats   Strat[]
+  StratTag StratTag[]
 }
 
 model Password {
@@ -110,6 +111,9 @@ model StratTag {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String
 
   name   String  @unique
   strats Strat[]

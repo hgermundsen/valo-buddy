@@ -127,6 +127,7 @@ export function updateStrat(id: Strat["id"], fields: Partial<Strat>) {
 export function createNewTagAndAddItToStrat(
   id: Strat["id"],
   tagName: StratTag["name"],
+  userId: User["id"],
 ) {
   return prisma.strat.update({
     where: { id },
@@ -134,6 +135,7 @@ export function createNewTagAndAddItToStrat(
       tags: {
         create: {
           name: tagName,
+          userId,
         },
       },
     },
@@ -191,6 +193,14 @@ export function createStrat(
   });
 }
 
+export function createEmptyStrat(
+  map: Strat["map"],
+  agent: Strat["agent"],
+  userId: User["id"],
+) {
+  return prisma.strat.create({ data: { userId, map, agent, title: "" } });
+}
+
 export function deleteStrat(id: Strat["id"], userId: User["id"]) {
   // Without the userId check, we have an IDOR vulnerability.
   //
@@ -208,26 +218,11 @@ export interface StratTagListItem {
 // them.
 export async function getAllStratTags(
   userId: User["id"],
-  map: Strat["map"],
-  agent: Strat["agent"],
 ): Promise<StratTagListItem[]> {
-  const allStratTags = await prisma.strat.findMany({
-    where: { userId, map, agent },
-    select: { tags: { select: { id: true, name: true } } },
+  return prisma.stratTag.findMany({
+    where: { userId },
+    select: { id: true, name: true },
   });
-
-  const uniqueTagIds = new Set();
-  const uniqueTags: StratTagListItem[] = [];
-  allStratTags.forEach((tagsList) => {
-    tagsList.tags.forEach((tag) => {
-      if (!uniqueTagIds.has(tag.id)) {
-        uniqueTags.push({ ...tag });
-        uniqueTagIds.add(tag.id);
-      }
-    });
-  });
-
-  return uniqueTags;
 }
 
 export async function getTagsForStrat(id: Strat["id"], userId: User["id"]) {

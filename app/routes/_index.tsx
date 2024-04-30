@@ -16,7 +16,69 @@ const MARQUEE_PHRASES = [
   "Buy the SEN bundle",
 ];
 
-const ENCODING_CHARS = ["!", "@", "#", "$", "%", "^", "&", "*", "?"];
+const ENCODING_CHARS = [
+  "!",
+  "@",
+  "#",
+  "$",
+  "%",
+  "^",
+  "&",
+  "*",
+  "?",
+  "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
+  "g",
+  "h",
+  "i",
+  "j",
+  "k",
+  "l",
+  "m",
+  "n",
+  "o",
+  "p",
+  "q",
+  "r",
+  "s",
+  "t",
+  "u",
+  "v",
+  "w",
+  "x",
+  "y",
+  "z",
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H",
+  "I",
+  "J",
+  "K",
+  "L",
+  "M",
+  "N",
+  "O",
+  "P",
+  "Q",
+  "R",
+  "S",
+  "T",
+  "U",
+  "V",
+  "W",
+  "X",
+  "Y",
+  "Z",
+];
 const INITIAL_PRODUCT_NAME_TEXT_AS_ARRAY = [
   "_",
   "_",
@@ -116,7 +178,10 @@ export default function MapSelect() {
   }, []);
 
   return (
-    <main className="flex flex-col space-y-32 grow justify-center items-center">
+    <main
+      // https://www.ibelick.com/blog/create-grid-and-dot-backgrounds-with-css-tailwind-css
+      className="flex flex-col space-y-32 grow justify-center items-center bg-[radial-gradient(#333333_1px,transparent_2px)] [background-size:32px_32px]"
+    >
       <MarqueeRtol phrases={MARQUEE_PHRASES} />
       <div className="flex flex-col items-center space-y-4">
         <h1 className="text-5xl lg:text-7xl font-['Space_Mono'] scale-y-110">
@@ -131,15 +196,15 @@ export default function MapSelect() {
         <div className="flex space-x-4">
           <Link
             to="register"
-            className="p-5 font-['Space_Mono'] uppercase text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out"
+            className="p-5 font-['Space_Mono'] text-white border-2 border-red-300 bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 hover:border-valored-500 focus:bg-valored-400 transition-all duration-300 ease-in-out"
           >
-            Sign up now
+            SIGN UP NOW
           </Link>
           <Link
             to="login"
-            className="p-5 font-['Space_Mono'] uppercase text-white bg-gradient-to-r from-red-600 to-neutral-900 from-50% to-50% bg-right-bottom bg-[length:201%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out"
+            className="p-5 font-['Space_Mono'] text-white border-2 border-neutral-700 bg-gradient-to-r from-red-600 to-neutral-900 from-50% to-50% bg-right-bottom bg-[length:201%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 hover:border-valored-500 focus:bg-valored-400 transition-all duration-300 ease-in-out"
           >
-            Log in
+            LOG IN
           </Link>
         </div>
       </div>

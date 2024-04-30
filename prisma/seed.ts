@@ -131,16 +131,19 @@ async function seed() {
   const passiveStratTag = await prisma.stratTag.create({
     data: {
       name: "passive",
+      userId: user.id,
     },
   });
   const woohoojinStratTag = await prisma.stratTag.create({
     data: {
       name: "woohoojin",
+      userId: user.id,
     },
   });
   const retakeStratTag = await prisma.stratTag.create({
     data: {
       name: "retake",
+      userId: user.id,
     },
   });
 

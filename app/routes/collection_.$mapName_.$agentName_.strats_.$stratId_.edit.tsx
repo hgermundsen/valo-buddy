@@ -17,7 +17,6 @@ import { useState } from "react";
 import invariant from "tiny-invariant";
 
 import Breadcrumbs from "~/components/breadcrumbs";
-import DeleteModal from "~/components/deleteModal";
 import { CancelIcon, PlusIcon, SaveIcon } from "~/components/svgs";
 import {
   deleteStrat,
@@ -26,7 +25,7 @@ import {
   updateStrat,
 } from "~/models/strat.server";
 import { getMapNameAndAgentName } from "~/security";
-import { requireUserId } from "~/session.server";
+import { requireUserId, sessionStorage } from "~/session.server";
 
 export const meta: MetaFunction = () => {
   return [
@@ -50,7 +49,12 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     throw new Response("Not Found", { status: 404 });
   }
 
-  return json({ mapName, agentName, strat });
+  const session = await sessionStorage.getSession(
+    request.headers.get("Cookie"),
+  );
+  const isNewlyCreatedStrat: boolean | null =
+    session.get("isNewlyCreatedStrat") || null;
+  return json({ mapName, agentName, strat, isNewlyCreatedStrat });
 }
 
 export async function action({ request, params }: ActionFunctionArgs) {
@@ -66,7 +70,38 @@ export async function action({ request, params }: ActionFunctionArgs) {
     throw new Response("Not Found", { status: 404 });
   }
 
+  // If it's present, remove the "isNewlyCreatedStrat" key from the session
+  // cookie. This is the right time to do it: the user is either saving the
+  // changes they've made to the newly-created blank strat (just creating it as
+  // far as they're is concerned), or canceling.
+  const session = await sessionStorage.getSession(
+    request.headers.get("Cookie"),
+  );
+
   const formData = await request.formData();
+
+  if (formData.get("_action") === "cancel") {
+    if (session.has("isNewlyCreatedStrat")) {
+      session.unset("isNewlyCreatedStrat");
+
+      await deleteStrat(stratId, userId);
+
+      // It's safe to just include user input in the form of params here. The page
+      // we're redirecting to performs input sanitization and validation.
+      const correspondingStratsPageURL = `/collection/${params.mapName}/${params.agentName}/strats`;
+      return redirect(correspondingStratsPageURL, {
+        // In case we removed the "isNewlyCreatedStrat" key/value pair, make sure
+        // that's committed.
+        headers: { "Set-Cookie": await sessionStorage.commitSession(session) },
+      });
+    } else {
+      // It's safe to just include user input in the form of params here. The page
+      // we're redirecting to performs input sanitization and validation.
+      const correspondingStratDetailPageURL = `/collection/${params.mapName}/${params.agentName}/strats/${params.stratId}`;
+      return redirect(correspondingStratDetailPageURL);
+    }
+  }
+
   // If the user edits a field and ends up retyping the same thing, then that
   // field will appear in this object. The server function handles this.
   const updates = Object.fromEntries(formData);
@@ -74,10 +109,18 @@ export async function action({ request, params }: ActionFunctionArgs) {
   // TODO: Optimistic UI?
   await updateStrat(stratId, updates);
 
+  if (session.has("isNewlyCreatedStrat")) {
+    session.unset("isNewlyCreatedStrat");
+  }
+
   // It's safe to just include user input in the form of params here. The page
   // we're redirecting to performs input sanitization and validation.
   const correspondingStratDetailPageURL = `/collection/${params.mapName}/${params.agentName}/strats/${params.stratId}`;
-  return redirect(correspondingStratDetailPageURL);
+  return redirect(correspondingStratDetailPageURL, {
+    // In case we removed the "isNewlyCreatedStrat" key/value pair, make sure
+    // that's committed.
+    headers: { "Set-Cookie": await sessionStorage.commitSession(session) },
+  });
 }
 
 export default function EditStratPage() {
@@ -128,6 +171,7 @@ export default function EditStratPage() {
                 name="title"
                 aria-label="Strat title"
                 defaultValue={data.strat.title}
+                placeholder="Strat title"
                 className="grow text-5xl font-['Druk_Wide_Bold'] uppercase px-2 py-1 text-neutral-200 placeholder:text-neutral-400 bg-neutral-700 border-b-2 border-neutral-600 outline-none hover:bg-neutral-600 hover:border-neutral-500 focus:bg-neutral-600 focus:border-neutral-500 transition"
               />
               <button
@@ -137,18 +181,33 @@ export default function EditStratPage() {
                 <SaveIcon />
                 <span>SAVE</span>
               </button>
-              <button
-                onClick={() =>
-                  navigate(
-                    `/collection/${data.mapName}/${data.agentName}/strats/${data.strat.id}`,
-                  )
-                }
-                type="button"
-                className="h-min flex space-x-2 px-4 py-3 text-sm font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out"
-              >
-                <CancelIcon />
-                <span>CANCEL</span>
-              </button>
+
+              {/* If we're currently editing an newly-created strat, then that
+                  means we need to delete it if we click the "cancel" button
+                  (trigger the action). Otherwise, we can just navigate back one
+                  page, which doesn't involve going out to the network, and is
+                  much snappier. */}
+              {data.isNewlyCreatedStrat ? (
+                <Form method="post">
+                  <input type="hidden" name="_action" value="cancel" />
+                  <button
+                    type="submit"
+                    className="h-min flex space-x-2 px-4 py-3 text-sm font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out"
+                  >
+                    <CancelIcon />
+                    <span>CANCEL</span>
+                  </button>
+                </Form>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => navigate(-1)}
+                  className="h-min flex space-x-2 px-4 py-3 text-sm font-['Space_Mono'] text-white bg-gradient-to-r from-red-600 to-valored-500 from-50% to-50% bg-right-bottom bg-[length:200%_100%] outline-none hover:bg-left-bottom hover:text-neutral-900 focus:bg-valored-400 transition-all duration-300 ease-in-out"
+                >
+                  <CancelIcon />
+                  <span>CANCEL</span>
+                </button>
+              )}
             </div>
             <div className="flex flex-wrap gap-2">
               {sortedTagNames.map((tagName) => (
@@ -244,12 +303,14 @@ export default function EditStratPage() {
             content={data.strat.miscNotes}
           />
 
-          <Link
-            to="delete"
-            className="h-min px-4 py-3 text-center text-sm font-['Space_Mono'] text-valored-500 border-2 border-neutral-700 bg-gradient-to-t from-red-600 to-neutral-900 from-50% to-50% bg-top bg-[length:100%_200%] outline-none hover:bg-bottom hover:text-neutral-900 hover:border-valored-500 focus:bg-valored-400 transition-all duration-300 ease-in-out"
-          >
-            DELETE STRAT
-          </Link>
+          {!data.isNewlyCreatedStrat ? (
+            <Link
+              to="delete"
+              className="h-min px-4 py-3 text-center text-sm font-['Space_Mono'] text-valored-500 border-2 border-neutral-700 bg-gradient-to-t from-red-600 to-neutral-900 from-50% to-50% bg-top bg-[length:100%_200%] outline-none hover:bg-bottom hover:text-neutral-900 hover:border-valored-500 focus:bg-valored-400 transition-all duration-300 ease-in-out"
+            >
+              DELETE STRAT
+            </Link>
+          ) : null}
         </main>
       </Form>
     </>
