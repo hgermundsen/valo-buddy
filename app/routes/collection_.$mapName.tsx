@@ -1,5 +1,5 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
-import { Link, json, useLoaderData } from "@remix-run/react";
+import { Link, json } from "@remix-run/react";
 
 import Breadcrumbs from "~/components/breadcrumbs";
 import { getMapName } from "~/security";
