@@ -16,7 +16,6 @@
     "start:mocks": "NODE_ENV=production node --require ./mocks --require dotenv/config ./build/server.js",
     "test": "vitest"
   },
-  "type": "module",
   "prettier": {},
   "eslintIgnore": [
     "/node_modules",
