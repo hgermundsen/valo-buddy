@@ -47,7 +47,6 @@ interface Agent {
 }
 
 export default function AgentSelect() {
-  const data = useLoaderData<typeof loader>();
   const agents: Agent[] = [
     { name: "astra", image: astra },
     { name: "breach", image: breach },
