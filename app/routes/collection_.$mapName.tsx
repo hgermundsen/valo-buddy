@@ -11,6 +11,7 @@ import astra from "../images/agents/astra.webp";
 import breach from "../images/agents/breach.webp";
 import brimstone from "../images/agents/brimstone.webp";
 import chamber from "../images/agents/chamber.webp";
+import clove from "../images/agents/clove.webp";
 import cypher from "../images/agents/cypher.webp";
 import deadlock from "../images/agents/deadlock.webp";
 import fade from "../images/agents/fade.webp";
@@ -52,6 +53,7 @@ export default function AgentSelect() {
     { name: "breach", image: breach },
     { name: "brimstone", image: brimstone },
     { name: "chamber", image: chamber },
+    { name: "clove", image: clove },
     { name: "cypher", image: cypher },
     { name: "deadlock", image: deadlock },
     { name: "fade", image: fade },

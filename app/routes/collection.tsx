@@ -1,6 +1,8 @@
 import type { MetaFunction } from "@remix-run/node";
 import { Link } from "@remix-run/react";
 
+// Map images pulled from https://valorant.fandom.com/wiki/Maps
+import abyss from "../images/maps/abyss.webp";
 import ascent from "../images/maps/ascent.webp";
 import bind from "../images/maps/bind.webp";
 import breeze from "../images/maps/breeze.webp";
@@ -21,6 +23,7 @@ interface Map {
 
 export default function MapSelect() {
   const maps: Map[] = [
+    { name: "abyss", image: abyss },
     { name: "ascent", image: ascent },
     { name: "bind", image: bind },
     { name: "breeze", image: breeze },

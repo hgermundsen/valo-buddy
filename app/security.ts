@@ -3,6 +3,7 @@ import invariant from "tiny-invariant";
 import validator from "validator";
 
 const MAP_NAMES = [
+  "abyss",
   "ascent",
   "bind",
   "breeze",
@@ -19,6 +20,7 @@ const AGENT_NAMES = [
   "breach",
   "brimstone",
   "chamber",
+  "clove",
   "cypher",
   "deadlock",
   "fade",
