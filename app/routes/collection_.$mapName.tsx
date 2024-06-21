@@ -5,7 +5,7 @@ import Breadcrumbs from "~/components/breadcrumbs";
 import { getMapName } from "~/security";
 import { capitalizeWord } from "~/utils";
 
-// Agent images: at the bottom of https://valorant.fandom.com/wiki/Iso
+// Agent images: at the bottom of https://valorant.fandom.com/wiki/Agents
 // Or from: https://www.valorantpicker.com/#/ (but these are PNGs)
 import astra from "../images/agents/astra.webp";
 import breach from "../images/agents/breach.webp";
