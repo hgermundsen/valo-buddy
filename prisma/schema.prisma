@@ -15,7 +15,6 @@ model User {
   email    String    @unique
   password Password?
 
-  notes    Note[]
   vods     Vod[]
   strats   Strat[]
   StratTag StratTag[]
@@ -26,18 +25,6 @@ model Password {
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId String @unique
-}
-
-model Note {
-  id    String @id @default(cuid())
-  title String
-  body  String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId String
 }
 
 model Vod {
@@ -88,22 +75,14 @@ model Strat {
   userId   String
   isPublic Boolean @default(false)
 
-  map                                      String
-  agent                                    String
-  title                                    String
-  tags                                     StratTag[]
-  miscLinks                                String[]
-  lineupsAndAbilityTricksAttackerSideNotes String?
-  lineupsAndAbilityTricksDefenderSideNotes String?
-  earlyRoundAttackerSideNotes              String?
-  earlyRoundDefenderSideNotes              String?
-  midRoundAttackerSideNotes                String?
-  midRoundDefenderSideNotes                String?
-  lateRoundAttackerSideNotes               String?
-  lateRoundDefenderSideNotes               String?
-  miscNotes                                String?
-  relatedVods                              Vod[]
-  images                                   StratImage[]
+  map               String
+  agent             String
+  title             String
+  tags              StratTag[]
+  attackerSideNotes String?
+  defenderSideNotes String?
+  relatedVods       Vod[]
+  images            StratImage[]
 }
 
 model StratTag {
@@ -119,18 +98,6 @@ model StratTag {
   strats Strat[]
 }
 
-enum StratSection {
-  LINEUPS_AND_ABILITY_TRICKS_ATTACKER_SIDE
-  LINEUPS_AND_ABILITY_TRICKS_DEFENDER_SIDE
-  EARLY_ROUND_ATTACKER_SIDE
-  EARLY_ROUND_DEFENDER_SIDE
-  MID_ROUND_ATTACKER_SIDE
-  MID_ROUND_DEFENDER_SIDE
-  LATE_ROUND_ATTACKER_SIDE
-  LATE_ROUND_DEFENDER_SIDE
-  MISC
-}
-
 model StratImage {
   id        String    @id @default(cuid())
   createdAt DateTime  @default(now())
@@ -140,6 +107,5 @@ model StratImage {
   associatedStrat Strat  @relation(fields: [stratId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   stratId         String
 
-  imageURL     String
-  stratSection StratSection @default(MISC)
+  imageURL String
 }

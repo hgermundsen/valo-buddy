@@ -66,18 +66,10 @@ export function getStrat({
       updatedAt: true,
       title: true,
       tags: { select: { id: true, name: true } },
-      miscLinks: true,
-      lineupsAndAbilityTricksAttackerSideNotes: true,
-      lineupsAndAbilityTricksDefenderSideNotes: true,
-      earlyRoundAttackerSideNotes: true,
-      earlyRoundDefenderSideNotes: true,
-      midRoundAttackerSideNotes: true,
-      midRoundDefenderSideNotes: true,
-      lateRoundAttackerSideNotes: true,
-      lateRoundDefenderSideNotes: true,
-      miscNotes: true,
+      attackerSideNotes: true,
+      defenderSideNotes: true,
       relatedVods: { select: { id: true, title: true } },
-      images: { select: { id: true, stratSection: true, imageURL: true } },
+      images: { select: { id: true, imageURL: true } },
     },
     where: {
       id,
@@ -188,6 +180,8 @@ export function createStrat(
       map,
       agent,
       title,
+      attackerSideNotes: "",
+      defenderSideNotes: "",
       ...preprocessedFields,
     },
   });
@@ -198,7 +192,64 @@ export function createEmptyStrat(
   agent: Strat["agent"],
   userId: User["id"],
 ) {
-  return prisma.strat.create({ data: { userId, map, agent, title: "" } });
+  const template = `# Lineups and Ability Tricks
+## Subsection here
+### Sub-subsection here
+This is where you'd put actual strategy information. For now we fully support markdown for formatting and you can find more info in this [Cheat Sheet](https://www.markdownguide.org/cheat-sheet/) if you're unfamiliar.
+
+1. An ordered list
+2. With multiple entries
+3. Like this
+
+* And an unordered list
+  * With nested parts
+* Like this
+
+Images can be embedded like this: ![](https://media.tenor.com/A79jOIxgqUYAAAAi/surprised-penguin-valorant.gif)
+
+---
+
+# Early Round
+## Subsection here
+### Sub-subsection here
+This is where you'd put actual strategy information. For now we fully support markdown for formatting and you can find more info in this [Cheat Sheet](https://www.markdownguide.org/cheat-sheet/) if you're unfamiliar.
+
+1. An ordered list
+2. With multiple entries
+3. Like this
+
+* And an unordered list
+  * With nested parts
+* Like this
+
+Images can be embedded like this: ![](https://media.tenor.com/A79jOIxgqUYAAAAi/surprised-penguin-valorant.gif)
+
+---
+
+# Mid Round
+## Subsection here
+### Sub-subsection here
+This is where you'd put actual strategy information. For now we fully support markdown for formatting and you can find more info in this [Cheat Sheet](https://www.markdownguide.org/cheat-sheet/) if you're unfamiliar
+
+1. An ordered list
+2. With multiple entries
+3. Like this
+
+* And an unordered list
+  * With nested parts
+* Like this
+
+Images can be embedded like this: ![](https://media.tenor.com/A79jOIxgqUYAAAAi/surprised-penguin-valorant.gif)`;
+  return prisma.strat.create({
+    data: {
+      user: { connect: { id: userId } },
+      map,
+      agent,
+      title: "",
+      attackerSideNotes: template,
+      defenderSideNotes: template,
+    },
+  });
 }
 
 export function deleteStrat(id: Strat["id"], userId: User["id"]) {

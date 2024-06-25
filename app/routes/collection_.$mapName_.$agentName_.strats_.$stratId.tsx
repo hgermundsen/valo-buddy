@@ -1,4 +1,3 @@
-import { StratSection } from "@prisma/client";
 import { LoaderFunctionArgs, MetaFunction, json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
@@ -9,16 +8,13 @@ import { EditIcon } from "~/components/svgs";
 import { getStrat } from "~/models/strat.server";
 import { getMapNameAndAgentName } from "~/security";
 import { requireUserId } from "~/session.server";
-import { capitalizeWord } from "~/utils";
 
-export const meta: MetaFunction = ({ params }) => {
-  const mapName = capitalizeWord(params.mapName!);
-  const agentName = capitalizeWord(params.agentName!);
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return [
     {
       // TODO: Is this a helpful title? You're showing IDs, that's not very
       // human-readable...
-      title: `ValoBuddy - ${mapName}/${agentName}/strats/${params.stratId!}`,
+      title: `${data?.strat.title} - ValoBuddy`,
     },
   ];
 };
@@ -80,150 +76,61 @@ export default function StratDetailsPage() {
       </div>
 
       <main className="flex flex-col space-y-12 px-16 py-4">
-        {/* TODO: Create OneColumnSection component. */}
-        {data.strat.miscLinks.length > 0 ? (
-          <section>
-            <h2 className="text-3xl font-['Druk_Wide_Bold'] uppercase">
-              Links
-            </h2>
-            {data.strat.miscLinks.length === 0 ? (
-              <p className="text-neutral-400 italic">No content.</p>
-            ) : (
-              <ul>
-                <div className="grid gap-6 grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-                  {data.strat.miscLinks.map((link) => (
-                    <li key={link}>{link}</li>
-                  ))}
-                </div>
-              </ul>
-            )}
-          </section>
-        ) : null}
         <TwoColumnSection
-          attackerSideSection={
-            StratSection.LINEUPS_AND_ABILITY_TRICKS_ATTACKER_SIDE
-          }
-          defenderSideSection={
-            StratSection.LINEUPS_AND_ABILITY_TRICKS_DEFENDER_SIDE
-          }
-          title="Lineups and Ability Tricks"
-          images={data.strat.images}
-          attackerSideNotes={
-            data.strat.lineupsAndAbilityTricksAttackerSideNotes
-          }
-          defenderSideNotes={
-            data.strat.lineupsAndAbilityTricksDefenderSideNotes
-          }
+          attackerSideNotes={data.strat.attackerSideNotes}
+          defenderSideNotes={data.strat.defenderSideNotes}
         />
-        <TwoColumnSection
-          attackerSideSection={StratSection.EARLY_ROUND_ATTACKER_SIDE}
-          defenderSideSection={StratSection.EARLY_ROUND_DEFENDER_SIDE}
-          title="Early Round"
-          images={data.strat.images}
-          attackerSideNotes={data.strat.earlyRoundAttackerSideNotes}
-          defenderSideNotes={data.strat.earlyRoundDefenderSideNotes}
-        />
-        <TwoColumnSection
-          attackerSideSection={StratSection.MID_ROUND_ATTACKER_SIDE}
-          defenderSideSection={StratSection.MID_ROUND_DEFENDER_SIDE}
-          title="Mid Round"
-          images={data.strat.images}
-          attackerSideNotes={data.strat.midRoundAttackerSideNotes}
-          defenderSideNotes={data.strat.midRoundDefenderSideNotes}
-        />
-        <TwoColumnSection
-          attackerSideSection={StratSection.LATE_ROUND_ATTACKER_SIDE}
-          defenderSideSection={StratSection.LATE_ROUND_DEFENDER_SIDE}
-          title="Late Round"
-          images={data.strat.images}
-          attackerSideNotes={data.strat.lateRoundAttackerSideNotes}
-          defenderSideNotes={data.strat.lateRoundDefenderSideNotes}
-        />
-        {data.strat.miscNotes !== null ? (
-          <section className="flex flex-col space-y-2">
-            <h2 className="text-3xl font-['Druk_Wide_Bold'] uppercase">
-              Miscellaneous
-            </h2>
-            <p>{data.strat.miscNotes}</p>
-          </section>
-        ) : null}
       </main>
     </div>
   );
 }
-
-interface StratImage {
-  id: string;
-  stratSection: StratSection;
-  imageURL: string;
-}
 interface TwoColumnSectionProps {
-  attackerSideSection: StratSection;
-  defenderSideSection: StratSection;
-  title: string;
-  images: StratImage[];
   attackerSideNotes: string | null;
   defenderSideNotes: string | null;
 }
 function TwoColumnSection({
-  attackerSideSection,
-  defenderSideSection,
-  title,
-  images,
   attackerSideNotes,
   defenderSideNotes,
 }: TwoColumnSectionProps) {
-  if (attackerSideNotes === null && defenderSideNotes === null) {
-    return null;
-  }
   return (
     <section className="flex flex-col space-y-2">
-      <h2 className="text-3xl font-['Druk_Wide_Bold'] uppercase">{title}</h2>
       <div className="grid grid-cols-2 gap-6">
         <div className="flex flex-col space-y-2">
-          <h3 className="text-xl text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
+          <h2 className="text-3xl font-['Druk_Wide_Bold'] uppercase underline my-4">
             Attacker Side
-          </h3>
-          {images
-            .filter((image) => image.stratSection === attackerSideSection)
-            .map((image) => (
-              <img
-                key={image.id}
-                src={image.imageURL}
-                // TODO: Come up with a better way to do alt tags. Make the
-                // user provide them? Maybe the title attached to imgur
-                // upload?
-                alt="User-uploaded content"
-              />
-            ))}
-
+          </h2>
           {attackerSideNotes && attackerSideNotes.length > 0 ? (
-            <Markdown content={attackerSideNotes} />
+            <Markdown content={attackerSideNotes}></Markdown>
           ) : (
-            <p className="text-neutral-400 italic">No content.</p>
+            <>
+              <p className="text-neutral-400 italic">
+                No content to show here, add some notes! Markdown is supported.
+              </p>
+              <img
+                alt="Something has gone wrong, there should be something here..."
+                src="https://media.tenor.com/EbyOKpncujQAAAAi/john-travolta-tra-jt-transparent.gif"
+                className="w-3/4"
+              ></img>
+            </>
           )}
         </div>
         <div className="flex flex-col space-y-2">
-          <h3 className="text-xl text-neutral-400 font-['Space_Mono'] scale-y-125 uppercase">
+          <h2 className="text-3xl font-['Druk_Wide_Bold'] uppercase underline my-4">
             Defender Side
-          </h3>
-          {images
-            .filter((image) => image.stratSection === defenderSideSection)
-            .map((image) => (
-              <img
-                key={image.id}
-                src={image.imageURL}
-                // TODO: Come up with a better way to do alt tags. Make the
-                // user provide them? Maybe the title attached to imgur
-                // upload?
-                alt="User-uploaded content"
-              />
-            ))}
-
+          </h2>
           {defenderSideNotes && defenderSideNotes.length > 0 ? (
-            <Markdown content={defenderSideNotes} />
+            <Markdown content={defenderSideNotes}></Markdown>
           ) : (
-            <p className="text-neutral-400 italic">No content.</p>
+            <>
+              <p className="text-neutral-400 italic">
+                No content to show here, add some notes! Markdown is supported.
+              </p>
+              <img
+                alt="Something has gone wrong, there should be something here..."
+                src="https://media.tenor.com/EbyOKpncujQAAAAi/john-travolta-tra-jt-transparent.gif"
+                className="w-3/4 scale-x-[-1]"
+              ></img>
+            </>
           )}
         </div>
       </div>
