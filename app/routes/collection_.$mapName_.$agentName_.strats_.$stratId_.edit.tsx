@@ -103,9 +103,37 @@ export async function action({ request, params }: ActionFunctionArgs) {
   // If the user edits a field and ends up retyping the same thing, then that
   // field will appear in this object. The server function handles this.
   const updates = Object.fromEntries(formData);
-  // TODO: Error handling?
-  // TODO: Optimistic UI?
-  await updateStrat(stratId, updates);
+
+  // Define the regex pattern to match Markdown image links
+  const imageLinkRegex = /!\[.*?\]\((.*?)\)/g;
+
+  // Extract image URLs from attackerSideNotes and defenderSideNotes
+  const attackerImageURLs =
+    updates.attackerSideNotes
+      .toString()
+      .match(imageLinkRegex)
+      ?.map((match) => match.replace(imageLinkRegex, "$1")) || [];
+  const defenderImageURLs =
+    updates.defenderSideNotes
+      .toString()
+      .match(imageLinkRegex)
+      ?.map((match) => match.replace(imageLinkRegex, "$1")) || [];
+
+  // Combine both arrays of image URLs
+  const allImageURLs = [...attackerImageURLs, ...defenderImageURLs];
+
+  // Append the first 3 image URLs into the stratImageUrls field
+  const stratImageUrls = allImageURLs.slice(0, 3);
+
+  // Update the numImages field with the total number of image URLs found
+  const numImages = allImageURLs.length;
+
+  const imageUpdates = {
+    ...updates,
+    stratImageUrls: stratImageUrls,
+    numImages: numImages,
+  };
+  await updateStrat(stratId, imageUpdates);
 
   if (session.has("isNewlyCreatedStrat")) {
     session.unset("isNewlyCreatedStrat");

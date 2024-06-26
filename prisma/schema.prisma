@@ -82,7 +82,8 @@ model Strat {
   attackerSideNotes String?
   defenderSideNotes String?
   relatedVods       Vod[]
-  images            StratImage[]
+  stratImageUrls    String[]
+  numImages         Int     @default(0) @db.SmallInt
 }
 
 model StratTag {
@@ -96,16 +97,4 @@ model StratTag {
 
   name   String  @unique
   strats Strat[]
-}
-
-model StratImage {
-  id        String    @id @default(cuid())
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
-
-  associatedStrat Strat  @relation(fields: [stratId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  stratId         String
-
-  imageURL String
 }

@@ -185,7 +185,8 @@ export default function Strats() {
               createdAt={new Date(strat.createdAt)}
               updatedAt={new Date(strat.updatedAt)}
               tags={strat.tags.map((tag) => tag.name)}
-              imageURLs={strat.images.map((image) => image.imageURL)}
+              stratImageUrls={strat.stratImageUrls}
+              numImages={strat.numImages}
             />
           ))
         )}
@@ -200,7 +201,8 @@ interface StratProps {
   createdAt: Date;
   updatedAt: Date;
   tags: string[];
-  imageURLs: string[];
+  stratImageUrls: string[];
+  numImages: number;
 }
 function Strat({
   id,
@@ -208,13 +210,14 @@ function Strat({
   createdAt,
   updatedAt,
   tags,
-  imageURLs,
+  stratImageUrls,
+  numImages,
 }: StratProps) {
   const sortedTags = tags.sort();
 
   return (
     <div className="flex space-x-4">
-      <ImageGrid imageURLs={imageURLs} />
+      <ImageGrid stratImageURLs={stratImageUrls} numImages={numImages} />
       <div className="w-full flex flex-col space-y-2">
         <div className="flex justify-between">
           <div className="flex flex-col">
@@ -247,79 +250,80 @@ function Strat({
 }
 
 interface ImageGridProps {
-  imageURLs: string[];
+  stratImageURLs: string[];
+  numImages: number;
 }
-function ImageGrid({ imageURLs }: ImageGridProps) {
+function ImageGrid({ stratImageURLs, numImages }: ImageGridProps) {
   let content = (
     <div className="absolute w-full h-full flex justify-center items-center bg-neutral-900">
       <span>No images</span>
     </div>
   );
-  if (imageURLs.length === 1) {
+  if (numImages === 1) {
     content = (
       <img
-        src={imageURLs[0]}
+        src={stratImageURLs[0]}
         // TODO: Come up with a better way to do alt tags. Make the user provide
         // them? Maybe the title attached to imgur upload?
         alt="User-uploaded content"
         className="absolute w-full h-full p-1 object-cover bg-neutral-900"
       />
     );
-  } else if (imageURLs.length === 2) {
+  } else if (numImages === 2) {
     content = (
       <div className="absolute w-full h-full p-1 grid grid-rows-2 gap-1 bg-neutral-900">
         <img
-          src={imageURLs[0]}
+          src={stratImageURLs[0]}
           alt="User-uploaded content"
           className="w-full h-full object-cover"
         />
         <img
-          src={imageURLs[1]}
+          src={stratImageURLs[1]}
           alt="User-uploaded content"
           className="w-full h-full object-cover"
         />
       </div>
     );
-  } else if (imageURLs.length === 3) {
+  } else if (numImages === 3) {
     content = (
       <div className="absolute h-full p-1 grid grid-rows-2 grid-cols-2 gap-1 bg-neutral-900">
         <img
-          src={imageURLs[0]}
+          src={stratImageURLs[0]}
           alt="User-uploaded content"
           className="h-full object-cover"
         />
         <img
-          src={imageURLs[1]}
+          src={stratImageURLs[1]}
           alt="User-uploaded content"
           className="h-full object-cover"
         />
         <img
-          src={imageURLs[2]}
+          src={stratImageURLs[2]}
           alt="User-uploaded content"
           className="w-full h-full col-span-2 object-cover"
         />
       </div>
     );
-  } else if (imageURLs.length > 3) {
+  } else if (numImages > 3) {
     content = (
       <div className="absolute h-full p-1 grid grid-rows-2 grid-cols-2 gap-1 bg-neutral-900">
         <img
-          src={imageURLs[0]}
+          src={stratImageURLs[0]}
           alt="User-uploaded content"
           className="h-full object-cover"
         />
         <img
-          src={imageURLs[1]}
+          src={stratImageURLs[1]}
           alt="User-uploaded content"
           className="h-full object-cover"
         />
         <img
-          src={imageURLs[2]}
+          src={stratImageURLs[2]}
           alt="User-uploaded content"
           className="h-full object-cover"
         />
         <div className="flex justify-center items-center">
-          <span>+{imageURLs.length - 3} more</span>
+          <span>+{numImages - 3} more</span>
         </div>
       </div>
     );

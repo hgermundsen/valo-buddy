@@ -153,11 +153,8 @@ async function seed() {
       tags: {
         connect: [{ id: passiveStratTag.id }, { id: woohoojinStratTag.id }],
       },
-      images: {
-        create: {
-          imageURL: "https://imgur.com/sSOFMDa.png",
-        },
-      },
+      stratImageUrls: ["https://imgur.com/sSOFMDa.png"],
+      numImages: 1,
     },
   });
 
@@ -175,18 +172,11 @@ async function seed() {
       relatedVods: {
         connect: { id: vod3.id },
       },
-      images: {
-        createMany: {
-          data: [
-            {
-              imageURL: "https://i.imgur.com/10jVymu.png",
-            },
-            {
-              imageURL: "https://imgur.com/sSOFMDa.png",
-            },
-          ],
-        },
-      },
+      stratImageUrls: [
+        "https://i.imgur.com/10jVymu.png",
+        "https://imgur.com/sSOFMDa.png",
+      ],
+      numImages: 2,
     },
   });
 
@@ -204,21 +194,12 @@ async function seed() {
       relatedVods: {
         connect: { id: vod3.id },
       },
-      images: {
-        createMany: {
-          data: [
-            {
-              imageURL: "https://i.imgur.com/10jVymu.png",
-            },
-            {
-              imageURL: "https://imgur.com/sSOFMDa.png",
-            },
-            {
-              imageURL: "https://i.imgur.com/xJkhTkO.png",
-            },
-          ],
-        },
-      },
+      stratImageUrls: [
+        "https://i.imgur.com/10jVymu.png",
+        "https://imgur.com/sSOFMDa.png",
+        "https://i.imgur.com/xJkhTkO.png",
+      ],
+      numImages: 3,
     },
   });
 
@@ -233,30 +214,12 @@ async function seed() {
       relatedVods: {
         connect: { id: vod3.id },
       },
-      images: {
-        createMany: {
-          data: [
-            {
-              imageURL: "https://i.imgur.com/10jVymu.png",
-            },
-            {
-              imageURL: "https://imgur.com/sSOFMDa.png",
-            },
-            {
-              imageURL: "https://i.imgur.com/xJkhTkO.png",
-            },
-            {
-              imageURL: "https://i.imgur.com/10jVymu.png",
-            },
-            {
-              imageURL: "https://imgur.com/sSOFMDa.png",
-            },
-            {
-              imageURL: "https://i.imgur.com/xJkhTkO.png",
-            },
-          ],
-        },
-      },
+      stratImageUrls: [
+        "https://i.imgur.com/10jVymu.png",
+        "https://imgur.com/sSOFMDa.png",
+        "https://i.imgur.com/xJkhTkO.png",
+      ],
+      numImages: 6,
     },
   });
 
