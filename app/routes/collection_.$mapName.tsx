@@ -7,6 +7,7 @@ import { capitalizeWord } from "~/utils";
 
 // Agent images: at the bottom of https://valorant.fandom.com/wiki/Agents
 // Or from: https://www.valorantpicker.com/#/ (but these are PNGs)
+import allAgents from "../images/agents/allAgents.webp";
 import astra from "../images/agents/astra.webp";
 import breach from "../images/agents/breach.webp";
 import brimstone from "../images/agents/brimstone.webp";
@@ -73,6 +74,7 @@ export default function AgentSelect() {
     { name: "sova", image: sova },
     { name: "viper", image: viper },
     { name: "yoru", image: yoru },
+    { name: "all-agents", image: allAgents },
   ];
   return (
     <>

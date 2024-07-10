@@ -48,7 +48,7 @@ export default function Breadcrumbs(props: Props) {
             to={`/collection/${props.mapName}`}
             className="text-blue-500 hover:underline visited:text-purple-500"
           >
-            {props.mapName}
+            {props.mapName === "all-maps" ? "all maps" : props.mapName}
           </Link>
         </>
       ) : null}
@@ -59,7 +59,7 @@ export default function Breadcrumbs(props: Props) {
             to={`/collection/${props.mapName}/${props.agentName}`}
             className="text-blue-500 hover:underline visited:text-purple-500"
           >
-            {props.agentName}
+            {props.agentName === "all-agents" ? "all agents" : props.agentName}
           </Link>
         </>
       ) : null}

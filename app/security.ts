@@ -4,6 +4,7 @@ import validator from "validator";
 
 const MAP_NAMES = [
   "abyss",
+  "all-maps",
   "ascent",
   "bind",
   "breeze",
@@ -16,6 +17,7 @@ const MAP_NAMES = [
   "sunset",
 ];
 const AGENT_NAMES = [
+  "all-agents",
   "astra",
   "breach",
   "brimstone",

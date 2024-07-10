@@ -3,6 +3,7 @@ import { Link } from "@remix-run/react";
 
 // Map images pulled from https://valorant.fandom.com/wiki/Maps
 import abyss from "../images/maps/abyss.webp";
+import allMaps from "../images/maps/allMaps.webp";
 import ascent from "../images/maps/ascent.webp";
 import bind from "../images/maps/bind.webp";
 import breeze from "../images/maps/breeze.webp";
@@ -34,6 +35,7 @@ export default function MapSelect() {
     { name: "pearl", image: pearl },
     { name: "split", image: split },
     { name: "sunset", image: sunset },
+    { name: "all-maps", image: allMaps },
   ];
   return (
     <main className="flex grow justify-center items-center p-6 lg:p-16">
@@ -46,7 +48,7 @@ export default function MapSelect() {
             style={{ animationDelay: `${0.05 * i}s` }}
           >
             <span className="z-10 absolute bottom-2 md:bottom-4 left-2 md:left-4 text-xl md:text-2xl font-['Druk_Wide_Bold'] uppercase bg-gradient-to-b from-neutral-300 to-white text-transparent bg-clip-text group-hover:text-white transition">
-              {name}
+              {name === "all-maps" ? "all maps" : name}
             </span>
             <img
               src={image}
