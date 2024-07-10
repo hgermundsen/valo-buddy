@@ -25,8 +25,12 @@ export function getStratListItems({
   const where: any = {
     userId,
     deletedAt: null,
-    map,
-    agent,
+    OR: [
+      { map, agent },
+      { map: "all-maps", agent },
+      { map, agent: "all-agents" },
+      { map: "all-maps", agent: "all-agents" },
+    ],
   };
 
   if (query) {

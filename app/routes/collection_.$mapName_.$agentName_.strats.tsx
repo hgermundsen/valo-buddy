@@ -167,13 +167,27 @@ export default function Strats() {
         {data.strats.length === 0 ? (
           data.q === undefined ? (
             <p className="text-neutral-400 italic">
-              No strats for {capitalizeWord(data.agentName)} on{" "}
-              {capitalizeWord(data.mapName)}.
+              No strats for{" "}
+              {data.agentName === "all-agents"
+                ? "All Agents"
+                : capitalizeWord(data.agentName)}{" "}
+              on{" "}
+              {data.mapName === "all-maps"
+                ? "All Maps"
+                : capitalizeWord(data.mapName)}
+              .
             </p>
           ) : (
             <p className="text-neutral-400 italic">
-              No strats for {capitalizeWord(data.agentName)} on{" "}
-              {capitalizeWord(data.mapName)} which match that search query.
+              No strats for{" "}
+              {data.agentName === "all-agents"
+                ? "All Agents"
+                : capitalizeWord(data.agentName)}{" "}
+              on{" "}
+              {data.mapName === "all-maps"
+                ? "All Maps"
+                : capitalizeWord(data.mapName)}{" "}
+              which match that search query.
             </p>
           )
         ) : (
